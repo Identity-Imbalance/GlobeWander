@@ -23,3 +23,7 @@ Additionally, it will furnish trip specifics, such as costs, activities, departu
 
 - Yaman Ayoun
 
+- ## [User Stroy](https://github.com/Identity-Imbalance/GlobeWander/blob/sub-main/userstroy.md)
+- ## [Requirments](https://github.com/Identity-Imbalance/GlobeWander/blob/sub-main/requirements.md)
+
+- ![ERD Globe Wander](https://github.com/Identity-Imbalance/GlobeWander/blob/sub-main/ERD.jpg)
