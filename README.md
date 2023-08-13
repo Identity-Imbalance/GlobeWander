@@ -11,15 +11,15 @@ Additionally, it will furnish trip specifics, such as costs, activities, departu
 
 ### Team members
 
-    - Abdallah Alomari
+- Abdallah Alomari
 
-    - Osama Alkarmy
+- Osama Alkarmy
 
-    - Bashar shehadeh
+- Bashar shehadeh
 
-    - Ammar Tarawneh
+- Ammar Tarawneh
 
-    - Tasnem Al-Abed
+- Tasnem Al-Abed
 
-    - Yaman Ayoun
+- Yaman Ayoun
 
