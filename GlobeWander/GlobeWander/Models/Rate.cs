@@ -10,6 +10,6 @@
 
         public string Rating { get; set; }
 
-        public Trip Trip { get; set; }
+        public Trip? Trip { get; set; }
     }
 }
