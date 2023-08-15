@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using GlobeWander.Data;
 using GlobeWander.Models;
+using GlobeWander.Models.Interfaces;
 
 namespace GlobeWander.Controllers
 {
@@ -14,9 +15,9 @@ namespace GlobeWander.Controllers
     [ApiController]
     public class TourSpotsController : ControllerBase
     {
-        private readonly GlobeWanderDbContext _context;
+        private readonly ITourSpot _context;
 
-        public TourSpotsController(GlobeWanderDbContext context)
+        public TourSpotsController(ITourSpot context)
         {
             _context = context;
         }
@@ -25,22 +26,22 @@ namespace GlobeWander.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TourSpot>>> GetTourSpots()
         {
-          if (_context.TourSpots == null)
+          if (_context == null)
           {
               return NotFound();
           }
-            return await _context.TourSpots.ToListAsync();
+            return await _context.GetAllTourSpots();
         }
 
         // GET: api/TourSpots/5
         [HttpGet("{id}")]
         public async Task<ActionResult<TourSpot>> GetTourSpot(int id)
         {
-          if (_context.TourSpots == null)
+          if (_context == null)
           {
               return NotFound();
           }
-            var tourSpot = await _context.TourSpots.FindAsync(id);
+            var tourSpot = await _context.GetSpotById(id);
 
             if (tourSpot == null)
             {
@@ -60,23 +61,7 @@ namespace GlobeWander.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(tourSpot).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!TourSpotExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await _context.UpdateTourSpot(tourSpot, id);
 
             return NoContent();
         }
@@ -86,12 +71,11 @@ namespace GlobeWander.Controllers
         [HttpPost]
         public async Task<ActionResult<TourSpot>> PostTourSpot(TourSpot tourSpot)
         {
-          if (_context.TourSpots == null)
+          if (_context == null)
           {
               return Problem("Entity set 'GlobeWanderDbContext.TourSpots'  is null.");
           }
-            _context.TourSpots.Add(tourSpot);
-            await _context.SaveChangesAsync();
+            await _context.CreateTourSpot(tourSpot);
 
             return CreatedAtAction("GetTourSpot", new { id = tourSpot.ID }, tourSpot);
         }
@@ -100,25 +84,18 @@ namespace GlobeWander.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTourSpot(int id)
         {
-            if (_context.TourSpots == null)
+            if (_context == null)
             {
                 return NotFound();
             }
-            var tourSpot = await _context.TourSpots.FindAsync(id);
+            var tourSpot = _context.DeleteTourSpot(id);
             if (tourSpot == null)
             {
                 return NotFound();
             }
 
-            _context.TourSpots.Remove(tourSpot);
-            await _context.SaveChangesAsync();
-
             return NoContent();
         }
 
-        private bool TourSpotExists(int id)
-        {
-            return (_context.TourSpots?.Any(e => e.ID == id)).GetValueOrDefault();
-        }
     }
 }

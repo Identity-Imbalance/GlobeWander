@@ -10,7 +10,7 @@
 
         public int TourSpotID { get; set; }
 
-        public TourSpot TourSpot { get; set; }
+        public TourSpot? TourSpot { get; set; }
 
         public List<HotelRoom>? HotelRoom { get; set; }
     }
