@@ -35,6 +35,8 @@ namespace GlobeWander
             builder.Services.AddTransient<IBookingTrip, BookingTripService>();
             builder.Services.AddTransient<IRate, RateService>();
 
+
+
             builder.Services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo()

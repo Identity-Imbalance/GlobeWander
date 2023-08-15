@@ -18,11 +18,11 @@
 
         public string Theme { get; set; }
 
-        public TourSpot TourSpots { get; set; }
+        public TourSpot? TourSpots { get; set; }
 
-        public List<BookingTrip> BookingTrips { get; set; }
+        public List<BookingTrip>? BookingTrips { get; set; }
 
-        public List<Rate> Rates { get; set; }
+        public List<Rate>? Rates { get; set; }
 
     }
 }
