@@ -18,8 +18,8 @@
 
         public string Theme { get; set; }
 
-        public List<BookingTrip>? BookingTrips { get; set; }
+        public List<BookingTripDTO>? BookingTrips { get; set; }
 
-        public List<Rate>? Rates { get; set; }
+        public List<RateDTO>? Rates { get; set; }
     }
 }

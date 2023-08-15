@@ -16,8 +16,8 @@
 
         public string PhoneNumber { get; set; }
 
-        public List<Hotel>? Hotels { get; set; }
+        public List<HotelDTO>? Hotels { get; set; }
 
-        public List<Trip>? Trips { get; set; }
+        public List<TripDTO>? Trips { get; set; }
     }
 }
