@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using GlobeWander.Data;
 using GlobeWander.Models;
+using GlobeWander.Models.Interfaces;
 
 namespace GlobeWander.Controllers
 {
@@ -14,9 +15,9 @@ namespace GlobeWander.Controllers
     [ApiController]
     public class TripsController : ControllerBase
     {
-        private readonly GlobeWanderDbContext _context;
+        private readonly ITrip _context;
 
-        public TripsController(GlobeWanderDbContext context)
+        public TripsController(ITrip context)
         {
             _context = context;
         }
@@ -25,22 +26,22 @@ namespace GlobeWander.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Trip>>> GetTrips()
         {
-          if (_context.Trips == null)
+          if (_context == null)
           {
               return NotFound();
           }
-            return await _context.Trips.ToListAsync();
+            return await _context.GetAllTrips();
         }
 
         // GET: api/Trips/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Trip>> GetTrip(int id)
         {
-          if (_context.Trips == null)
+          if (_context == null)
           {
               return NotFound();
           }
-            var trip = await _context.Trips.FindAsync(id);
+            var trip = await _context.GetTripByID(id);
 
             if (trip == null)
             {
@@ -60,23 +61,7 @@ namespace GlobeWander.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(trip).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!TripExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await _context.UpdateTrip(trip, id);
 
             return NoContent();
         }
@@ -86,12 +71,11 @@ namespace GlobeWander.Controllers
         [HttpPost]
         public async Task<ActionResult<Trip>> PostTrip(Trip trip)
         {
-          if (_context.Trips == null)
+          if (_context == null)
           {
               return Problem("Entity set 'GlobeWanderDbContext.Trips'  is null.");
           }
-            _context.Trips.Add(trip);
-            await _context.SaveChangesAsync();
+            await _context.CreateTrip(trip);
 
             return CreatedAtAction("GetTrip", new { id = trip.Id }, trip);
         }
@@ -100,25 +84,15 @@ namespace GlobeWander.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTrip(int id)
         {
-            if (_context.Trips == null)
+            if (_context == null)
             {
                 return NotFound();
             }
-            var trip = await _context.Trips.FindAsync(id);
-            if (trip == null)
-            {
-                return NotFound();
-            }
-
-            _context.Trips.Remove(trip);
-            await _context.SaveChangesAsync();
+            await _context.DeleteTrip(id);
 
             return NoContent();
         }
 
-        private bool TripExists(int id)
-        {
-            return (_context.Trips?.Any(e => e.Id == id)).GetValueOrDefault();
-        }
+        
     }
 }

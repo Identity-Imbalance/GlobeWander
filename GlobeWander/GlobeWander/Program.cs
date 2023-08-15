@@ -25,7 +25,18 @@ namespace GlobeWander
             builder.Services.AddDbContext<GlobeWanderDbContext>(
                 options => options.UseSqlServer(stringConnection
                 ));
+
+            builder.Services.AddTransient<ITourSpot, TourSpotService>();
+            builder.Services.AddTransient<ITrip, TripService>();
+            builder.Services.AddTransient<IHotel, HotelService>();
+            builder.Services.AddTransient<IHotelRoom, HotelRoomService>();
+            builder.Services.AddTransient<IRoom, RoomService>();
+            builder.Services.AddTransient<IBookingRoom, BookingRoomService>();
+            builder.Services.AddTransient<IBookingTrip, BookingTripService>();
             builder.Services.AddTransient<IRate, RateService>();
+
+
+
             builder.Services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo()
