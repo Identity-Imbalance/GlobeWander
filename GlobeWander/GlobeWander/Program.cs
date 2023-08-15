@@ -1,4 +1,6 @@
 using GlobeWander.Data;
+using GlobeWander.Models.Interfaces;
+using GlobeWander.Models.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace GlobeWander
@@ -23,7 +25,7 @@ namespace GlobeWander
             builder.Services.AddDbContext<GlobeWanderDbContext>(
                 options => options.UseSqlServer(stringConnection
                 ));
-
+            builder.Services.AddTransient<IRate, RateService>();
             builder.Services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo()
