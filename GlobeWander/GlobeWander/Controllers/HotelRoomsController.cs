@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using GlobeWander.Data;
 using GlobeWander.Models;
+using GlobeWander.Models.Interfaces;
 
 namespace GlobeWander.Controllers
 {
@@ -14,71 +15,29 @@ namespace GlobeWander.Controllers
     [ApiController]
     public class HotelRoomsController : ControllerBase
     {
-        private readonly GlobeWanderDbContext _context;
 
-        public HotelRoomsController(GlobeWanderDbContext context)
+        private readonly IHotelRoom _hotelRoom;
+
+        public HotelRoomsController(IHotelRoom Hotelroom)
         {
-            _context = context;
+            _hotelRoom = Hotelroom;
+
         }
 
         // GET: api/HotelRooms
         [HttpGet]
+
         public async Task<ActionResult<IEnumerable<HotelRoom>>> GetHotelRooms()
         {
-          if (_context.HotelRooms == null)
-          {
-              return NotFound();
-          }
-            return await _context.HotelRooms.ToListAsync();
+            return await _hotelRoom.GetHotelRooms();
         }
 
         // GET: api/HotelRooms/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<HotelRoom>> GetHotelRoom(int id)
+        [HttpGet("Hotels/{hotelId}/Rooms/{roomNumber}")]
+        public async Task<ActionResult<HotelRoom>> GetHotelRoom(int roomNumber)
         {
-          if (_context.HotelRooms == null)
-          {
-              return NotFound();
-          }
-            var hotelRoom = await _context.HotelRooms.FindAsync(id);
+            return await _hotelRoom.GetHotelRoomId(roomNumber);
 
-            if (hotelRoom == null)
-            {
-                return NotFound();
-            }
-
-            return hotelRoom;
-        }
-
-        // PUT: api/HotelRooms/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutHotelRoom(int id, HotelRoom hotelRoom)
-        {
-            if (id != hotelRoom.HotelID)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(hotelRoom).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!HotelRoomExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
         }
 
         // POST: api/HotelRooms
@@ -86,53 +45,27 @@ namespace GlobeWander.Controllers
         [HttpPost]
         public async Task<ActionResult<HotelRoom>> PostHotelRoom(HotelRoom hotelRoom)
         {
-          if (_context.HotelRooms == null)
-          {
-              return Problem("Entity set 'GlobeWanderDbContext.HotelRooms'  is null.");
-          }
-            _context.HotelRooms.Add(hotelRoom);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (HotelRoomExists(hotelRoom.HotelID))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            return await _hotelRoom.CreateHotelRoom(hotelRoom);
 
-            return CreatedAtAction("GetHotelRoom", new { id = hotelRoom.HotelID }, hotelRoom);
+        }
+
+
+        // PUT: api/HotelRooms/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPut("Hotel/{hotelId}/Room/{idRoom}")]
+        public async Task<IActionResult> PutHotelRoom(int roomNumber, HotelRoom hotelRoom)
+        {
+            return Ok(await _hotelRoom.UpdateHotelRoom(roomNumber, hotelRoom));
         }
 
         // DELETE: api/HotelRooms/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteHotelRoom(int id)
+        [HttpDelete("Hotel/{hotelId}/Room/{idRoom}")]
+        public async Task<HotelRoom> DeleteHotelRoom(int roomNumber)
         {
-            if (_context.HotelRooms == null)
-            {
-                return NotFound();
-            }
-            var hotelRoom = await _context.HotelRooms.FindAsync(id);
-            if (hotelRoom == null)
-            {
-                return NotFound();
-            }
+            // return Ok(await _hoteRoom.Delete(hotelId, idRoom));
 
-            _context.HotelRooms.Remove(hotelRoom);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            return await _hotelRoom.DeleteHotelRoom(roomNumber);
         }
 
-        private bool HotelRoomExists(int id)
-        {
-            return (_context.HotelRooms?.Any(e => e.HotelID == id)).GetValueOrDefault();
-        }
     }
 }
