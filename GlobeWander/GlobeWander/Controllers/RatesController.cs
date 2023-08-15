@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using GlobeWander.Data;
 using GlobeWander.Models;
+using GlobeWander.Models.Interfaces;
 
 namespace GlobeWander.Controllers
 {
@@ -14,39 +15,25 @@ namespace GlobeWander.Controllers
     [ApiController]
     public class RatesController : ControllerBase
     {
-        private readonly GlobeWanderDbContext _context;
+        private readonly IRate _rate;
 
-        public RatesController(GlobeWanderDbContext context)
+        public RatesController(IRate rate)
         {
-            _context = context;
+            _rate = rate;
         }
 
         // GET: api/Rates
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Rate>>> GetRates()
         {
-          if (_context.Rates == null)
-          {
-              return NotFound();
-          }
-            return await _context.Rates.ToListAsync();
+            return await _rate.GetAllRate();
         }
 
         // GET: api/Rates/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Rate>> GetRate(int id)
         {
-          if (_context.Rates == null)
-          {
-              return NotFound();
-          }
-            var rate = await _context.Rates.FindAsync(id);
-
-            if (rate == null)
-            {
-                return NotFound();
-            }
-
+         var rate = await _rate.GetRateById(id);
             return rate;
         }
 
@@ -60,25 +47,8 @@ namespace GlobeWander.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(rate).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!RateExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+          var updateRate =await _rate.UpdateRate(id, rate);
+            return Ok(updateRate);
         }
 
         // POST: api/Rates
@@ -86,53 +56,17 @@ namespace GlobeWander.Controllers
         [HttpPost]
         public async Task<ActionResult<Rate>> PostRate(Rate rate)
         {
-          if (_context.Rates == null)
-          {
-              return Problem("Entity set 'GlobeWanderDbContext.Rates'  is null.");
-          }
-            _context.Rates.Add(rate);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (RateExists(rate.ID))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return CreatedAtAction("GetRate", new { id = rate.ID }, rate);
+          return await _rate.Create(rate);
         }
 
         // DELETE: api/Rates/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRate(int id)
         {
-            if (_context.Rates == null)
-            {
-                return NotFound();
-            }
-            var rate = await _context.Rates.FindAsync(id);
-            if (rate == null)
-            {
-                return NotFound();
-            }
-
-            _context.Rates.Remove(rate);
-            await _context.SaveChangesAsync();
-
+           await _rate.DeleteRate(id);
             return NoContent();
         }
 
-        private bool RateExists(int id)
-        {
-            return (_context.Rates?.Any(e => e.ID == id)).GetValueOrDefault();
-        }
+      
     }
 }
