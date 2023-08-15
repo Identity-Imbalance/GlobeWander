@@ -1,4 +1,5 @@
 ﻿using GlobeWander.Data;
+using GlobeWander.Models.DTO;
 using GlobeWander.Models.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,17 +14,24 @@ namespace GlobeWander.Models.Services
         }
 
         //create not
-        public async Task<Rate> Create(Rate rate)
+        public async Task<RateDTO> Create(RateDTO rateDTO)
         {
-            _rateService.Entry(rate).State = EntityState.Added;
+            var rate = new Rate
+            {
+                TripID = rateDTO.TripID,
+                Comments = rateDTO.Comments,
+                Rating = rateDTO.Rating,
+            };
+            _rateService.Rates.Add(rate);
             await _rateService.SaveChangesAsync();
-            return rate;
+            return rateDTO;
 
         }
 
-        public async Task<Rate> DeleteRate(int id)
+        public async Task<RateDTO> DeleteRate(int id)
         {
-            Rate rate = await GetRateById(id);
+            var rate = await _rateService.Rates.FindAsync(id);
+
             _rateService.Entry(rate).State = EntityState.Deleted;
             await _rateService.SaveChangesAsync();
             return rate;
