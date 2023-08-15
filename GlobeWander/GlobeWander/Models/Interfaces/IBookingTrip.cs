@@ -1,6 +1,6 @@
 ﻿namespace GlobeWander.Models.Interfaces
 {
-    public class IBookingTrip
+    public interface IBookingTrip
     {
     }
 }
