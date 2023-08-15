@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using GlobeWander.Data;
 using GlobeWander.Models;
+using GlobeWander.Models.Interfaces;
 
 namespace GlobeWander.Controllers
 {
@@ -14,33 +15,34 @@ namespace GlobeWander.Controllers
     [ApiController]
     public class RoomsController : ControllerBase
     {
-        private readonly GlobeWanderDbContext _context;
+        private readonly IRoom _context;
 
-        public RoomsController(GlobeWanderDbContext context)
+        public RoomsController(IRoom context)
         {
             _context = context;
         }
 
         // GET: api/Rooms
         [HttpGet]
+
         public async Task<ActionResult<IEnumerable<Room>>> GetRooms()
         {
-          if (_context.Rooms == null)
-          {
-              return NotFound();
-          }
-            return await _context.Rooms.ToListAsync();
+            if (_context == null)
+            {
+                return NotFound();
+            }
+            return await _context.GetRooms();
         }
 
         // GET: api/Rooms/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Room>> GetRoom(int id)
         {
-          if (_context.Rooms == null)
-          {
-              return NotFound();
-          }
-            var room = await _context.Rooms.FindAsync(id);
+            if (_context == null)
+            {
+                return NotFound();
+            }
+            var room = await _context.GetRoomId(id);
 
             if (room == null)
             {
@@ -60,23 +62,10 @@ namespace GlobeWander.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(room).State = EntityState.Modified;
+            await _context.UpdateRoom(id, room);
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!RoomExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+
+
 
             return NoContent();
         }
@@ -86,12 +75,12 @@ namespace GlobeWander.Controllers
         [HttpPost]
         public async Task<ActionResult<Room>> PostRoom(Room room)
         {
-          if (_context.Rooms == null)
-          {
-              return Problem("Entity set 'GlobeWanderDbContext.Rooms'  is null.");
-          }
-            _context.Rooms.Add(room);
-            await _context.SaveChangesAsync();
+            if (_context == null)
+            {
+                return Problem("Entity set 'GlobeWanderDbContext.Rooms'  is null.");
+            }
+            await _context.CreateRoom(room);
+
 
             return CreatedAtAction("GetRoom", new { id = room.ID }, room);
         }
@@ -100,25 +89,19 @@ namespace GlobeWander.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRoom(int id)
         {
-            if (_context.Rooms == null)
+            if (_context == null)
             {
                 return NotFound();
             }
-            var room = await _context.Rooms.FindAsync(id);
+            var room = await _context.DeleteRoom(id);
             if (room == null)
             {
                 return NotFound();
             }
 
-            _context.Rooms.Remove(room);
-            await _context.SaveChangesAsync();
+
 
             return NoContent();
-        }
-
-        private bool RoomExists(int id)
-        {
-            return (_context.Rooms?.Any(e => e.ID == id)).GetValueOrDefault();
         }
     }
 }
