@@ -236,7 +236,7 @@ namespace GlobeWander.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TourSpotsID")
+                    b.Property<int?>("TourSpotsID")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -311,17 +311,14 @@ namespace GlobeWander.Migrations
                 {
                     b.HasOne("GlobeWander.Models.TourSpot", "TourSpots")
                         .WithMany("Trips")
-                        .HasForeignKey("TourSpotsID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TourSpotsID");
 
                     b.Navigation("TourSpots");
                 });
 
             modelBuilder.Entity("GlobeWander.Models.BookingRoom", b =>
                 {
-                    b.Navigation("HotelRooms")
-                        .IsRequired();
+                    b.Navigation("HotelRooms");
                 });
 
             modelBuilder.Entity("GlobeWander.Models.Hotel", b =>

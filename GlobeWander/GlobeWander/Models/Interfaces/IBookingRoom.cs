@@ -8,8 +8,8 @@
 
         public Task<BookingRoom> GetBookingRoomById(int Id);
 
-        public Task<BookingRoom> UpdateBookingRoom(BookingRoom bookingRoom,int hotelId, int roomNumber);
+        public Task<BookingRoom> UpdateBookingRoom(int id, BookingRoom bookingRoom);
 
-        public Task DeleteBookingRoom(int hotelId, int roomNumber);
+        public Task DeleteBookingRoom(int id);
     }
 }

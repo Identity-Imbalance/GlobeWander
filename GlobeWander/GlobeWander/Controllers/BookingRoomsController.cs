@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using GlobeWander.Data;
 using GlobeWander.Models;
+using GlobeWander.Models.Interfaces;
 
 namespace GlobeWander.Controllers
 {
@@ -14,9 +15,9 @@ namespace GlobeWander.Controllers
     [ApiController]
     public class BookingRoomsController : ControllerBase
     {
-        private readonly GlobeWanderDbContext _context;
+        private readonly IBookingRoom _context;
 
-        public BookingRoomsController(GlobeWanderDbContext context)
+        public BookingRoomsController(IBookingRoom context)
         {
             _context = context;
         }
@@ -25,22 +26,22 @@ namespace GlobeWander.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BookingRoom>>> GetBookingRooms()
         {
-          if (_context.BookingRooms == null)
+          if (_context == null)
           {
               return NotFound();
           }
-            return await _context.BookingRooms.ToListAsync();
+            return await _context.GetAllBookingRooms();
         }
 
         // GET: api/BookingRooms/5
         [HttpGet("{id}")]
         public async Task<ActionResult<BookingRoom>> GetBookingRoom(int id)
         {
-          if (_context.BookingRooms == null)
+          if (_context == null)
           {
               return NotFound();
           }
-            var bookingRoom = await _context.BookingRooms.FindAsync(id);
+            var bookingRoom = await _context.GetBookingRoomById(id);
 
             if (bookingRoom == null)
             {
@@ -52,7 +53,8 @@ namespace GlobeWander.Controllers
 
         // PUT: api/BookingRooms/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+        [HttpPut]
+        [Route("/api/hotelroom/")]
         public async Task<IActionResult> PutBookingRoom(int id, BookingRoom bookingRoom)
         {
             if (id != bookingRoom.ID)
@@ -60,23 +62,7 @@ namespace GlobeWander.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(bookingRoom).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!BookingRoomExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await _context.UpdateBookingRoom(id, bookingRoom);
 
             return NoContent();
         }
@@ -86,12 +72,11 @@ namespace GlobeWander.Controllers
         [HttpPost]
         public async Task<ActionResult<BookingRoom>> PostBookingRoom(BookingRoom bookingRoom)
         {
-          if (_context.BookingRooms == null)
+          if (_context == null)
           {
               return Problem("Entity set 'GlobeWanderDbContext.BookingRooms'  is null.");
           }
-            _context.BookingRooms.Add(bookingRoom);
-            await _context.SaveChangesAsync();
+            await _context.CreateBookingRoom(bookingRoom);
 
             return CreatedAtAction("GetBookingRoom", new { id = bookingRoom.ID }, bookingRoom);
         }
@@ -100,25 +85,19 @@ namespace GlobeWander.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBookingRoom(int id)
         {
-            if (_context.BookingRooms == null)
+            if (_context == null)
             {
                 return NotFound();
             }
-            var bookingRoom = await _context.BookingRooms.FindAsync(id);
+            var bookingRoom =  _context.DeleteBookingRoom(id);
             if (bookingRoom == null)
             {
                 return NotFound();
             }
 
-            _context.BookingRooms.Remove(bookingRoom);
-            await _context.SaveChangesAsync();
-
             return NoContent();
         }
 
-        private bool BookingRoomExists(int id)
-        {
-            return (_context.BookingRooms?.Any(e => e.ID == id)).GetValueOrDefault();
-        }
+
     }
 }
