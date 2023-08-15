@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace GlobeWander.Migrations
 {
     /// <inheritdoc />
-    public partial class Adding_DataEntity : Migration
+    public partial class DatabaseSetup : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -94,7 +94,7 @@ namespace GlobeWander.Migrations
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Theme = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TourSpotsID = table.Column<int>(type: "int", nullable: false)
+                    TourSpotsID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -103,8 +103,7 @@ namespace GlobeWander.Migrations
                         name: "FK_Trips_TourSpots_TourSpotsID",
                         column: x => x.TourSpotsID,
                         principalTable: "TourSpots",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "ID");
                 });
 
             migrationBuilder.CreateTable(

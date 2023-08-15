@@ -20,15 +20,12 @@ namespace GlobeWander.Models.Services
             return bookingRoom;                    
         }
 
-        public async Task DeleteBookingRoom(int hotelId, int roomNumber)
+        public async Task DeleteBookingRoom(int id)
         {
-            var delete = await _context.BookingRooms
-                .Where(r => r.HotelID == hotelId && r.RoomNumber == roomNumber)
-                .FirstOrDefaultAsync();
-            if (delete != null)
+            var deleteBookingRoom = await _context.BookingRooms.FindAsync(id);
+            if (deleteBookingRoom != null) 
             {
-                _context.Entry<BookingRoom>(delete).State = EntityState.Deleted;
-
+                _context.Entry(deleteBookingRoom).State = EntityState.Deleted;
                 await _context.SaveChangesAsync();
             }
         }
@@ -47,16 +44,16 @@ namespace GlobeWander.Models.Services
             return bookingRoom;
         }
 
-        public async Task<BookingRoom> UpdateBookingRoom(BookingRoom updatedBookingRoom, int hotelId, int roomNumber)
+        public async Task<BookingRoom> UpdateBookingRoom(int id ,BookingRoom updatedBookingRoom )
         {
-            BookingRoom bookingRoom = new BookingRoom();
-            bookingRoom.Cost = updatedBookingRoom.Cost;
-            bookingRoom.Duration= updatedBookingRoom.Duration;
+            if (id == updatedBookingRoom.ID)
+            {
+                _context.Entry(updatedBookingRoom).State = EntityState.Modified;
 
-            _context.Entry(bookingRoom).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-
-            return bookingRoom;
+                await _context.SaveChangesAsync();
+            }
+            return updatedBookingRoom;
+            
         }
     }
 }
