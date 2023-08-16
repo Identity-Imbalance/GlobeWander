@@ -12,7 +12,7 @@
 
         public string Duration { get; set; }
 
-        public Trip Trip { get; set; }
+        public Trip? Trip { get; set; }
 
     }
 }
