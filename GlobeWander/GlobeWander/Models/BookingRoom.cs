@@ -12,6 +12,6 @@
 
         public string Duration { get; set; }
 
-        public HotelRoom HotelRooms { get; set; }
+        public HotelRoom? HotelRooms { get; set; }
     }
 }
