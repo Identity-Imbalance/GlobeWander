@@ -1,6 +1,8 @@
 ﻿using GlobeWander.Data;
+using GlobeWander.Models.DTO;
 using GlobeWander.Models.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.Metrics;
 
 namespace GlobeWander.Models.Services
 {
@@ -12,48 +14,161 @@ namespace GlobeWander.Models.Services
         {
             _context = context;
         }
-        public async Task<TourSpot> CreateTourSpot(TourSpot tourSpot)
+        public async Task<TourSpotDTO> CreateTourSpot(newTourSpotDTO tourSpot)
         {
-            _context.TourSpots.Add(tourSpot);
-
+            var newTourSpot = new TourSpot()
+            {
+                ID = tourSpot.ID,
+                Name = tourSpot.Name,
+                Country = tourSpot.Country,
+                City = tourSpot.City,
+                Description = tourSpot.Description,
+                Categoary = tourSpot.Categoary,
+                PhoneNumber = tourSpot.PhoneNumber
+            };
+            _context.Entry<TourSpot>(newTourSpot).State = EntityState.Added;
             await _context.SaveChangesAsync();
+            var tourSpotDTO = await GetSpotById(newTourSpot.ID);
+            tourSpot.ID = newTourSpot.ID;
 
-            return tourSpot;
+            return tourSpotDTO;
         }
 
         public async Task DeleteTourSpot(int id)
         {
-            var tourSpotToDelete = await _context.TourSpots.FindAsync(id);
+            TourSpot tourSpotToDelete = await _context.TourSpots.FindAsync(id);
 
-            if (tourSpotToDelete != null)
-            {
                 _context.Entry<TourSpot>(tourSpotToDelete).State = EntityState.Deleted;
 
                 await _context.SaveChangesAsync();
-            }
+            
         }
 
-        public async Task<List<TourSpot>> GetAllTourSpots()
+        public async Task<List<TourSpotDTO>> GetAllTourSpots()
         {
-            var allTourSpots = await _context.TourSpots.ToListAsync();
+            return await _context.TourSpots.Select(
+                tours=> new TourSpotDTO
+                {
+                    ID = tours.ID,
+                    Name = tours.Name,
+                    Country = tours.Country,
+                    City = tours.City,
+                    Description = tours.Description,
+                    Categoary = tours.Categoary,
+                    PhoneNumber = tours.PhoneNumber,
+                    Hotels = tours.Hotels.Select(hotels => new HotelDTO
+                    {
+                        TourSpotID = hotels.TourSpotID,
+                        Id = hotels.Id,
+                        Name = hotels.Name,
+                        Description = hotels.Description,
+                        HotelRoom = hotels.HotelRoom.Select(hrooms => new HotelRoomDTO
+                        {
+                            RoomNumber = hrooms.RoomNumber,
+                            HotelID = hrooms.HotelID,
+                            RoomID = hrooms.RoomID,
+                            Price = hrooms.Price,
+                            IsAvailable = hrooms.IsAvailable,
+                            Rooms = new RoomDTO
+                            {
+                                ID = hrooms.Rooms.ID,
+                                Name = hrooms.Rooms.Name,
+                                Layout = hrooms.Rooms.Layout
+                                
+                            },
+                            BookingRoom = new BookingRoomDTO
+                            {
+                                ID = hrooms.BookingRoom.ID,
+                                RoomNumber = hrooms.BookingRoom.RoomNumber,
+                                HotelID = hrooms.BookingRoom.HotelID,
+                                Cost = hrooms.BookingRoom.Cost,
+                                Duration = hrooms.BookingRoom.Duration
+                            }
+                        }).ToList(),
+                    }).ToList(),
 
-            return allTourSpots;
+                }
+                ).ToListAsync();
+            
         }
 
-        public async Task<TourSpot> GetSpotById(int id)
+        public async Task<TourSpotDTO> GetSpotById(int id)
         {
-            return await _context.TourSpots.FindAsync(id);
-        }
+            TourSpotDTO? tourSpot = await _context.TourSpots
+                .Where(x=> x.ID == id)
+                .Select(
+                tours => new TourSpotDTO
+                {
+                    ID = id,
+                    Name = tours.Name,
+                    Country = tours.Country,
+                    City = tours.City,
+                    Description = tours.Description,
+                    Categoary = tours.Categoary,
+                    PhoneNumber = tours.PhoneNumber,
+                    Hotels = tours.Hotels.Select(hotels => new HotelDTO
+                    {
+                        TourSpotID = hotels.TourSpotID,
+                        Id = hotels.Id,
+                        Name = hotels.Name,
+                        Description = hotels.Description,
+                        HotelRoom = hotels.HotelRoom.Select(hrooms => new HotelRoomDTO
+                        {
+                            RoomNumber = hrooms.RoomNumber,
+                            HotelID = hrooms.HotelID,
+                            RoomID = hrooms.RoomID,
+                            Price = hrooms.Price,
+                            IsAvailable = hrooms.IsAvailable,
+                            Rooms = new RoomDTO
+                            {
+                                ID = hrooms.Rooms.ID,
+                                Name = hrooms.Rooms.Name,
+                                Layout = hrooms.Rooms.Layout
 
-        public async Task<TourSpot> UpdateTourSpot(TourSpot tourSpot, int id)
-        {
-            tourSpot.ID = id;
+                            },
+                            BookingRoom = new BookingRoomDTO
+                            {
+                                ID = hrooms.BookingRoom.ID,
+                                RoomNumber = hrooms.BookingRoom.RoomNumber,
+                                HotelID = hrooms.BookingRoom.HotelID,
+                                Cost = hrooms.BookingRoom.Cost,
+                                Duration = hrooms.BookingRoom.Duration
+                            }
+                        }).ToList(),
+                    }).ToList(),
 
-            _context.Entry<TourSpot>(tourSpot).State = EntityState.Modified;
-
-            await _context.SaveChangesAsync();
+                }
+                
+                ).FirstOrDefaultAsync();
+                
+                
 
             return tourSpot;
+        }
+
+        public async Task<TourSpotDTO> UpdateTourSpot(newTourSpotDTO tourSpot, int id)
+        {
+            var tourSpotRecord = await _context.TourSpots.FindAsync(id);
+
+            if (tourSpotRecord != null)
+            {
+                tourSpotRecord.ID = id;
+                tourSpotRecord.Name = tourSpot.Name;
+                tourSpotRecord.Country = tourSpot.Country;
+                tourSpotRecord.City = tourSpot.City;
+                    tourSpotRecord.Description = tourSpot.Description;
+                    tourSpotRecord.Categoary = tourSpot.Categoary;
+                    tourSpotRecord.PhoneNumber = tourSpot.PhoneNumber;
+                               
+                _context.Entry(tourSpotRecord).State = EntityState.Modified;
+
+                await _context.SaveChangesAsync();
+
+               
+            }
+            var updateTour = await GetSpotById(tourSpot.ID);
+            return updateTour;
+
         }
     }
 }

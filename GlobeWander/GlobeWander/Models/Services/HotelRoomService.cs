@@ -24,19 +24,19 @@ namespace GlobeWander.Models.Services
             await _context.SaveChangesAsync();
             return hotelRoom;
         }
-        public async Task<HotelRoom> GetHotelRoomId(int roomNumber)
+        public async Task<HotelRoom> GetHotelRoomId(int roomNumber, int hotelId)
         {
 
-            HotelRoom hotelRoom = await _context.HotelRooms.FindAsync(roomNumber);
+            HotelRoom hotelRoom = await _context.HotelRooms.FindAsync(roomNumber,hotelId);
 
             return hotelRoom;
 
 
         }
-        public async Task<HotelRoom> DeleteHotelRoom(int roomNumber)
+        public async Task<HotelRoom> DeleteHotelRoom(int roomNumber, int hotelID)
         {
 
-            HotelRoom hotel = await GetHotelRoomId(roomNumber);
+            HotelRoom hotel = await GetHotelRoomId(roomNumber,hotelID);
             _context.Entry(hotel).State = EntityState.Deleted;
             await _context.SaveChangesAsync();
 
@@ -52,9 +52,9 @@ namespace GlobeWander.Models.Services
             return HotelRoom;
         }
 
-        public async Task<HotelRoom> UpdateHotelRoom(int roomNumber, HotelRoom updatedHotelRoom)
+        public async Task<HotelRoom> UpdateHotelRoom(int roomNumber,int hotelId, HotelRoom updatedHotelRoom)
         {
-            HotelRoom hotelRoom = await GetHotelRoomId(roomNumber);
+            HotelRoom hotelRoom = await GetHotelRoomId(roomNumber, hotelId);
 
             hotelRoom.Price = updatedHotelRoom.Price;
             hotelRoom.IsAvailable = updatedHotelRoom.IsAvailable;
