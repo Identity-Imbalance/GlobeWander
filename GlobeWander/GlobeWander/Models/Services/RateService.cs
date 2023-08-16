@@ -1,6 +1,7 @@
 ﻿using GlobeWander.Data;
 using GlobeWander.Models.DTO;
 using GlobeWander.Models.Interfaces;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 
 namespace GlobeWander.Models.Services
@@ -28,34 +29,54 @@ namespace GlobeWander.Models.Services
 
         }
 
-        public async Task<RateDTO> DeleteRate(int id)
+        public async Task<Rate> DeleteRate(int id ,int TripId)
         {
-            var rate = await _rateService.Rates.FindAsync(id);
-
-            _rateService.Entry(rate).State = EntityState.Deleted;
+            var rate = await _rateService.Rates.Where(x => x.ID == id && x.TripID ==TripId).FirstOrDefaultAsync();
+           // var rateDto = await GetRateById(id);
+            _rateService.Rates.Remove(rate);
             await _rateService.SaveChangesAsync();
             return rate;
+           
+        }
+        public async Task<List<RateDTO>> GetAllRate()
+        {
+            return await _rateService.Rates.Select(r => new RateDTO
+            {
+                ID = r.ID,
+                TripID = r.TripID,
+                Comments = r.Comments,
+                Rating = r.Rating
+            }
+            ).ToListAsync();         
         }
 
-        public async Task<List<Rate>> GetAllRate()
+        public async Task<RateDTO> GetRateById(int id, int TripID)
         {
-            var rates = await _rateService.Rates.ToListAsync();
-            return rates;
+            return await _rateService.Rates.Where(x => x.ID == id && x.TripID == TripID).Select(r => new RateDTO
+            {
+                ID = r.ID,
+                TripID = r.TripID,
+                Comments = r.Comments,
+                Rating = r.Rating
+            }
+             ).FirstOrDefaultAsync();
         }
 
-        public async Task<Rate> GetRateById(int id)
+        public async Task<RateDTO> UpdateRate(int id,int tripId, RateDTO rate)
         {
-           Rate rate = await _rateService.Rates.FindAsync(id);
-            return rate;
-        }
+            var existRate = await _rateService.Rates.FindAsync(id, tripId);
+            if (existRate != null)
+            {
 
-        public async Task<Rate> UpdateRate(int id, Rate rate)
-        {
-            var existRate = await _rateService.Rates.FindAsync(id);
+            existRate.ID = rate.ID;
+            existRate.TripID = rate.TripID;
             existRate.Rating = rate.Rating;
             existRate.Comments = rate.Comments;
+            _rateService.Entry(existRate).State = EntityState.Modified;
             await _rateService.SaveChangesAsync();
-            return existRate;
+            return rate;
+            }
+            return null;
         }
     }
 }
