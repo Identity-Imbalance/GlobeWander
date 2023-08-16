@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using GlobeWander.Data;
 using GlobeWander.Models;
+using GlobeWander.Models.Interfaces;
 
 namespace GlobeWander.Controllers
 {
@@ -14,41 +15,34 @@ namespace GlobeWander.Controllers
     [ApiController]
     public class HotelsController : ControllerBase
     {
-        private readonly GlobeWanderDbContext _context;
 
-        public HotelsController(GlobeWanderDbContext context)
+        private readonly IHotel _hotel;
+        public HotelsController(IHotel hotel)
         {
-            _context = context;
+            _hotel = hotel;
         }
 
         // GET: api/Hotels
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Hotel>>> GetHotels()
+        public async Task<ActionResult<IEnumerable<Hotel>>> Get()
         {
-          if (_context.Hotels == null)
-          {
-              return NotFound();
-          }
-            return await _context.Hotels.ToListAsync();
+            return await _hotel.GetAllHotels();
         }
 
         // GET: api/Hotels/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Hotel>> GetHotel(int id)
         {
-          if (_context.Hotels == null)
-          {
-              return NotFound();
-          }
-            var hotel = await _context.Hotels.FindAsync(id);
-
-            if (hotel == null)
-            {
-                return NotFound();
-            }
-
-            return hotel;
+            return await _hotel.GetHotelId(id);
         }
+
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost]
+        public async Task<ActionResult<Hotel>> PostHotel(Hotel hotel)
+        {
+            return await _hotel.CreateHotel(hotel);
+        }
+
 
         // PUT: api/Hotels/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -60,65 +54,27 @@ namespace GlobeWander.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(hotel).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!HotelExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return Ok(await _hotel.UpdateHotel(id, hotel));
         }
 
         // POST: api/Hotels
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Hotel>> PostHotel(Hotel hotel)
-        {
-          if (_context.Hotels == null)
-          {
-              return Problem("Entity set 'GlobeWanderDbContext.Hotels'  is null.");
-          }
-            _context.Hotels.Add(hotel);
-            await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetHotel", new { id = hotel.Id }, hotel);
-        }
 
         // DELETE: api/Hotels/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteHotel(int id)
         {
-            if (_context.Hotels == null)
+            var hotel = await _hotel.GetHotelId(id);
+
+            if (id != hotel.Id)
             {
-                return NotFound();
-            }
-            var hotel = await _context.Hotels.FindAsync(id);
-            if (hotel == null)
-            {
-                return NotFound();
+                return BadRequest();
             }
 
-            _context.Hotels.Remove(hotel);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            return Ok(await _hotel.DeleteHotel(id));
         }
 
-        private bool HotelExists(int id)
-        {
-            return (_context.Hotels?.Any(e => e.Id == id)).GetValueOrDefault();
-        }
+
+
     }
 }

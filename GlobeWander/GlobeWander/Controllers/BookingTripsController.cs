@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using GlobeWander.Data;
 using GlobeWander.Models;
+using GlobeWander.Models.Interfaces;
 
 namespace GlobeWander.Controllers
 {
@@ -14,40 +15,25 @@ namespace GlobeWander.Controllers
     [ApiController]
     public class BookingTripsController : ControllerBase
     {
-        private readonly GlobeWanderDbContext _context;
+        private readonly IBookingTrip _bookTrip;
 
-        public BookingTripsController(GlobeWanderDbContext context)
+        public BookingTripsController(IBookingTrip booktrip)
         {
-            _context = context;
+            _bookTrip = booktrip;
         }
 
         // GET: api/BookingTrips
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BookingTrip>>> GetbookingTrips()
         {
-          if (_context.bookingTrips == null)
-          {
-              return NotFound();
-          }
-            return await _context.bookingTrips.ToListAsync();
+            return await _bookTrip.GetAllBookingTrips();
         }
 
         // GET: api/BookingTrips/5
         [HttpGet("{id}")]
         public async Task<ActionResult<BookingTrip>> GetBookingTrip(int id)
         {
-          if (_context.bookingTrips == null)
-          {
-              return NotFound();
-          }
-            var bookingTrip = await _context.bookingTrips.FindAsync(id);
-
-            if (bookingTrip == null)
-            {
-                return NotFound();
-            }
-
-            return bookingTrip;
+            return await _bookTrip.GetBookingTripById(id);
         }
 
         // PUT: api/BookingTrips/5
@@ -60,25 +46,7 @@ namespace GlobeWander.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(bookingTrip).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!BookingTripExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return Ok(await _bookTrip.UpdateBookingTrip(id, bookingTrip));
         }
 
         // POST: api/BookingTrips
@@ -86,53 +54,21 @@ namespace GlobeWander.Controllers
         [HttpPost]
         public async Task<ActionResult<BookingTrip>> PostBookingTrip(BookingTrip bookingTrip)
         {
-          if (_context.bookingTrips == null)
-          {
-              return Problem("Entity set 'GlobeWanderDbContext.bookingTrips'  is null.");
-          }
-            _context.bookingTrips.Add(bookingTrip);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (BookingTripExists(bookingTrip.ID))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return CreatedAtAction("GetBookingTrip", new { id = bookingTrip.ID }, bookingTrip);
+            return await _bookTrip.Create(bookingTrip);
         }
 
         // DELETE: api/BookingTrips/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBookingTrip(int id)
         {
-            if (_context.bookingTrips == null)
+            var bookingTrip = await _bookTrip.GetBookingTripById(id);
+
+            if (id != bookingTrip.ID)
             {
-                return NotFound();
-            }
-            var bookingTrip = await _context.bookingTrips.FindAsync(id);
-            if (bookingTrip == null)
-            {
-                return NotFound();
+                return BadRequest();
             }
 
-            _context.bookingTrips.Remove(bookingTrip);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool BookingTripExists(int id)
-        {
-            return (_context.bookingTrips?.Any(e => e.ID == id)).GetValueOrDefault();
+            return Ok(await _bookTrip.Delete(id));
         }
     }
 }
