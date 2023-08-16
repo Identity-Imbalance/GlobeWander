@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using GlobeWander.Data;
 using GlobeWander.Models;
 using GlobeWander.Models.Interfaces;
+using GlobeWander.Models.DTO;
 
 namespace GlobeWander.Controllers
 {
@@ -24,7 +25,7 @@ namespace GlobeWander.Controllers
 
         // GET: api/TourSpots
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TourSpot>>> GetTourSpots()
+        public async Task<ActionResult<IEnumerable<TourSpotDTO>>> GetTourSpots()
         {
           if (_context == null)
           {
@@ -35,7 +36,7 @@ namespace GlobeWander.Controllers
 
         // GET: api/TourSpots/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<TourSpot>> GetTourSpot(int id)
+        public async Task<ActionResult<TourSpotDTO>> GetTourSpot(int id)
         {
           if (_context == null)
           {
@@ -54,30 +55,30 @@ namespace GlobeWander.Controllers
         // PUT: api/TourSpots/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTourSpot(int id, TourSpot tourSpot)
+        public async Task<IActionResult> PutTourSpot(int id, newTourSpotDTO tourSpot)
         {
-            if (id != tourSpot.ID)
-            {
-                return BadRequest();
-            }
+            //if (id != tourSpot.ID)
+            //{
+            //    return BadRequest();
+            //}
 
-            await _context.UpdateTourSpot(tourSpot, id);
+            var updatedTourSpot = await _context.UpdateTourSpot(tourSpot, id);
 
-            return NoContent();
+            return Ok(updatedTourSpot);
         }
 
         // POST: api/TourSpots
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<TourSpot>> PostTourSpot(TourSpot tourSpot)
+        public async Task<ActionResult<TourSpot>> PostTourSpot(newTourSpotDTO tourSpot)
         {
           if (_context == null)
           {
               return Problem("Entity set 'GlobeWanderDbContext.TourSpots'  is null.");
           }
-            await _context.CreateTourSpot(tourSpot);
+            var newTourSpot = await _context.CreateTourSpot(tourSpot);
 
-            return CreatedAtAction("GetTourSpot", new { id = tourSpot.ID }, tourSpot);
+            return CreatedAtAction("GetTourSpot", new { id = newTourSpot.ID }, tourSpot);
         }
 
         // DELETE: api/TourSpots/5
@@ -88,11 +89,8 @@ namespace GlobeWander.Controllers
             {
                 return NotFound();
             }
-            var tourSpot = _context.DeleteTourSpot(id);
-            if (tourSpot == null)
-            {
-                return NotFound();
-            }
+            await _context.DeleteTourSpot(id);
+            
 
             return NoContent();
         }

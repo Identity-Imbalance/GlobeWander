@@ -34,9 +34,9 @@ namespace GlobeWander.Controllers
 
         // GET: api/HotelRooms/5
         [HttpGet("Hotels/{hotelId}/Rooms/{roomNumber}")]
-        public async Task<ActionResult<HotelRoom>> GetHotelRoom(int roomNumber)
+        public async Task<ActionResult<HotelRoom>> GetHotelRoom(int roomNumber,int hotelId)
         {
-            return await _hotelRoom.GetHotelRoomId(roomNumber);
+            return await _hotelRoom.GetHotelRoomId(roomNumber, hotelId);
 
         }
 
@@ -53,18 +53,18 @@ namespace GlobeWander.Controllers
         // PUT: api/HotelRooms/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("Hotel/{hotelId}/Room/{idRoom}")]
-        public async Task<IActionResult> PutHotelRoom(int roomNumber, HotelRoom hotelRoom)
+        public async Task<IActionResult> PutHotelRoom(int roomNumber, int hotelId ,HotelRoom hotelRoom)
         {
-            return Ok(await _hotelRoom.UpdateHotelRoom(roomNumber, hotelRoom));
+            return Ok(await _hotelRoom.UpdateHotelRoom(roomNumber, hotelId, hotelRoom));
         }
 
         // DELETE: api/HotelRooms/5
         [HttpDelete("Hotel/{hotelId}/Room/{idRoom}")]
-        public async Task<HotelRoom> DeleteHotelRoom(int roomNumber)
+        public async Task<HotelRoom> DeleteHotelRoom(int roomNumber, int hotelID)
         {
             // return Ok(await _hoteRoom.Delete(hotelId, idRoom));
 
-            return await _hotelRoom.DeleteHotelRoom(roomNumber);
+            return await _hotelRoom.DeleteHotelRoom(roomNumber, hotelID);
         }
 
     }
