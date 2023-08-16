@@ -3,7 +3,7 @@
     "",
     "\\GlobeWander",
     "\\GlobeWander\\GlobeWander",
-    "\\GlobeWander\\GlobeWander\\Models\\Interfaces",
+    "\\GlobeWander\\GlobeWander\\Models",
     "\\GlobeWander\\GlobeWander\\Models\\Services"
   ],
   "SelectedNode": "\\GlobeWander\\GlobeWander.sln",

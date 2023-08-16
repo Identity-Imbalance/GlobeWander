@@ -21,11 +21,11 @@ namespace GlobeWander.Data
                 }
                 );
 
-            modelBuilder.Entity<BookingRoom>()
-                .HasOne(b => b.HotelRooms)  // BookingRoom references HotelRoom
-                .WithOne(h => h.BookingRoom) // HotelRoom references BookingRoom
-                .HasForeignKey<HotelRoom>(h => new { h.HotelID, h.RoomNumber }) // Define the composite foreign key
-                .HasPrincipalKey<BookingRoom>(b => new { b.HotelID, b.RoomNumber });
+            modelBuilder.Entity<HotelRoom>()
+                .HasOne(b => b.BookingRoom)  // BookingRoom references HotelRoom
+                .WithOne(h => h.HotelRooms) // HotelRoom references BookingRoom
+                .HasForeignKey<BookingRoom>(h => new { h.HotelID, h.RoomNumber })
+                .OnDelete(DeleteBehavior.NoAction);
 
 
             modelBuilder.Entity<Rate>().HasKey(

@@ -1,4 +1,5 @@
 ﻿using GlobeWander.Data;
+using GlobeWander.Models.DTO;
 using GlobeWander.Models.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,47 +14,85 @@ namespace GlobeWander.Models.Services
             _context = context;
         }
 
-        public async Task<BookingRoom> CreateBookingRoom(BookingRoom bookingRoom)
+        public async Task<BookingRoomDTO> CreateBookingRoom(BookingRoomDTO bookingRoomDTO)
         {
+            var bookingRoom = new BookingRoom
+            {
+                HotelID = bookingRoomDTO.HotelID,
+                RoomNumber = bookingRoomDTO.RoomNumber,
+                Cost = bookingRoomDTO.Cost,
+                Duration = bookingRoomDTO.Duration
+            };
+
             _context.BookingRooms.Add(bookingRoom);
             await _context.SaveChangesAsync();
-            return bookingRoom;                    
+
+            bookingRoomDTO.ID = bookingRoom.ID;
+            return bookingRoomDTO;
         }
 
         public async Task DeleteBookingRoom(int id)
         {
             var deleteBookingRoom = await _context.BookingRooms.FindAsync(id);
-            if (deleteBookingRoom != null) 
+            if (deleteBookingRoom != null)
             {
                 _context.Entry(deleteBookingRoom).State = EntityState.Deleted;
                 await _context.SaveChangesAsync();
             }
         }
 
-        public async Task<List<BookingRoom>> GetAllBookingRooms()
+        public async Task<List<BookingRoomDTO>> GetAllBookingRooms()
         {
-            var BookingRooms = await _context.BookingRooms.ToListAsync();
-
-            return BookingRooms;
-        }
-
-        public async Task<BookingRoom> GetBookingRoomById(int Id)
-        {
-            BookingRoom bookingRoom = await _context.BookingRooms.FindAsync(Id);
-
-            return bookingRoom;
-        }
-
-        public async Task<BookingRoom> UpdateBookingRoom(int id ,BookingRoom updatedBookingRoom )
-        {
-            if (id == updatedBookingRoom.ID)
+            var bookingRooms = await _context.BookingRooms.ToListAsync();
+            var bookingRoomDTOs = bookingRooms.Select(bookingRoom => new BookingRoomDTO
             {
-                _context.Entry(updatedBookingRoom).State = EntityState.Modified;
+                ID = bookingRoom.ID,
+                HotelID = bookingRoom.HotelID,
+                RoomNumber = bookingRoom.RoomNumber,
+                Cost = bookingRoom.Cost,
+                Duration = bookingRoom.Duration
+            }).ToList();
 
-                await _context.SaveChangesAsync();
+            return bookingRoomDTOs;
+        }
+
+        public async Task<BookingRoomDTO> GetBookingRoomById(int id)
+        {
+            var bookingRoom = await _context.BookingRooms.FindAsync(id);
+            if (bookingRoom == null)
+            {
+                return null;
             }
-            return updatedBookingRoom;
-            
+
+            var bookingRoomDTO = new BookingRoomDTO
+            {
+                ID = bookingRoom.ID,
+                HotelID = bookingRoom.HotelID,
+                RoomNumber = bookingRoom.RoomNumber,
+                Cost = bookingRoom.Cost,
+                Duration = bookingRoom.Duration
+            };
+
+            return bookingRoomDTO;
+        }
+
+        public async Task<BookingRoomDTO> UpdateBookingRoom(int id, BookingRoomDTO updatedBookingRoomDTO)
+        {
+            var bookingRoom = await _context.BookingRooms.FindAsync(id);
+            if (bookingRoom == null)
+            {
+                return null;
+            }
+
+            bookingRoom.HotelID = updatedBookingRoomDTO.HotelID;
+            bookingRoom.RoomNumber = updatedBookingRoomDTO.RoomNumber;
+            bookingRoom.Cost = updatedBookingRoomDTO.Cost;
+            bookingRoom.Duration = updatedBookingRoomDTO.Duration;
+
+            _context.Entry(bookingRoom).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            return updatedBookingRoomDTO;
         }
     }
 }
