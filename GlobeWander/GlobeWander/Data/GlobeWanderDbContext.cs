@@ -25,7 +25,7 @@ namespace GlobeWander.Data
                 .HasOne(b => b.BookingRoom)  // BookingRoom references HotelRoom
                 .WithOne(h => h.HotelRooms) // HotelRoom references BookingRoom
                 .HasForeignKey<BookingRoom>(h => new { h.HotelID, h.RoomNumber })
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.NoAction); 
 
 
             modelBuilder.Entity<Rate>().HasKey(
