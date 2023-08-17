@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using GlobeWander.Data;
 using GlobeWander.Models;
 using GlobeWander.Models.Interfaces;
+using GlobeWander.Models.DTO;
 
 namespace GlobeWander.Controllers
 {
@@ -24,51 +25,55 @@ namespace GlobeWander.Controllers
 
         // GET: api/BookingTrips
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<BookingTrip>>> GetbookingTrips()
+        public async Task<ActionResult<IEnumerable<BookingTripDTO>>> GetbookingTrips()
         {
-            return await _bookTrip.GetAllBookingTrips();
+            var bookingTrip = await _bookTrip.GetAllBookingTrips();
+            return Ok(bookingTrip);
         }
 
         // GET: api/BookingTrips/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<BookingTrip>> GetBookingTrip(int id)
+        [HttpGet("{id}/{tripId}")]
+        public async Task<ActionResult<BookingTripDTO>> GetBookingTrip(int id, int tripId)
         {
-            return await _bookTrip.GetBookingTripById(id);
+            return await _bookTrip.GetBookingTripById(id, tripId);
         }
 
         // PUT: api/BookingTrips/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutBookingTrip(int id, BookingTrip bookingTrip)
+        [HttpPut("{id}/{tripId}")]
+        public async Task<IActionResult> PutBookingTrip(int id, BookingTripDTO bookingTrip, int tripId)
         {
+
             if (id != bookingTrip.ID)
             {
                 return BadRequest();
             }
 
-            return Ok(await _bookTrip.UpdateBookingTrip(id, bookingTrip));
+            var updatebookingTrip = await _bookTrip.UpdateBookingTrip(id, bookingTrip, tripId);
+
+            return Ok(updatebookingTrip);
         }
 
         // POST: api/BookingTrips
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<BookingTrip>> PostBookingTrip(BookingTrip bookingTrip)
+        public async Task<ActionResult<BookingTripDTO>> PostBookingTrip(BookingTripDTO bookingTrip)
         {
             return await _bookTrip.Create(bookingTrip);
+
         }
 
         // DELETE: api/BookingTrips/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBookingTrip(int id)
+        [HttpDelete("{id}/{tripId}")]
+        public async Task<IActionResult> DeleteBookingTrip(int id, int tripId)
         {
-            var bookingTrip = await _bookTrip.GetBookingTripById(id);
-
-            if (id != bookingTrip.ID)
+            if (_bookTrip == null)
             {
-                return BadRequest();
+                return NotFound();
             }
 
-            return Ok(await _bookTrip.Delete(id));
+            await _bookTrip.Delete(id, tripId);
+            return NoContent();
         }
     }
 }

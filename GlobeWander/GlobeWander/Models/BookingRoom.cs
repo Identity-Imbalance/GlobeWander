@@ -7,7 +7,7 @@
         public int HotelID { get; set; }
 
         public int RoomNumber { get; set; }
-
+         
         public decimal Cost { get; set; }
 
         public string Duration { get; set; }

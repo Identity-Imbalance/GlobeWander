@@ -1,14 +1,16 @@
-﻿namespace GlobeWander.Models.Interfaces
+﻿using GlobeWander.Models.DTO;
+
+namespace GlobeWander.Models.Interfaces
 {
     public interface ITrip
     {
-        public Task<List<Trip>> GetAllTrips();
+        public Task<List<TripDTO>> GetAllTrips();
 
-        public Task<Trip> GetTripByID(int id);
+        public Task<TripDTO> GetTripByID(int id);
 
-        public Task<Trip> CreateTrip(Trip trip);
+        public Task<TripDTO> CreateTrip(NewTripDTO trip);
 
-        public Task<Trip> UpdateTrip(Trip trip, int id);
+        public Task<TripDTO> UpdateTrip(NewTripDTO trip, int id);
 
         public Task DeleteTrip(int id);
 
