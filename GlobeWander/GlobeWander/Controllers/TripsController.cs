@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using GlobeWander.Data;
 using GlobeWander.Models;
 using GlobeWander.Models.Interfaces;
+using GlobeWander.Models.DTO;
 
 namespace GlobeWander.Controllers
 {
@@ -24,7 +25,7 @@ namespace GlobeWander.Controllers
 
         // GET: api/Trips
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Trip>>> GetTrips()
+        public async Task<ActionResult<IEnumerable<TripDTO>>> GetTrips()
         {
           if (_context == null)
           {
@@ -35,7 +36,7 @@ namespace GlobeWander.Controllers
 
         // GET: api/Trips/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Trip>> GetTrip(int id)
+        public async Task<ActionResult<TripDTO>> GetTrip(int id)
         {
           if (_context == null)
           {
@@ -54,30 +55,30 @@ namespace GlobeWander.Controllers
         // PUT: api/Trips/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTrip(int id, Trip trip)
+        public async Task<IActionResult> PutTrip(int id, NewTripDTO trip)
         {
             if (id != trip.Id)
             {
                 return BadRequest();
             }
 
-            await _context.UpdateTrip(trip, id);
+           var updatedTrip =  await _context.UpdateTrip(trip, id);
 
-            return NoContent();
+            return Ok(updatedTrip);
         }
 
         // POST: api/Trips
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Trip>> PostTrip(Trip trip)
+        public async Task<ActionResult<TripDTO>> PostTrip(NewTripDTO trip)
         {
           if (_context == null)
           {
               return Problem("Entity set 'GlobeWanderDbContext.Trips'  is null.");
           }
-            await _context.CreateTrip(trip);
+           var newTripDTO =  await _context.CreateTrip(trip);
 
-            return CreatedAtAction("GetTrip", new { id = trip.Id }, trip);
+            return CreatedAtAction("GetTrip", new { id = newTripDTO.Id }, trip);
         }
 
         // DELETE: api/Trips/5
