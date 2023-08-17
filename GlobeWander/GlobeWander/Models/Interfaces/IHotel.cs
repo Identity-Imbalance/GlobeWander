@@ -1,13 +1,15 @@
-﻿namespace GlobeWander.Models.Interfaces
+﻿using GlobeWander.Models.DTO;
+
+namespace GlobeWander.Models.Interfaces
 {
     public interface IHotel
     {
-        Task<Hotel> CreateHotel(Hotel hotel);
-        Task<List<Hotel>> GetAllHotels();
-        Task<Hotel> GetHotelId(int hotelId);
+        Task<HotelDTO> CreateHotel(HotelDTO hotel);
+        Task<List<HotelDTO>> GetAllHotels();
+        Task<HotelDTO> GetHotelId(int hotelId);
 
-        Task<Hotel> UpdateHotel(int id, Hotel updatedHotel);
-        Task<Hotel> DeleteHotel(int id);
+        Task<HotelDTO> UpdateHotel(int id, HotelDTO updatedHotel);
+        Task<HotelDTO> DeleteHotel(int id);
 
     }
 }
