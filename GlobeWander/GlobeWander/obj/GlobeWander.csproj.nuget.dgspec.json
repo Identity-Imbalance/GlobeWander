@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\tsnee\\OneDrive\\Desktop\\NewProject\\GlobeWander\\GlobeWander\\GlobeWander.csproj": {}
+    "E:\\Labs\\Identity-Imbalance\\GlobeWander\\GlobeWander\\GlobeWander\\GlobeWander.csproj": {}
   },
   "projects": {
-    "C:\\Users\\tsnee\\OneDrive\\Desktop\\NewProject\\GlobeWander\\GlobeWander\\GlobeWander.csproj": {
+    "E:\\Labs\\Identity-Imbalance\\GlobeWander\\GlobeWander\\GlobeWander\\GlobeWander.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\tsnee\\OneDrive\\Desktop\\NewProject\\GlobeWander\\GlobeWander\\GlobeWander.csproj",
+        "projectUniqueName": "E:\\Labs\\Identity-Imbalance\\GlobeWander\\GlobeWander\\GlobeWander\\GlobeWander.csproj",
         "projectName": "GlobeWander",
-        "projectPath": "C:\\Users\\tsnee\\OneDrive\\Desktop\\NewProject\\GlobeWander\\GlobeWander\\GlobeWander.csproj",
-        "packagesPath": "C:\\Users\\tsnee\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\tsnee\\OneDrive\\Desktop\\NewProject\\GlobeWander\\GlobeWander\\obj\\",
+        "projectPath": "E:\\Labs\\Identity-Imbalance\\GlobeWander\\GlobeWander\\GlobeWander\\GlobeWander.csproj",
+        "packagesPath": "C:\\Users\\yaman\\.nuget\\packages\\",
+        "outputPath": "E:\\Labs\\Identity-Imbalance\\GlobeWander\\GlobeWander\\GlobeWander\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\tsnee\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\yaman\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,7 +22,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\sdk\\7.0.304\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -132,7 +131,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }
