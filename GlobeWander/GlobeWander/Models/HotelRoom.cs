@@ -20,6 +20,6 @@ namespace GlobeWander.Models
         [ForeignKey("RoomID")]
         public Room? Rooms { get; set; }
 
-        public BookingRoom BookingRoom { get; set; }
+        public BookingRoom? BookingRoom { get; set; }
     }
 }
