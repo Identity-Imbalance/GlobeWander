@@ -28,15 +28,18 @@ namespace GlobeWander.Models.Services
             return addroom;
         }
 
-        public async Task<Room> DeleteRoom(int roomId)
+        public async Task<RoomDTO> DeleteRoom(int roomId)
         {
-            Room? room = await _context.Rooms.FindAsync(roomId);
+            RoomDTO room1 = await GetRoomId(roomId);
+            Room room = await _context.Rooms.FindAsync(roomId);
 
             _context.Entry<Room>(room).State = EntityState.Deleted;
 
             await _context.SaveChangesAsync();
 
-            return room;
+            return room1;
+
+            
         }
 
         public async Task<RoomDTO> GetRoomId(int roomId)
@@ -69,15 +72,24 @@ namespace GlobeWander.Models.Services
 
         }
 
-        public async Task<Room> UpdateRoom(int roomId, Room room)
+        public async Task<RoomDTO> UpdateRoom(int roomId, RoomDTO room)
         {
-            var Temproom = await GetRoomId(roomId);
-            Temproom.Name = room.Name;
-            Temproom.Layout = room.Layout;
+            var room1 = await _context.Rooms.FindAsync(roomId);
+            if (room1 == null)
+            {
+                room1.Name = room.Name;
+                room1.Layout = room.Layout;
 
-            _context.Entry(room).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-            return room;
+
+                _context.Entry(room1).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+            }
+            room1.ID=roomId;
+            var updateroom = await GetRoomId(room.ID);
+            return updateroom;
+           
+            
+
         }
     }
 }

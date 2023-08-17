@@ -56,19 +56,13 @@ namespace GlobeWander.Controllers
         // PUT: api/Rooms/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutRoom(int id, Room room)
+        public async Task<IActionResult> PutRoom(int id, RoomDTO room)
         {
-            if (id != room.ID)
-            {
-                return BadRequest();
-            }
-
+           var updateRoom = await _context.UpdateRoom(id, room);    
+          
             await _context.UpdateRoom(id, room);
+            return Ok(updateRoom);
 
-
-
-
-            return NoContent();
         }
 
         // POST: api/Rooms

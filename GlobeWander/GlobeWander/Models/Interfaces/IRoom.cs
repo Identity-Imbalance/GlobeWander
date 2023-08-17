@@ -7,7 +7,7 @@ namespace GlobeWander.Models.Interfaces
         Task<RoomDTO> CreateRoom(newRoomDTo room);
         Task<List<RoomDTO>> GetRooms();
         Task<RoomDTO> GetRoomId(int roomId);
-        Task<Room> UpdateRoom(int roomId, Room room);
-        Task<Room> DeleteRoom(int roomId);
+        Task<RoomDTO> UpdateRoom(int roomId, RoomDTO room);
+        Task<RoomDTO> DeleteRoom(int roomId);
     }
 }
