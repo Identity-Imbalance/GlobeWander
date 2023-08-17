@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using GlobeWander.Data;
 using GlobeWander.Models;
 using GlobeWander.Models.Interfaces;
+using GlobeWander.Models.DTO;
 
 namespace GlobeWander.Controllers
 {
@@ -24,21 +25,21 @@ namespace GlobeWander.Controllers
 
         // GET: api/Hotels
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Hotel>>> Get()
+        public async Task<ActionResult<IEnumerable<HotelDTO>>> Get()
         {
             return await _hotel.GetAllHotels();
         }
 
         // GET: api/Hotels/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Hotel>> GetHotel(int id)
+        public async Task<ActionResult<HotelDTO>> GetHotel(int id)
         {
             return await _hotel.GetHotelId(id);
         }
 
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Hotel>> PostHotel(Hotel hotel)
+        public async Task<ActionResult<HotelDTO>> PostHotel(HotelDTO hotel)
         {
             return await _hotel.CreateHotel(hotel);
         }
@@ -47,7 +48,7 @@ namespace GlobeWander.Controllers
         // PUT: api/Hotels/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutHotel(int id, Hotel hotel)
+        public async Task<IActionResult> PutHotel(int id, HotelDTO hotel)
         {
             if (id != hotel.Id)
             {

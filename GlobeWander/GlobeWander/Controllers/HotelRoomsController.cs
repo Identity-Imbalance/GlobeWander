@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using GlobeWander.Data;
 using GlobeWander.Models;
 using GlobeWander.Models.Interfaces;
+using GlobeWander.Models.DTO;
 
 namespace GlobeWander.Controllers
 {
@@ -27,23 +28,23 @@ namespace GlobeWander.Controllers
         // GET: api/HotelRooms
         [HttpGet]
 
-        public async Task<ActionResult<IEnumerable<HotelRoom>>> GetHotelRooms()
+        public async Task<ActionResult<IEnumerable<HotelRoomDTO>>> GetHotelRooms()
         {
             return await _hotelRoom.GetHotelRooms();
         }
 
         // GET: api/HotelRooms/5
-        [HttpGet("Hotels/{hotelId}/Rooms/{roomNumber}")]
-        public async Task<ActionResult<HotelRoom>> GetHotelRoom(int roomNumber)
+        [HttpGet("Hotels/{hotelID}/Rooms/{roomNumber}")]
+        public async Task<ActionResult<HotelRoomDTO>> GetHotelRoom(int hotelID, int roomNumber)
         {
-            return await _hotelRoom.GetHotelRoomId(roomNumber);
+            return await _hotelRoom.GetHotelRoomId(hotelID, roomNumber);
 
         }
 
         // POST: api/HotelRooms
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<HotelRoom>> PostHotelRoom(HotelRoom hotelRoom)
+        public async Task<ActionResult<hotelroomDTOcreate>> PostHotelRoom(hotelroomDTOcreate hotelRoom)
         {
             return await _hotelRoom.CreateHotelRoom(hotelRoom);
 
@@ -52,19 +53,20 @@ namespace GlobeWander.Controllers
 
         // PUT: api/HotelRooms/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("Hotel/{hotelId}/Room/{idRoom}")]
-        public async Task<IActionResult> PutHotelRoom(int roomNumber, HotelRoom hotelRoom)
+        [HttpPut("Hotel/{hotelId}/Room/{roomNumber}")]
+        public async Task<IActionResult> PutHotelRoom(int hotelId,int roomNumber, hotelroomDTOcreate hotelRoom)
         {
-            return Ok(await _hotelRoom.UpdateHotelRoom(roomNumber, hotelRoom));
+            var ret = await _hotelRoom.UpdateHotelRoom(hotelId, roomNumber, hotelRoom);
+            return Ok(ret);
         }
 
         // DELETE: api/HotelRooms/5
-        [HttpDelete("Hotel/{hotelId}/Room/{idRoom}")]
-        public async Task<HotelRoom> DeleteHotelRoom(int roomNumber)
+        [HttpDelete("Hotels/{hotelID}/Rooms/{roomNumber}")]
+        public async Task<HotelRoomDTO> DeleteHotelRoom(int hotelID,int roomNumber)
         {
             // return Ok(await _hoteRoom.Delete(hotelId, idRoom));
 
-            return await _hotelRoom.DeleteHotelRoom(roomNumber);
+            return await _hotelRoom.DeleteHotelRoom(hotelID, roomNumber);
         }
 
     }
