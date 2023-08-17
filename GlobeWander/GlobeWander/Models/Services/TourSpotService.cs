@@ -152,10 +152,10 @@ namespace GlobeWander.Models.Services
 
             if (tourSpotRecord != null)
             {
-                tourSpotRecord.ID = id;
-                tourSpotRecord.Name = tourSpot.Name;
-                tourSpotRecord.Country = tourSpot.Country;
-                tourSpotRecord.City = tourSpot.City;
+                    tourSpotRecord.ID = id;
+                    tourSpotRecord.Name = tourSpot.Name;
+                    tourSpotRecord.Country = tourSpot.Country;
+                    tourSpotRecord.City = tourSpot.City;
                     tourSpotRecord.Description = tourSpot.Description;
                     tourSpotRecord.Categoary = tourSpot.Categoary;
                     tourSpotRecord.PhoneNumber = tourSpot.PhoneNumber;
@@ -166,6 +166,7 @@ namespace GlobeWander.Models.Services
 
                
             }
+            tourSpot.ID = id;
             var updateTour = await GetSpotById(tourSpot.ID);
             return updateTour;
 
