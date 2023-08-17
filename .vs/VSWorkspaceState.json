@@ -3,11 +3,8 @@
     "",
     "\\GlobeWander",
     "\\GlobeWander\\GlobeWander",
-    "\\GlobeWander\\GlobeWander\\Controllers",
-    "\\GlobeWander\\GlobeWander\\Models",
-    "\\GlobeWander\\GlobeWander\\Models\\Interfaces",
-    "\\GlobeWander\\GlobeWander\\Models\\Services"
+    "\\GlobeWander\\GlobeWander\\Controllers"
   ],
-  "SelectedNode": "\\GlobeWander\\GlobeWander\\Models\\Services\\BookingRoomService.cs",
+  "SelectedNode": "\\GlobeWander\\GlobeWander\\Controllers\\BookingTripsController.cs",
   "PreviewInSolutionExplorer": false
 }

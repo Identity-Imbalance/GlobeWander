@@ -1,4 +1,5 @@
 ﻿using GlobeWander.Data;
+using GlobeWander.Models.DTO;
 using GlobeWander.Models.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,51 +15,92 @@ namespace GlobeWander.Models.Services
             _context = context;
         }
 
-        public async Task<BookingTrip> Create(BookingTrip bookingTrip)
+        public async Task<BookingTripDTO> Create(BookingTripDTO bookingTrip)
         {
-            _context.Entry(bookingTrip).State = EntityState.Added;
+            var newBookingTrip = new BookingTrip()
+            {
+                ID = bookingTrip.ID,
+                TripID = bookingTrip.TripID,
+                NumberOfPersons = bookingTrip.NumberOfPersons,
+                CostPerPerson = bookingTrip.CostPerPerson,
+                Duration = bookingTrip.Duration
+            };
+            _context.Entry<BookingTrip>(newBookingTrip).State = EntityState.Added;
             await _context.SaveChangesAsync();
+            var BookingTripDTO = await GetBookingTripById(newBookingTrip.ID, newBookingTrip.TripID);
+            bookingTrip.ID = newBookingTrip.ID;
+
+            return BookingTripDTO;
+        }
+
+        public async Task<BookingTripDTO> GetBookingTripById(int id, int tripId)
+        {
+            BookingTripDTO? bookingTrip = await _context.bookingTrips
+              
+                .Where(x => x.ID == id && x.TripID == tripId)
+                .Select(bookingTrip => new BookingTripDTO
+              {
+                  ID = bookingTrip.ID,
+                  TripID = bookingTrip.TripID,
+                  NumberOfPersons = bookingTrip.NumberOfPersons,
+                  CostPerPerson = bookingTrip.CostPerPerson,
+                  Duration = bookingTrip.Duration
+
+              }).FirstOrDefaultAsync();
+
             return bookingTrip;
         }
 
-        public async Task<BookingTrip> GetBookingTripById(int id)
+        public async Task<List<BookingTripDTO>> GetAllBookingTrips()
         {
-            BookingTrip BookingTrip = await _context.bookingTrips.FindAsync(id);
+            return await _context.bookingTrips
+              .Select(bookTrip => new BookingTripDTO
+              {
+                  ID = bookTrip.ID,
+                  TripID = bookTrip.TripID,
+                  NumberOfPersons = bookTrip.NumberOfPersons,
+                  CostPerPerson = bookTrip.CostPerPerson,
+                  Duration = bookTrip.Duration,
 
-            return BookingTrip;
+              }).ToListAsync();
         }
 
-        public async Task<List<BookingTrip>> GetAllBookingTrips()
+
+        public async Task<BookingTripDTO> UpdateBookingTrip(int id, BookingTripDTO updateBookingTrip, int tripId)
         {
-            var BookingTrips = await _context.bookingTrips.ToListAsync();
+            var newbookingTrip = await _context.bookingTrips.FindAsync(id, tripId);
 
-            return BookingTrips;
-        } 
-   
+            if (newbookingTrip != null)
+            {
+                newbookingTrip.ID = updateBookingTrip.ID;
+                newbookingTrip.TripID = updateBookingTrip.TripID;
+                newbookingTrip.NumberOfPersons = updateBookingTrip.NumberOfPersons;
+                newbookingTrip.CostPerPerson = updateBookingTrip.CostPerPerson;
+                newbookingTrip.Duration = updateBookingTrip.Duration;
 
-        public async Task<BookingTrip> UpdateBookingTrip(int id, BookingTrip updateBookingTrip)
-        {
-            BookingTrip bookingTrip = await GetBookingTripById(id);
-            bookingTrip.NumberOfPersons = updateBookingTrip.NumberOfPersons;
-            bookingTrip.CostPerPerson = updateBookingTrip.CostPerPerson;
-            bookingTrip.Duration = updateBookingTrip.Duration;
+            
 
+            _context.Entry(newbookingTrip).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+                
+            }
+            var returnBookingTrip = await GetBookingTripById(newbookingTrip.ID, newbookingTrip.TripID);
 
-            _context.Entry(bookingTrip).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-
-
-            return bookingTrip;
+            return returnBookingTrip;
         }
+    
+            public async Task Delete(int id, int tripId)
+            {
+            var DeleteBookingTrip = await _context.bookingTrips.FindAsync(id, tripId);
 
-        public async Task<BookingTrip> Delete(int id)
-        {
-            BookingTrip bookingTrip = await GetBookingTripById(id);
-            _context.Entry(bookingTrip).State = EntityState.Deleted;
-            await _context.SaveChangesAsync();
+            if(DeleteBookingTrip != null)
+            {
+                _context.Entry<BookingTrip>(DeleteBookingTrip).State = EntityState.Deleted;
 
+                await _context.SaveChangesAsync();
+            }
+            
 
-            return bookingTrip;
         }
     }
 }
