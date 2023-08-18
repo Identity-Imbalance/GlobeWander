@@ -1,6 +1,8 @@
 using GlobeWander.Data;
+using GlobeWander.Models;
 using GlobeWander.Models.Interfaces;
 using GlobeWander.Models.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace GlobeWander
@@ -26,6 +28,13 @@ namespace GlobeWander
                 options => options.UseSqlServer(stringConnection
                 ));
 
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(option =>
+            {
+                option.User.RequireUniqueEmail = true;
+               
+            }).AddEntityFrameworkStores<GlobeWanderDbContext>();
+
+            builder.Services.AddTransient<IUser, IdentityUserService>();
             builder.Services.AddTransient<ITourSpot, TourSpotService>();
             builder.Services.AddTransient<ITrip, TripService>();
             builder.Services.AddTransient<IHotel, HotelService>();
