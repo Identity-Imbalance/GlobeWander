@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GlobeWander.Migrations
 {
     [DbContext(typeof(GlobeWanderDbContext))]
-    [Migration("20230816082315_database")]
-    partial class database
+    [Migration("20230817105137_newDataBaseSetup")]
+    partial class newDataBaseSetup
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -47,6 +47,9 @@ namespace GlobeWander.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("HotelID", "RoomNumber")
+                        .IsUnique();
 
                     b.ToTable("BookingRooms");
                 });
@@ -239,14 +242,25 @@ namespace GlobeWander.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TourSpotsID")
+                    b.Property<int>("TourSpotID")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TourSpotsID");
+                    b.HasIndex("TourSpotID");
 
                     b.ToTable("Trips");
+                });
+
+            modelBuilder.Entity("GlobeWander.Models.BookingRoom", b =>
+                {
+                    b.HasOne("GlobeWander.Models.HotelRoom", "HotelRooms")
+                        .WithOne("BookingRoom")
+                        .HasForeignKey("GlobeWander.Models.BookingRoom", "HotelID", "RoomNumber")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("HotelRooms");
                 });
 
             modelBuilder.Entity("GlobeWander.Models.BookingTrip", b =>
@@ -285,15 +299,6 @@ namespace GlobeWander.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("GlobeWander.Models.BookingRoom", "BookingRoom")
-                        .WithOne("HotelRooms")
-                        .HasForeignKey("GlobeWander.Models.HotelRoom", "HotelID", "RoomNumber")
-                        .HasPrincipalKey("GlobeWander.Models.BookingRoom", "HotelID", "RoomNumber")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("BookingRoom");
-
                     b.Navigation("Hotel");
 
                     b.Navigation("Rooms");
@@ -314,19 +319,21 @@ namespace GlobeWander.Migrations
                 {
                     b.HasOne("GlobeWander.Models.TourSpot", "TourSpots")
                         .WithMany("Trips")
-                        .HasForeignKey("TourSpotsID");
+                        .HasForeignKey("TourSpotID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("TourSpots");
-                });
-
-            modelBuilder.Entity("GlobeWander.Models.BookingRoom", b =>
-                {
-                    b.Navigation("HotelRooms");
                 });
 
             modelBuilder.Entity("GlobeWander.Models.Hotel", b =>
                 {
                     b.Navigation("HotelRoom");
+                });
+
+            modelBuilder.Entity("GlobeWander.Models.HotelRoom", b =>
+                {
+                    b.Navigation("BookingRoom");
                 });
 
             modelBuilder.Entity("GlobeWander.Models.Room", b =>

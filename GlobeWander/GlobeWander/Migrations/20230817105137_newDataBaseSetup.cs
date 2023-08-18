@@ -6,28 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace GlobeWander.Migrations
 {
     /// <inheritdoc />
-    public partial class DatabaseSetup : Migration
+    public partial class newDataBaseSetup : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "BookingRooms",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    HotelID = table.Column<int>(type: "int", nullable: false),
-                    RoomNumber = table.Column<int>(type: "int", nullable: false),
-                    Cost = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Duration = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BookingRooms", x => x.ID);
-                    table.UniqueConstraint("AK_BookingRooms_HotelID_RoomNumber", x => new { x.HotelID, x.RoomNumber });
-                });
-
             migrationBuilder.CreateTable(
                 name: "Rooms",
                 columns: table => new
@@ -94,16 +77,17 @@ namespace GlobeWander.Migrations
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Theme = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TourSpotsID = table.Column<int>(type: "int", nullable: true)
+                    TourSpotID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Trips", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Trips_TourSpots_TourSpotsID",
-                        column: x => x.TourSpotsID,
+                        name: "FK_Trips_TourSpots_TourSpotID",
+                        column: x => x.TourSpotID,
                         principalTable: "TourSpots",
-                        principalColumn: "ID");
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -119,12 +103,6 @@ namespace GlobeWander.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_HotelRooms", x => new { x.HotelID, x.RoomNumber });
-                    table.ForeignKey(
-                        name: "FK_HotelRooms_BookingRooms_HotelID_RoomNumber",
-                        columns: x => new { x.HotelID, x.RoomNumber },
-                        principalTable: "BookingRooms",
-                        principalColumns: new[] { "HotelID", "RoomNumber" },
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_HotelRooms_Hotels_HotelID",
                         column: x => x.HotelID,
@@ -180,6 +158,33 @@ namespace GlobeWander.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "BookingRooms",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    HotelID = table.Column<int>(type: "int", nullable: false),
+                    RoomNumber = table.Column<int>(type: "int", nullable: false),
+                    Cost = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Duration = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BookingRooms", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_BookingRooms_HotelRooms_HotelID_RoomNumber",
+                        columns: x => new { x.HotelID, x.RoomNumber },
+                        principalTable: "HotelRooms",
+                        principalColumns: new[] { "HotelID", "RoomNumber" });
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BookingRooms_HotelID_RoomNumber",
+                table: "BookingRooms",
+                columns: new[] { "HotelID", "RoomNumber" },
+                unique: true);
+
             migrationBuilder.CreateIndex(
                 name: "IX_bookingTrips_TripID",
                 table: "bookingTrips",
@@ -201,34 +206,34 @@ namespace GlobeWander.Migrations
                 column: "TripID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Trips_TourSpotsID",
+                name: "IX_Trips_TourSpotID",
                 table: "Trips",
-                column: "TourSpotsID");
+                column: "TourSpotID");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "bookingTrips");
+                name: "BookingRooms");
 
             migrationBuilder.DropTable(
-                name: "HotelRooms");
+                name: "bookingTrips");
 
             migrationBuilder.DropTable(
                 name: "Rates");
 
             migrationBuilder.DropTable(
-                name: "BookingRooms");
+                name: "HotelRooms");
+
+            migrationBuilder.DropTable(
+                name: "Trips");
 
             migrationBuilder.DropTable(
                 name: "Hotels");
 
             migrationBuilder.DropTable(
                 name: "Rooms");
-
-            migrationBuilder.DropTable(
-                name: "Trips");
 
             migrationBuilder.DropTable(
                 name: "TourSpots");

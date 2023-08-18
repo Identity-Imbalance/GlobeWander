@@ -24,7 +24,10 @@ namespace GlobeWander.Models.Services
                 Description = trip.Description,
                 StartDate = trip.StartDate,
                 EndDate = trip.EndDate,
-                Theme = trip.Theme
+                Theme = trip.Theme,
+                TourSpotID = trip.TourSpotID
+                
+                
             };
             _context.Entry(newTrip).State = EntityState.Added;
 
@@ -63,6 +66,7 @@ namespace GlobeWander.Models.Services
                     StartDate = tr.StartDate,
                     EndDate = tr.EndDate,
                     Theme = tr.Theme,
+                    TourSpotID = tr.TourSpotID,
                     BookingTrips = tr.BookingTrips.Select(bt => new BookingTripDTO
                     {
                         ID = bt.ID,
@@ -96,6 +100,7 @@ namespace GlobeWander.Models.Services
                     StartDate = tr.StartDate,
                     EndDate = tr.EndDate,
                     Theme = tr.Theme,
+                    TourSpotID = tr.TourSpotID,
                     BookingTrips = tr.BookingTrips.Select(bt => new BookingTripDTO
                     {
                         ID = bt.ID,
