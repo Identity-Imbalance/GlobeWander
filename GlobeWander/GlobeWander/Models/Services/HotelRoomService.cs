@@ -22,7 +22,8 @@ namespace GlobeWander.Models.Services
         public async Task<hotelroomDTOcreate> CreateHotelRoom(hotelroomDTOcreate hotelRoomdto)
         {
             HotelRoom hotelRooms = new HotelRoom()
-            {RoomNumber= hotelRoomdto.HotelID*100 + hotelRoomdto.RoomID,
+            {
+                RoomNumber= hotelRoomdto.HotelID*100 + hotelRoomdto.RoomID,
                 HotelID= hotelRoomdto.HotelID,
                 RoomID= hotelRoomdto.RoomID,
                 Price= hotelRoomdto.Price,
