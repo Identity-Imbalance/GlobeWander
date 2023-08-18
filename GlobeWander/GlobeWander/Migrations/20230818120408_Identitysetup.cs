@@ -6,11 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace GlobeWander.Migrations
 {
     /// <inheritdoc />
-<<<<<<<< HEAD:GlobeWander/GlobeWander/Migrations/20230817130425_identity.cs
-    public partial class identity : Migration
-========
-    public partial class newDataBaseSetup : Migration
->>>>>>>> origin/sub-main:GlobeWander/GlobeWander/Migrations/20230817105137_newDataBaseSetup.cs
+    public partial class Identitysetup : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

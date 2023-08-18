@@ -12,13 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GlobeWander.Migrations
 {
     [DbContext(typeof(GlobeWanderDbContext))]
-<<<<<<<< HEAD:GlobeWander/GlobeWander/Migrations/20230817130425_identity.Designer.cs
-    [Migration("20230817130425_identity")]
-    partial class identity
-========
-    [Migration("20230817105137_newDataBaseSetup")]
-    partial class newDataBaseSetup
->>>>>>>> origin/sub-main:GlobeWander/GlobeWander/Migrations/20230817105137_newDataBaseSetup.Designer.cs
+    [Migration("20230818120408_Identitysetup")]
+    partial class Identitysetup
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
