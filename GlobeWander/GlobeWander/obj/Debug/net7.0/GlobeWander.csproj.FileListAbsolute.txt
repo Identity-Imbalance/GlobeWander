@@ -898,11 +898,3 @@ C:\Users\SOKKER\Source\Repos\Identity-Imbalance\GlobeWander\GlobeWander\GlobeWan
 C:\Users\SOKKER\Source\Repos\Identity-Imbalance\GlobeWander\GlobeWander\GlobeWander\obj\Debug\net7.0\GlobeWander.csproj.CopyComplete
 C:\Users\SOKKER\Source\Repos\Identity-Imbalance\GlobeWander\GlobeWander\GlobeWander\obj\Debug\net7.0\GlobeWander.genruntimeconfig.cache
 C:\Users\SOKKER\Source\Repos\Identity-Imbalance\GlobeWander\GlobeWander\GlobeWander\obj\Debug\net7.0\ref\GlobeWander.dll
-F:\.net\GlobeWander\GlobeWander\GlobeWander\bin\Debug\net7.0\EntityFramework.SqlServer.dll
-F:\.net\GlobeWander\GlobeWander\GlobeWander\bin\Debug\net7.0\EntityFramework.dll
-F:\.net\GlobeWander\GlobeWander\GlobeWander\bin\Debug\net7.0\System.Data.SqlClient.dll
-F:\.net\GlobeWander\GlobeWander\GlobeWander\bin\Debug\net7.0\runtimes\win-arm64\native\sni.dll
-F:\.net\GlobeWander\GlobeWander\GlobeWander\bin\Debug\net7.0\runtimes\win-x64\native\sni.dll
-F:\.net\GlobeWander\GlobeWander\GlobeWander\bin\Debug\net7.0\runtimes\win-x86\native\sni.dll
-F:\.net\GlobeWander\GlobeWander\GlobeWander\bin\Debug\net7.0\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
-F:\.net\GlobeWander\GlobeWander\GlobeWander\bin\Debug\net7.0\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll

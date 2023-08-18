@@ -17,5 +17,7 @@
         public DateTime EndDate { get; set; }
 
         public string Theme { get; set; }
+
+        public int TourSpotID { get; set; }
     }
 }
