@@ -304,12 +304,12 @@ namespace GlobeWander.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TourSpotsID")
+                    b.Property<int>("TourSpotID")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TourSpotsID");
+                    b.HasIndex("TourSpotID");
 
                     b.ToTable("Trips");
                 });
@@ -514,7 +514,9 @@ namespace GlobeWander.Migrations
                 {
                     b.HasOne("GlobeWander.Models.TourSpot", "TourSpots")
                         .WithMany("Trips")
-                        .HasForeignKey("TourSpotsID");
+                        .HasForeignKey("TourSpotID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("TourSpots");
                 });

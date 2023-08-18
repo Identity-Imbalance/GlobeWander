@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GlobeWander.Migrations
 {
     [DbContext(typeof(GlobeWanderDbContext))]
-    [Migration("20230817130425_identity")]
-    partial class identity
+    [Migration("20230818120408_Identitysetup")]
+    partial class Identitysetup
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -307,12 +307,12 @@ namespace GlobeWander.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TourSpotsID")
+                    b.Property<int>("TourSpotID")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TourSpotsID");
+                    b.HasIndex("TourSpotID");
 
                     b.ToTable("Trips");
                 });
@@ -517,7 +517,9 @@ namespace GlobeWander.Migrations
                 {
                     b.HasOne("GlobeWander.Models.TourSpot", "TourSpots")
                         .WithMany("Trips")
-                        .HasForeignKey("TourSpotsID");
+                        .HasForeignKey("TourSpotID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("TourSpots");
                 });
