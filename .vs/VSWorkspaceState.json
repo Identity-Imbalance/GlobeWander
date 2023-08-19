@@ -1,7 +1,12 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\GlobeWander",
+    "\\GlobeWander\\GlobeWander",
+    "\\GlobeWander\\GlobeWander\\Migrations",
+    "\\GlobeWander\\GlobeWander\\Models",
+    "\\GlobeWander\\GlobeWander\\Models\\Services"
   ],
-  "SelectedNode": "\\GlobeWander.sln",
+  "SelectedNode": "\\GlobeWander\\GlobeWander\\Models\\Services\\BookingRoomService.cs",
   "PreviewInSolutionExplorer": false
 }
