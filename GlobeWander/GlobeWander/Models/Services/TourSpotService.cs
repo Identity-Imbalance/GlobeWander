@@ -86,6 +86,35 @@ namespace GlobeWander.Models.Services
                             }
                         }).ToList(),
                     }).ToList(),
+                    Trips = tours.Trips
+                    .Where(x=> x.TourSpotID == tours.ID)
+                    .Select(trips => new TripDTO
+                    {
+                        Id = trips.Id,
+                        Name = trips.Name,
+                        Description = trips.Description,
+                        Cost = trips.Cost,
+                        Activity = trips.Activity,
+                        StartDate = trips.StartDate,
+                        EndDate = trips.EndDate,
+                        Theme = trips.Theme,
+                        TourSpotID = trips.TourSpotID,
+                        BookingTrips = trips.BookingTrips.Select(bt => new BookingTripDTO
+                        {
+                            ID = bt.ID,
+                            TripID = bt.TripID,
+                            NumberOfPersons = bt.NumberOfPersons,
+                            CostPerPerson = bt.CostPerPerson,
+                            Duration = bt.Duration
+                        }).ToList(),
+                        Rates = trips.Rates.Select(r => new RateDTO
+                        {
+                            ID = r.ID,
+                            TripID = r.TripID,
+                            Comments = r.Comments,
+                            Rating = r.Rating
+                        }).ToList()
+                    }).ToList()
 
                 }
                 ).ToListAsync();
@@ -152,10 +181,10 @@ namespace GlobeWander.Models.Services
 
             if (tourSpotRecord != null)
             {
-                tourSpotRecord.ID = id;
-                tourSpotRecord.Name = tourSpot.Name;
-                tourSpotRecord.Country = tourSpot.Country;
-                tourSpotRecord.City = tourSpot.City;
+                    tourSpotRecord.ID = id;
+                    tourSpotRecord.Name = tourSpot.Name;
+                    tourSpotRecord.Country = tourSpot.Country;
+                    tourSpotRecord.City = tourSpot.City;
                     tourSpotRecord.Description = tourSpot.Description;
                     tourSpotRecord.Categoary = tourSpot.Categoary;
                     tourSpotRecord.PhoneNumber = tourSpot.PhoneNumber;
@@ -166,6 +195,7 @@ namespace GlobeWander.Models.Services
 
                
             }
+            tourSpot.ID = id;
             var updateTour = await GetSpotById(tourSpot.ID);
             return updateTour;
 

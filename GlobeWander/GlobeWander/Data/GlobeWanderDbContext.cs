@@ -1,9 +1,10 @@
 ﻿using GlobeWander.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace GlobeWander.Data
 {
-    public class GlobeWanderDbContext : DbContext
+    public class GlobeWanderDbContext : IdentityDbContext<ApplicationUser>
     {
         public GlobeWanderDbContext(DbContextOptions option) : base(option)
         {
@@ -12,7 +13,7 @@ namespace GlobeWander.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //base.OnModelCreating(modelBuilder);
+          base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<HotelRoom>().HasKey(
                 hotelRooms => new {

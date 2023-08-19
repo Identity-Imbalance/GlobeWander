@@ -1,11 +1,7 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\GlobeWander",
-    "\\GlobeWander\\GlobeWander",
-    "\\GlobeWander\\GlobeWander\\Models\\Interfaces",
-    "\\GlobeWander\\GlobeWander\\Models\\Services"
+    ""
   ],
-  "SelectedNode": "\\GlobeWander\\GlobeWander.sln",
+  "SelectedNode": "\\GlobeWander.sln",
   "PreviewInSolutionExplorer": false
 }
