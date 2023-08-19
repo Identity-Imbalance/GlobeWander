@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GlobeWander.Migrations
 {
     [DbContext(typeof(GlobeWanderDbContext))]
-    [Migration("20230819181632_newUpdate")]
-    partial class newUpdate
+    [Migration("20230819222829_dd")]
+    partial class dd
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -112,6 +112,10 @@ namespace GlobeWander.Migrations
 
                     b.Property<decimal>("TotalPrice")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 
@@ -404,9 +408,9 @@ namespace GlobeWander.Migrations
                             Activity = "walking",
                             Cost = 20.0,
                             Description = "trip start at 8 am and going from Amman to Petra",
-                            EndDate = new DateTime(2023, 8, 19, 18, 16, 32, 153, DateTimeKind.Utc).AddTicks(3006),
+                            EndDate = new DateTime(2023, 8, 19, 22, 28, 29, 128, DateTimeKind.Utc).AddTicks(8046),
                             Name = "Petra ride",
-                            StartDate = new DateTime(2023, 8, 19, 21, 16, 32, 153, DateTimeKind.Local).AddTicks(2994),
+                            StartDate = new DateTime(2023, 8, 20, 1, 28, 29, 128, DateTimeKind.Local).AddTicks(8005),
                             Theme = "Discovering",
                             TourSpotID = 1
                         },
@@ -416,9 +420,9 @@ namespace GlobeWander.Migrations
                             Activity = "visiting",
                             Cost = 30.0,
                             Description = "Amman to Jerash with a trip manager who can speak many languages",
-                            EndDate = new DateTime(2023, 8, 19, 18, 16, 32, 153, DateTimeKind.Utc).AddTicks(3010),
+                            EndDate = new DateTime(2023, 8, 19, 22, 28, 29, 128, DateTimeKind.Utc).AddTicks(8050),
                             Name = "Jerash ride",
-                            StartDate = new DateTime(2023, 8, 19, 21, 16, 32, 153, DateTimeKind.Local).AddTicks(3009),
+                            StartDate = new DateTime(2023, 8, 20, 1, 28, 29, 128, DateTimeKind.Local).AddTicks(8049),
                             Theme = "Discovering",
                             TourSpotID = 2
                         },
@@ -428,9 +432,9 @@ namespace GlobeWander.Migrations
                             Activity = "climbing",
                             Cost = 40.0,
                             Description = "Amman to Irbid with a trip manager who can speak many languages",
-                            EndDate = new DateTime(2023, 8, 19, 18, 16, 32, 153, DateTimeKind.Utc).AddTicks(3012),
+                            EndDate = new DateTime(2023, 8, 19, 22, 28, 29, 128, DateTimeKind.Utc).AddTicks(8054),
                             Name = "Um-Qais ride",
-                            StartDate = new DateTime(2023, 8, 19, 21, 16, 32, 153, DateTimeKind.Local).AddTicks(3011),
+                            StartDate = new DateTime(2023, 8, 20, 1, 28, 29, 128, DateTimeKind.Local).AddTicks(8052),
                             Theme = "Discovering",
                             TourSpotID = 3
                         });

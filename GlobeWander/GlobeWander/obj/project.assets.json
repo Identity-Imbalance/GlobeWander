@@ -12795,19 +12795,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\abboo\\.nuget\\packages\\": {}
+    "C:\\Users\\SOKKER\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\.net\\GlobeWander\\GlobeWander\\GlobeWander\\GlobeWander.csproj",
+      "projectUniqueName": "C:\\Users\\SOKKER\\Source\\Repos\\Identity-Imbalance\\GlobeWander\\GlobeWander\\GlobeWander\\GlobeWander.csproj",
       "projectName": "GlobeWander",
-      "projectPath": "F:\\.net\\GlobeWander\\GlobeWander\\GlobeWander\\GlobeWander.csproj",
-      "packagesPath": "C:\\Users\\abboo\\.nuget\\packages\\",
-      "outputPath": "F:\\.net\\GlobeWander\\GlobeWander\\GlobeWander\\obj\\",
+      "projectPath": "C:\\Users\\SOKKER\\Source\\Repos\\Identity-Imbalance\\GlobeWander\\GlobeWander\\GlobeWander\\GlobeWander.csproj",
+      "packagesPath": "C:\\Users\\SOKKER\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\SOKKER\\Source\\Repos\\Identity-Imbalance\\GlobeWander\\GlobeWander\\GlobeWander\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\abboo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\SOKKER\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -12926,7 +12926,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files (x86)\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
       }
     }
   }
