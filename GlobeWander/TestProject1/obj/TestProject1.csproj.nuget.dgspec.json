@@ -1,7 +1,7 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Bashar\\Source\\Repos\\Identity-Imbalance\\GlobeWander\\GlobeWander\\Test\\Test.csproj": {}
+    "C:\\Users\\Bashar\\Source\\Repos\\Identity-Imbalance\\GlobeWander\\GlobeWander\\TestProject1\\TestProject1.csproj": {}
   },
   "projects": {
     "C:\\Users\\Bashar\\Source\\Repos\\Identity-Imbalance\\GlobeWander\\GlobeWander\\GlobeWander\\GlobeWander.csproj": {
@@ -135,14 +135,14 @@
         }
       }
     },
-    "C:\\Users\\Bashar\\Source\\Repos\\Identity-Imbalance\\GlobeWander\\GlobeWander\\Test\\Test.csproj": {
+    "C:\\Users\\Bashar\\Source\\Repos\\Identity-Imbalance\\GlobeWander\\GlobeWander\\TestProject1\\TestProject1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Bashar\\Source\\Repos\\Identity-Imbalance\\GlobeWander\\GlobeWander\\Test\\Test.csproj",
-        "projectName": "Test",
-        "projectPath": "C:\\Users\\Bashar\\Source\\Repos\\Identity-Imbalance\\GlobeWander\\GlobeWander\\Test\\Test.csproj",
+        "projectUniqueName": "C:\\Users\\Bashar\\Source\\Repos\\Identity-Imbalance\\GlobeWander\\GlobeWander\\TestProject1\\TestProject1.csproj",
+        "projectName": "TestProject1",
+        "projectPath": "C:\\Users\\Bashar\\Source\\Repos\\Identity-Imbalance\\GlobeWander\\GlobeWander\\TestProject1\\TestProject1.csproj",
         "packagesPath": "C:\\Users\\Bashar\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Bashar\\Source\\Repos\\Identity-Imbalance\\GlobeWander\\GlobeWander\\Test\\obj\\",
+        "outputPath": "C:\\Users\\Bashar\\Source\\Repos\\Identity-Imbalance\\GlobeWander\\GlobeWander\\TestProject1\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Bashar\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -190,13 +190,13 @@
             },
             "xunit": {
               "target": "Package",
-              "version": "[2.5.0, )"
+              "version": "[2.4.2, )"
             },
             "xunit.runner.visualstudio": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[2.5.0, )"
+              "version": "[2.4.5, )"
             }
           },
           "imports": [
