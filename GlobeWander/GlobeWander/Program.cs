@@ -5,6 +5,7 @@ using GlobeWander.Models.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 namespace GlobeWander
 {
@@ -19,6 +20,11 @@ namespace GlobeWander
             builder.Services.AddControllers().AddNewtonsoftJson(options =>
        options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
      );
+            builder.Services.AddControllers()
+       .AddJsonOptions(options =>
+       {
+           options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+       });
 
             string? stringConnection = builder.Configuration.GetConnectionString("DefaultConnection");
 

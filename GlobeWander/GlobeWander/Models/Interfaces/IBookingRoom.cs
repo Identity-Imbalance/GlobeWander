@@ -4,13 +4,13 @@ namespace GlobeWander.Models.Interfaces
 {
     public interface IBookingRoom
     {
-        public Task<BookingRoomDTO> CreateBookingRoom(BookingRoomDTO bookingRoom);
+        public Task<BookingRoomDTO> CreateBookingRoom(NewBookingRoomDTO bookingRoom);
 
         public Task<List<BookingRoomDTO>> GetAllBookingRooms();
 
         public Task<BookingRoomDTO> GetBookingRoomById(int Id);
 
-        public Task<BookingRoomDTO> UpdateBookingRoom(int id, BookingRoomDTO bookingRoom);
+        public Task<BookingRoomDTO> UpdateBookingRoom(int id, DurationBookingRoomDTO bookingRoom);
 
         public Task DeleteBookingRoom(int id);
     }
