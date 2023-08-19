@@ -12,7 +12,7 @@ namespace Test
         protected readonly GlobeWanderDbContext _db;
         public Mock()
         {
-            _connection = new SqliteConnection("Filename=:memory:");
+            _connection = new SqliteConnection("Filename=:memory");
             _connection.Open();
             
             _db = new GlobeWanderDbContext(

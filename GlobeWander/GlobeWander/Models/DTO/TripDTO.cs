@@ -22,6 +22,8 @@
 
         public int TourSpotID { get; set; }
 
+        public int TourSpotID { get; set; }
+
         public List<BookingTripDTO>? BookingTrips { get; set; }
 
         public List<RateDTO>? Rates { get; set; }

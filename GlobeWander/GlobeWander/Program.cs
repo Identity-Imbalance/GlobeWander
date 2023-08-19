@@ -5,7 +5,6 @@ using GlobeWander.Models.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
 using System.Text.Json.Serialization;
 
 namespace GlobeWander
@@ -65,13 +64,11 @@ namespace GlobeWander
 
 
             builder.Services.AddAuthorization(options => { 
-                options.AddPolicy("create", policy => policy.RequireClaim("permissions", "create"));
-                options.AddPolicy("update", policy => policy.RequireClaim("permissions", "update"));
-                options.AddPolicy("delete", policy => policy.RequireClaim("permissions", "delete")); 
-                options.AddPolicy("read", policy => policy.RequireClaim("permissions", "read")); });
+                options.AddPolicy("create", policy => policy.RequireClaim("persmissions", "create"));
+                options.AddPolicy("update", policy => policy.RequireClaim("persmissions", "update"));
+                options.AddPolicy("delete", policy => policy.RequireClaim("persmissions", "delete")); 
+                options.AddPolicy("read", policy => policy.RequireClaim("persmissions", "read")); });
 
-
-            builder.Services.AddAuthorization();
 
             builder.Services.AddSwaggerGen(options =>
             {
@@ -80,26 +77,6 @@ namespace GlobeWander
                     Title = "Globe Wander API",
                     Version = "v1",
                 });
-                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-                {
-                    Name = "Authorization",
-                    Type = SecuritySchemeType.Http,
-                    Scheme = "Bearer",
-                    BearerFormat = "JWT",
-                    In = ParameterLocation.Header,
-                    Description = "add the JWT TOKEN"
-                });
-                options.AddSecurityRequirement(new OpenApiSecurityRequirement
-     {{
-         new OpenApiSecurityScheme {
-         Reference=
-         new OpenApiReference{
-             Type=ReferenceType.SecurityScheme,
-             Id= "Bearer"
-     }
-     },
-     new string[]{ } }
-     });
             });
 
 
