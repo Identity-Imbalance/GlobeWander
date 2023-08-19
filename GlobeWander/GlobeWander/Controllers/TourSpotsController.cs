@@ -27,11 +27,8 @@ namespace GlobeWander.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TourSpotDTO>>> GetTourSpots()
         {
-          if (_context == null)
-          {
-              return NotFound();
-          }
-            return await _context.GetAllTourSpots();
+            var tourSpots = await _context.GetAllTourSpots();
+            return Ok(tourSpots);
         }
 
         // GET: api/TourSpots/5
