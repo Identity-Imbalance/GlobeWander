@@ -9,6 +9,7 @@ using GlobeWander.Data;
 using GlobeWander.Models;
 using GlobeWander.Models.Interfaces;
 using GlobeWander.Models.DTO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GlobeWander.Controllers
 {
@@ -27,7 +28,7 @@ namespace GlobeWander.Controllers
 
         // GET: api/HotelRooms
         [HttpGet]
-
+       
         public async Task<ActionResult<IEnumerable<HotelRoomDTO>>> GetHotelRooms()
         {
             return await _hotelRoom.GetHotelRooms();

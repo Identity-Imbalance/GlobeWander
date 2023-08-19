@@ -98,15 +98,21 @@ namespace GlobeWander.Migrations
                     b.Property<decimal>("Cost")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("Duration")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Duration")
+                        .HasColumnType("int");
 
                     b.Property<int>("HotelID")
                         .HasColumnType("int");
 
                     b.Property<int>("RoomNumber")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 
@@ -119,10 +125,10 @@ namespace GlobeWander.Migrations
             modelBuilder.Entity("GlobeWander.Models.BookingTrip", b =>
                 {
                     b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("TripID")
-                        .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<decimal>("CostPerPerson")
                         .HasColumnType("decimal(18,2)");
@@ -134,7 +140,10 @@ namespace GlobeWander.Migrations
                     b.Property<int>("NumberOfPersons")
                         .HasColumnType("int");
 
-                    b.HasKey("ID", "TripID");
+                    b.Property<int>("TripID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
 
                     b.HasIndex("TripID");
 
@@ -165,6 +174,29 @@ namespace GlobeWander.Migrations
                     b.HasIndex("TourSpotID");
 
                     b.ToTable("Hotels");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "A unique hotel that you can't find in this place",
+                            Name = "Paradise",
+                            TourSpotID = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "A unique hotel that you can't find in this place",
+                            Name = "Wander ",
+                            TourSpotID = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "A unique hotel that you can't find in this place",
+                            Name = "Amazing",
+                            TourSpotID = 3
+                        });
                 });
 
             modelBuilder.Entity("GlobeWander.Models.HotelRoom", b =>
@@ -178,7 +210,7 @@ namespace GlobeWander.Migrations
                     b.Property<bool>("IsAvailable")
                         .HasColumnType("bit");
 
-                    b.Property<decimal>("Price")
+                    b.Property<decimal>("PricePerDay")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("RoomID")
@@ -194,10 +226,10 @@ namespace GlobeWander.Migrations
             modelBuilder.Entity("GlobeWander.Models.Rate", b =>
                 {
                     b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("TripID")
-                        .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<string>("Comments")
                         .IsRequired()
@@ -207,7 +239,10 @@ namespace GlobeWander.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ID", "TripID");
+                    b.Property<int>("TripID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
 
                     b.HasIndex("TripID");
 
@@ -232,6 +267,26 @@ namespace GlobeWander.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Rooms");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            Layout = 2,
+                            Name = "Small Room"
+                        },
+                        new
+                        {
+                            ID = 2,
+                            Layout = 3,
+                            Name = "Suite Room"
+                        },
+                        new
+                        {
+                            ID = 3,
+                            Layout = 1,
+                            Name = "Studio room"
+                        });
                 });
 
             modelBuilder.Entity("GlobeWander.Models.TourSpot", b =>
@@ -242,9 +297,8 @@ namespace GlobeWander.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<string>("Categoary")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Category")
+                        .HasColumnType("int");
 
                     b.Property<string>("City")
                         .IsRequired()
@@ -262,13 +316,44 @@ namespace GlobeWander.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<long>("PhoneNumber")
+                        .HasColumnType("bigint");
 
                     b.HasKey("ID");
 
                     b.ToTable("TourSpots");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            Category = 3,
+                            City = "Petra",
+                            Country = "Jordan",
+                            Description = "a place before thousands years",
+                            Name = "Petra",
+                            PhoneNumber = 78885423L
+                        },
+                        new
+                        {
+                            ID = 2,
+                            Category = 3,
+                            City = "Jerash",
+                            Country = "Jordan",
+                            Description = "A historical place that the Romanian civilization build before thousands years.",
+                            Name = "Jerash",
+                            PhoneNumber = 88782215L
+                        },
+                        new
+                        {
+                            ID = 3,
+                            Category = 3,
+                            City = "Irbid",
+                            Country = "Jordan",
+                            Description = "A historical place that the Romanian civilization build before thousands years. In the north of Jordan",
+                            Name = "Um Qais",
+                            PhoneNumber = 788442523L
+                        });
                 });
 
             modelBuilder.Entity("GlobeWander.Models.Trip", b =>
@@ -312,6 +397,44 @@ namespace GlobeWander.Migrations
                     b.HasIndex("TourSpotID");
 
                     b.ToTable("Trips");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Activity = "walking",
+                            Cost = 20.0,
+                            Description = "trip start at 8 am and going from Amman to Petra",
+                            EndDate = new DateTime(2023, 8, 19, 20, 45, 48, 342, DateTimeKind.Utc).AddTicks(7879),
+                            Name = "Petra ride",
+                            StartDate = new DateTime(2023, 8, 19, 23, 45, 48, 342, DateTimeKind.Local).AddTicks(7868),
+                            Theme = "Discovering",
+                            TourSpotID = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Activity = "visiting",
+                            Cost = 30.0,
+                            Description = "Amman to Jerash with a trip manager who can speak many languages",
+                            EndDate = new DateTime(2023, 8, 19, 20, 45, 48, 342, DateTimeKind.Utc).AddTicks(7883),
+                            Name = "Jerash ride",
+                            StartDate = new DateTime(2023, 8, 19, 23, 45, 48, 342, DateTimeKind.Local).AddTicks(7882),
+                            Theme = "Discovering",
+                            TourSpotID = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Activity = "climbing",
+                            Cost = 40.0,
+                            Description = "Amman to Irbid with a trip manager who can speak many languages",
+                            EndDate = new DateTime(2023, 8, 19, 20, 45, 48, 342, DateTimeKind.Utc).AddTicks(7885),
+                            Name = "Um-Qais ride",
+                            StartDate = new DateTime(2023, 8, 19, 23, 45, 48, 342, DateTimeKind.Local).AddTicks(7885),
+                            Theme = "Discovering",
+                            TourSpotID = 3
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -339,6 +462,50 @@ namespace GlobeWander.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "admin manager",
+                            ConcurrencyStamp = "00000000-0000-0000-0000-000000000000",
+                            Name = "Admin Manager",
+                            NormalizedName = "ADMIN MANAGER"
+                        },
+                        new
+                        {
+                            Id = "tour manager",
+                            ConcurrencyStamp = "00000000-0000-0000-0000-000000000000",
+                            Name = "Tour Manager",
+                            NormalizedName = "TOUR MANAGER"
+                        },
+                        new
+                        {
+                            Id = "trip manager",
+                            ConcurrencyStamp = "00000000-0000-0000-0000-000000000000",
+                            Name = "Trip Manager",
+                            NormalizedName = "TRIP MANAGER"
+                        },
+                        new
+                        {
+                            Id = "hotel manager",
+                            ConcurrencyStamp = "00000000-0000-0000-0000-000000000000",
+                            Name = "Hotel Manager",
+                            NormalizedName = "HOTEL MANAGER"
+                        },
+                        new
+                        {
+                            Id = "user",
+                            ConcurrencyStamp = "00000000-0000-0000-0000-000000000000",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        },
+                        new
+                        {
+                            Id = "anonymoususer",
+                            ConcurrencyStamp = "00000000-0000-0000-0000-000000000000",
+                            Name = "AnonymousUser",
+                            NormalizedName = "ANONYMOUSUSER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

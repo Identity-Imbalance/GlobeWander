@@ -8,8 +8,8 @@ namespace GlobeWander.Models.Services
 {
     public class IdentityUserService : IUser
     {
-        private UserManager<ApplicationUser> _UserManager;
-        private JWTTokenService tokenService;
+        private readonly UserManager<ApplicationUser> _UserManager;
+        private readonly JWTTokenService tokenService;
        
         public IdentityUserService(UserManager<ApplicationUser> manager, JWTTokenService tokenService)
         {
@@ -26,7 +26,8 @@ namespace GlobeWander.Models.Services
                 {
                     Id = user.Id,
                     UserName = user.UserName,
-                    Token = await tokenService.GetToken(user, System.TimeSpan.FromMinutes(5))
+                    Token = await tokenService.GetToken(user, System.TimeSpan.FromMinutes(5)),
+                    Roles = await _UserManager.GetRolesAsync(user)
                 };
             }
             return null;
@@ -40,7 +41,8 @@ namespace GlobeWander.Models.Services
             {
                 Id = user.Id,
                 UserName = user.UserName,
-                Token = await tokenService.GetToken(user, System.TimeSpan.FromMinutes(5))
+                Token = await tokenService.GetToken(user, System.TimeSpan.FromMinutes(5)),
+                Roles = await _UserManager.GetRolesAsync(user)
             };
         }
 
@@ -55,11 +57,14 @@ namespace GlobeWander.Models.Services
             var result = await _UserManager.CreateAsync(user, registerUserDto.Password);
             if(result.Succeeded)
             {
+                _UserManager.AddToRolesAsync(user, registerUserDto.Roles);
                 return new UserDTO
                 {
                     Id = user.Id,
                     UserName = user.UserName,
-                    Token = await tokenService.GetToken(user, System.TimeSpan.FromMinutes(5))
+                    Token = await tokenService.GetToken(user, System.TimeSpan.FromMinutes(5)),
+                    Roles= await _UserManager.GetRolesAsync(user)
+                    
                 };
             }
             foreach (var error in result.Errors)
@@ -67,13 +72,12 @@ namespace GlobeWander.Models.Services
                 var errorMessage = error.Code.Contains("Password") ? nameof(registerUserDto.Password) :
                                    error.Code.Contains("Email") ? nameof(registerUserDto.Email) :
                                    error.Code.Contains("Username") ? nameof(registerUserDto.UserName) :
-                                 //  error.Code.Contains("Phone") ? nameof(registerUserDto.Phone) :
+                               //  error.Code.Contains("Phone") ? nameof(registerUserDto.Phone) :
                                    "";
                 modelState.AddModelError(errorMessage, error.Description);
 
             };
             return null;
-
         }
     }
 }

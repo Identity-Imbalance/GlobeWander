@@ -6,6 +6,6 @@
 
         public string Name { get; set; }
 
-        public int Layout { get; set; }
+        public Layout Layout { get; set; }
     }
 }

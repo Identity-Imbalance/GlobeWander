@@ -9,6 +9,7 @@ using GlobeWander.Data;
 using GlobeWander.Models;
 using GlobeWander.Models.Interfaces;
 using GlobeWander.Models.DTO;
+using System.Security.Claims;
 
 namespace GlobeWander.Controllers
 {
@@ -36,7 +37,10 @@ namespace GlobeWander.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<BookingRoomDTO>> GetBookingRoom(int id)
         {
-            var bookingRoomDTO = await _context.GetBookingRoomById(id);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var bookingRoomDTO = await _context.GetBookingRoomById(id, userId);
+
 
             if (bookingRoomDTO == null)
             {
@@ -49,14 +53,11 @@ namespace GlobeWander.Controllers
         // PUT: api/BookingRooms/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutBookingRoom(int id, BookingRoomDTO bookingRoomDTO)
+        public async Task<IActionResult> PutBookingRoom(int id, DurationBookingRoomDTO bookingRoomDTO)
         {
-            if (id != bookingRoomDTO.ID)
-            {
-                return BadRequest();
-            }
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            await _context.UpdateBookingRoom(id, bookingRoomDTO);
+            await _context.UpdateBookingRoom(id, bookingRoomDTO,userId);
 
             return NoContent();
         }
@@ -64,11 +65,14 @@ namespace GlobeWander.Controllers
         // POST: api/BookingRooms
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<BookingRoomDTO>> PostBookingRoom(BookingRoomDTO bookingRoomDTO)
+        public async Task<ActionResult<BookingRoomDTO>> PostBookingRoom(NewBookingRoomDTO bookingRoomDTO)
         {
-            await _context.CreateBookingRoom(bookingRoomDTO);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            return CreatedAtAction("GetBookingRoom", new { id = bookingRoomDTO.ID }, bookingRoomDTO);
+            var x = await _context.CreateBookingRoom(bookingRoomDTO,userId);
+
+            return Ok(x);
+
         }
 
         // DELETE: api/BookingRooms/5
