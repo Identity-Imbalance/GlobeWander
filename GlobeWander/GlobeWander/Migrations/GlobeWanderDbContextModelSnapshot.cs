@@ -405,9 +405,9 @@ namespace GlobeWander.Migrations
                             Activity = "walking",
                             Cost = 20.0,
                             Description = "trip start at 8 am and going from Amman to Petra",
-                            EndDate = new DateTime(2023, 8, 19, 20, 45, 48, 342, DateTimeKind.Utc).AddTicks(7879),
+                            EndDate = new DateTime(2023, 8, 19, 22, 28, 29, 128, DateTimeKind.Utc).AddTicks(8046),
                             Name = "Petra ride",
-                            StartDate = new DateTime(2023, 8, 19, 23, 45, 48, 342, DateTimeKind.Local).AddTicks(7868),
+                            StartDate = new DateTime(2023, 8, 20, 1, 28, 29, 128, DateTimeKind.Local).AddTicks(8005),
                             Theme = "Discovering",
                             TourSpotID = 1
                         },
@@ -417,9 +417,9 @@ namespace GlobeWander.Migrations
                             Activity = "visiting",
                             Cost = 30.0,
                             Description = "Amman to Jerash with a trip manager who can speak many languages",
-                            EndDate = new DateTime(2023, 8, 19, 20, 45, 48, 342, DateTimeKind.Utc).AddTicks(7883),
+                            EndDate = new DateTime(2023, 8, 19, 22, 28, 29, 128, DateTimeKind.Utc).AddTicks(8050),
                             Name = "Jerash ride",
-                            StartDate = new DateTime(2023, 8, 19, 23, 45, 48, 342, DateTimeKind.Local).AddTicks(7882),
+                            StartDate = new DateTime(2023, 8, 20, 1, 28, 29, 128, DateTimeKind.Local).AddTicks(8049),
                             Theme = "Discovering",
                             TourSpotID = 2
                         },
@@ -429,9 +429,9 @@ namespace GlobeWander.Migrations
                             Activity = "climbing",
                             Cost = 40.0,
                             Description = "Amman to Irbid with a trip manager who can speak many languages",
-                            EndDate = new DateTime(2023, 8, 19, 20, 45, 48, 342, DateTimeKind.Utc).AddTicks(7885),
+                            EndDate = new DateTime(2023, 8, 19, 22, 28, 29, 128, DateTimeKind.Utc).AddTicks(8054),
                             Name = "Um-Qais ride",
-                            StartDate = new DateTime(2023, 8, 19, 23, 45, 48, 342, DateTimeKind.Local).AddTicks(7885),
+                            StartDate = new DateTime(2023, 8, 20, 1, 28, 29, 128, DateTimeKind.Local).AddTicks(8052),
                             Theme = "Discovering",
                             TourSpotID = 3
                         });
