@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace GlobeWander.Migrations
 {
     /// <inheritdoc />
-    public partial class sas : Migration
+    public partial class NewDataBaseSetup : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -76,8 +76,8 @@ namespace GlobeWander.Migrations
                     Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     City = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Categoary = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Category = table.Column<int>(type: "int", nullable: false),
+                    PhoneNumber = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -268,7 +268,8 @@ namespace GlobeWander.Migrations
                 name: "bookingTrips",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false),
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     TripID = table.Column<int>(type: "int", nullable: false),
                     NumberOfPersons = table.Column<int>(type: "int", nullable: false),
                     CostPerPerson = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
@@ -276,7 +277,7 @@ namespace GlobeWander.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_bookingTrips", x => new { x.ID, x.TripID });
+                    table.PrimaryKey("PK_bookingTrips", x => x.ID);
                     table.ForeignKey(
                         name: "FK_bookingTrips_Trips_TripID",
                         column: x => x.TripID,
@@ -289,14 +290,15 @@ namespace GlobeWander.Migrations
                 name: "Rates",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false),
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     TripID = table.Column<int>(type: "int", nullable: false),
                     Comments = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Rating = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Rates", x => new { x.ID, x.TripID });
+                    table.PrimaryKey("PK_Rates", x => x.ID);
                     table.ForeignKey(
                         name: "FK_Rates_Trips_TripID",
                         column: x => x.TripID,
@@ -337,6 +339,46 @@ namespace GlobeWander.Migrations
                     { "tour manager", "00000000-0000-0000-0000-000000000000", "Tour Manager", "TOUR MANAGER" },
                     { "trip manager", "00000000-0000-0000-0000-000000000000", "Trip Manager", "TRIP MANAGER" },
                     { "user", "00000000-0000-0000-0000-000000000000", "User", "USER" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Rooms",
+                columns: new[] { "ID", "Layout", "Name" },
+                values: new object[,]
+                {
+                    { 1, 2, "Small Room" },
+                    { 2, 3, "Suite Room" },
+                    { 3, 1, "Studio room" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "TourSpots",
+                columns: new[] { "ID", "Category", "City", "Country", "Description", "Name", "PhoneNumber" },
+                values: new object[,]
+                {
+                    { 1, 3, "Petra", "Jordan", "a place before thousands years", "Petra", 78885423L },
+                    { 2, 3, "Jerash", "Jordan", "A historical place that the Romanian civilization build before thousands years.", "Jerash", 88782215L },
+                    { 3, 3, "Irbid", "Jordan", "A historical place that the Romanian civilization build before thousands years. In the north of Jordan", "Um Qais", 788442523L }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Hotels",
+                columns: new[] { "Id", "Description", "Name", "TourSpotID" },
+                values: new object[,]
+                {
+                    { 1, "A unique hotel that you can't find in this place", "Paradise", 1 },
+                    { 2, "A unique hotel that you can't find in this place", "Wander ", 2 },
+                    { 3, "A unique hotel that you can't find in this place", "Amazing", 3 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Trips",
+                columns: new[] { "Id", "Activity", "Cost", "Description", "EndDate", "Name", "StartDate", "Theme", "TourSpotID" },
+                values: new object[,]
+                {
+                    { 1, "walking", 20.0, "trip start at 8 am and going from Amman to Petra", new DateTime(2023, 8, 19, 16, 34, 47, 644, DateTimeKind.Utc).AddTicks(4641), "Petra ride", new DateTime(2023, 8, 19, 19, 34, 47, 644, DateTimeKind.Local).AddTicks(4630), "Discovering", 1 },
+                    { 2, "visiting", 30.0, "Amman to Jerash with a trip manager who can speak many languages", new DateTime(2023, 8, 19, 16, 34, 47, 644, DateTimeKind.Utc).AddTicks(4644), "Jerash ride", new DateTime(2023, 8, 19, 19, 34, 47, 644, DateTimeKind.Local).AddTicks(4643), "Discovering", 2 },
+                    { 3, "climbing", 40.0, "Amman to Irbid with a trip manager who can speak many languages", new DateTime(2023, 8, 19, 16, 34, 47, 644, DateTimeKind.Utc).AddTicks(4647), "Um-Qais ride", new DateTime(2023, 8, 19, 19, 34, 47, 644, DateTimeKind.Local).AddTicks(4646), "Discovering", 3 }
                 });
 
             migrationBuilder.CreateIndex(

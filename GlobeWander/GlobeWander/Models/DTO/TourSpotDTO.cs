@@ -1,4 +1,6 @@
-﻿namespace GlobeWander.Models.DTO
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace GlobeWander.Models.DTO
 {
     public class TourSpotDTO
     {
@@ -12,9 +14,9 @@
 
         public string Description { get; set; }
 
-        public string Categoary { get; set; }
+        public Category Category { get; set; }
 
-        public string PhoneNumber { get; set; }
+        public long PhoneNumber { get; set; }
 
         public List<HotelDTO>? Hotels { get; set; }
 

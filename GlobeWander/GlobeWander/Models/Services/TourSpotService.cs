@@ -23,7 +23,7 @@ namespace GlobeWander.Models.Services
                 Country = tourSpot.Country,
                 City = tourSpot.City,
                 Description = tourSpot.Description,
-                Categoary = tourSpot.Categoary,
+                Category = tourSpot.Category,
                 PhoneNumber = tourSpot.PhoneNumber
             };
             _context.Entry<TourSpot>(newTourSpot).State = EntityState.Added;
@@ -54,7 +54,7 @@ namespace GlobeWander.Models.Services
                     Country = tours.Country,
                     City = tours.City,
                     Description = tours.Description,
-                    Categoary = tours.Categoary,
+                    Category = tours.Category,
                     PhoneNumber = tours.PhoneNumber,
                     Hotels = tours.Hotels.Select(hotels => new HotelDTO
                     {
@@ -67,7 +67,7 @@ namespace GlobeWander.Models.Services
                             RoomNumber = hrooms.RoomNumber,
                             HotelID = hrooms.HotelID,
                             RoomID = hrooms.RoomID,
-                            Price = hrooms.Price,
+                            PricePerDay = hrooms.PricePerDay,
                             IsAvailable = hrooms.IsAvailable,
                             Rooms = new RoomDTO
                             {
@@ -128,12 +128,12 @@ namespace GlobeWander.Models.Services
                 .Select(
                 tours => new TourSpotDTO
                 {
-                    ID = id,
+                    ID = tours.ID,
                     Name = tours.Name,
                     Country = tours.Country,
                     City = tours.City,
                     Description = tours.Description,
-                    Categoary = tours.Categoary,
+                    Category = tours.Category,
                     PhoneNumber = tours.PhoneNumber,
                     Hotels = tours.Hotels.Select(hotels => new HotelDTO
                     {
@@ -146,7 +146,7 @@ namespace GlobeWander.Models.Services
                             RoomNumber = hrooms.RoomNumber,
                             HotelID = hrooms.HotelID,
                             RoomID = hrooms.RoomID,
-                            Price = hrooms.Price,
+                            PricePerDay = hrooms.PricePerDay,
                             IsAvailable = hrooms.IsAvailable,
                             Rooms = new RoomDTO
                             {
@@ -165,9 +165,37 @@ namespace GlobeWander.Models.Services
                             }
                         }).ToList(),
                     }).ToList(),
+                    Trips = tours.Trips
+                    .Where(x => x.TourSpotID == tours.ID)
+                    .Select(trips => new TripDTO
+                    {
+                        Id = trips.Id,
+                        Name = trips.Name,
+                        Description = trips.Description,
+                        Cost = trips.Cost,
+                        Activity = trips.Activity,
+                        StartDate = trips.StartDate,
+                        EndDate = trips.EndDate,
+                        Theme = trips.Theme,
+                        TourSpotID = trips.TourSpotID,
+                        BookingTrips = trips.BookingTrips.Select(bt => new BookingTripDTO
+                        {
+                            ID = bt.ID,
+                            TripID = bt.TripID,
+                            NumberOfPersons = bt.NumberOfPersons,
+                            CostPerPerson = bt.CostPerPerson,
+                            Duration = bt.Duration
+                        }).ToList(),
+                        Rates = trips.Rates.Select(r => new RateDTO
+                        {
+                            ID = r.ID,
+                            TripID = r.TripID,
+                            Comments = r.Comments,
+                            Rating = r.Rating
+                        }).ToList()
+                    }).ToList()
 
                 }
-                
                 ).FirstOrDefaultAsync();
                 
                 
@@ -186,7 +214,7 @@ namespace GlobeWander.Models.Services
                     tourSpotRecord.Country = tourSpot.Country;
                     tourSpotRecord.City = tourSpot.City;
                     tourSpotRecord.Description = tourSpot.Description;
-                    tourSpotRecord.Categoary = tourSpot.Categoary;
+                    tourSpotRecord.Category = tourSpot.Category;
                     tourSpotRecord.PhoneNumber = tourSpot.PhoneNumber;
                                
                 _context.Entry(tourSpotRecord).State = EntityState.Modified;

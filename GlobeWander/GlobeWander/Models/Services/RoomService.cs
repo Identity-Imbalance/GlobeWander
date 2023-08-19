@@ -75,12 +75,10 @@ namespace GlobeWander.Models.Services
         public async Task<RoomDTO> UpdateRoom(int roomId, RoomDTO room)
         {
             var room1 = await _context.Rooms.FindAsync(roomId);
-            if (room1 == null)
+            if (room1 != null)
             {
                 room1.Name = room.Name;
                 room1.Layout = room.Layout;
-
-
                 _context.Entry(room1).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
             }
