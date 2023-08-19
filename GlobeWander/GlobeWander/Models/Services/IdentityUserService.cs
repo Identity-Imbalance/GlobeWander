@@ -50,13 +50,12 @@ namespace GlobeWander.Models.Services
                 var errorMessage = error.Code.Contains("Password") ? nameof(registerUserDto.Password) :
                                    error.Code.Contains("Email") ? nameof(registerUserDto.Email) :
                                    error.Code.Contains("Username") ? nameof(registerUserDto.UserName) :
-                                 //  error.Code.Contains("Phone") ? nameof(registerUserDto.Phone) :
+                               //  error.Code.Contains("Phone") ? nameof(registerUserDto.Phone) :
                                    "";
                 modelState.AddModelError(errorMessage, error.Description);
 
             };
             return null;
-
         }
     }
 }
