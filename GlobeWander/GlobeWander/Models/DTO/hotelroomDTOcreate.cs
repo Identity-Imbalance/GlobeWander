@@ -7,7 +7,7 @@
 
         public int RoomID { get; set; }
 
-        public decimal Price { get; set; }
+        public decimal PricePerDay { get; set; }
 
         public bool IsAvailable { get; set; }
 

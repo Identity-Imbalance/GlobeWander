@@ -52,7 +52,7 @@ namespace GlobeWander.Models.Services
                 RoomID = v.RoomID,
                 IsAvailable = v.IsAvailable,
                 RoomNumber = v.RoomNumber,
-                Price = v.Price
+                PricePerDay = v.PricePerDay
 
             }).ToListAsync();
 
@@ -85,7 +85,7 @@ namespace GlobeWander.Models.Services
                     RoomID = v.RoomID,
                     IsAvailable = v.IsAvailable,
                     RoomNumber = v.RoomNumber,
-                    Price = v.Price
+                    PricePerDay = v.PricePerDay
 
                 }).ToList()
         }).ToListAsync();

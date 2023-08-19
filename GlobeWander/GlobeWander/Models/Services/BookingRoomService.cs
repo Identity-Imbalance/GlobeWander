@@ -14,28 +14,42 @@ namespace GlobeWander.Models.Services
             _context = context;
         }
 
-        public async Task<BookingRoomDTO> CreateBookingRoom(BookingRoomDTO bookingRoomDTO)
+        public async Task<BookingRoomDTO> CreateBookingRoom(NewBookingRoomDTO bookingRoomDTO)
         {
-            var bookingRoom = new BookingRoom
+            var getHotelRoom = await _context.HotelRooms.FindAsync(bookingRoomDTO.HotelID,bookingRoomDTO.RoomNumber);
+
+            if (getHotelRoom.IsAvailable)
             {
-                HotelID = bookingRoomDTO.HotelID,
-                RoomNumber = bookingRoomDTO.RoomNumber,
-                Cost = bookingRoomDTO.Cost,
-                Duration = bookingRoomDTO.Duration
-            };
+                var bookingRoom = new BookingRoom
+                {
+                    HotelID = bookingRoomDTO.HotelID,
+                    RoomNumber = bookingRoomDTO.RoomNumber,
+                    Cost = getHotelRoom.PricePerDay,
+                    Duration = bookingRoomDTO.Duration,
+                    TotalPrice = getHotelRoom.PricePerDay * bookingRoomDTO.Duration
 
-            _context.BookingRooms.Add(bookingRoom);
-            await _context.SaveChangesAsync();
+                };
+                getHotelRoom.IsAvailable = false;
+                _context.BookingRooms.Add(bookingRoom);
+                await _context.SaveChangesAsync();
 
-            bookingRoomDTO.ID = bookingRoom.ID;
-            return bookingRoomDTO;
+                var newBookingRoom = await GetBookingRoomById(bookingRoom.ID);
+
+                return newBookingRoom;
+            }
+            return null;
+           
         }
 
         public async Task DeleteBookingRoom(int id)
         {
             var deleteBookingRoom = await _context.BookingRooms.FindAsync(id);
+
+            var hotelRoom = await _context.HotelRooms.FindAsync(deleteBookingRoom.HotelID, deleteBookingRoom.RoomNumber);
+            
             if (deleteBookingRoom != null)
             {
+                hotelRoom.IsAvailable = true;
                 _context.Entry(deleteBookingRoom).State = EntityState.Deleted;
                 await _context.SaveChangesAsync();
             }
@@ -50,7 +64,8 @@ namespace GlobeWander.Models.Services
                 HotelID = bookingRoom.HotelID,
                 RoomNumber = bookingRoom.RoomNumber,
                 Cost = bookingRoom.Cost,
-                Duration = bookingRoom.Duration
+                Duration = bookingRoom.Duration,
+                TotalPrice = bookingRoom.TotalPrice
             }).ToList();
 
             return bookingRoomDTOs;
@@ -70,29 +85,25 @@ namespace GlobeWander.Models.Services
                 HotelID = bookingRoom.HotelID,
                 RoomNumber = bookingRoom.RoomNumber,
                 Cost = bookingRoom.Cost,
-                Duration = bookingRoom.Duration
+                Duration = bookingRoom.Duration,
+                TotalPrice = bookingRoom.TotalPrice
             };
 
             return bookingRoomDTO;
         }
-
-        public async Task<BookingRoomDTO> UpdateBookingRoom(int id, BookingRoomDTO updatedBookingRoomDTO)
+        // user cannot update the booking room 
+        public async Task<BookingRoomDTO> UpdateBookingRoom(int id, DurationBookingRoomDTO updatedBookingRoomDTO)
         {
             var bookingRoom = await _context.BookingRooms.FindAsync(id);
-            if (bookingRoom == null)
+            if (bookingRoom != null)
             {
-                return null;
+                bookingRoom.Duration = updatedBookingRoomDTO.Duration;
+                bookingRoom.TotalPrice = updatedBookingRoomDTO.Duration * bookingRoom.Cost;
+                _context.Entry(bookingRoom).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
             }
-
-            bookingRoom.HotelID = updatedBookingRoomDTO.HotelID;
-            bookingRoom.RoomNumber = updatedBookingRoomDTO.RoomNumber;
-            bookingRoom.Cost = updatedBookingRoomDTO.Cost;
-            bookingRoom.Duration = updatedBookingRoomDTO.Duration;
-
-            _context.Entry(bookingRoom).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-
-            return updatedBookingRoomDTO;
+            var newBookingRoomUpdate = await GetBookingRoomById(id);
+            return newBookingRoomUpdate;
         }
     }
 }
