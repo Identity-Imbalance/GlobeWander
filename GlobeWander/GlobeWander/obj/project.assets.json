@@ -12795,19 +12795,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Bashar\\.nuget\\packages\\": {}
+    "C:\\Users\\yaman\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Bashar\\Source\\Repos\\Identity-Imbalance\\GlobeWander\\GlobeWander\\GlobeWander\\GlobeWander.csproj",
+      "projectUniqueName": "E:\\Labs\\Identity-Imbalance\\GlobeWander\\GlobeWander\\GlobeWander\\GlobeWander.csproj",
       "projectName": "GlobeWander",
-      "projectPath": "C:\\Users\\Bashar\\Source\\Repos\\Identity-Imbalance\\GlobeWander\\GlobeWander\\GlobeWander\\GlobeWander.csproj",
-      "packagesPath": "C:\\Users\\Bashar\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Bashar\\Source\\Repos\\Identity-Imbalance\\GlobeWander\\GlobeWander\\GlobeWander\\obj\\",
+      "projectPath": "E:\\Labs\\Identity-Imbalance\\GlobeWander\\GlobeWander\\GlobeWander\\GlobeWander.csproj",
+      "packagesPath": "C:\\Users\\yaman\\.nuget\\packages\\",
+      "outputPath": "E:\\Labs\\Identity-Imbalance\\GlobeWander\\GlobeWander\\GlobeWander\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Bashar\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\yaman\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -12929,7 +12929,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100-preview.7.23376.3\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
       }
     }
   },
