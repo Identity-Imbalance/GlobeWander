@@ -15,7 +15,7 @@ namespace GlobeWander.Models.Services
         }
 
 
-        public async Task<RoomDTO> CreateRoom(newRoomDTo room)
+        public async Task<RoomDTO> CreateRoom(RoomDTO room)
         {
             Room room1 = new Room()
             {

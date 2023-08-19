@@ -2,15 +2,19 @@
 using GlobeWander.Models.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.Security.Claims;
 
 namespace GlobeWander.Models.Services
 {
     public class IdentityUserService : IUser
     {
         private UserManager<ApplicationUser> _UserManager;
-        public IdentityUserService(UserManager<ApplicationUser> manager)
+        private JWTTokenService tokenService;
+       
+        public IdentityUserService(UserManager<ApplicationUser> manager, JWTTokenService tokenService)
         {
             _UserManager = manager;
+            this.tokenService = tokenService;
         }
         public async Task<UserDTO> Authenticate(string username, string password)
         {
@@ -21,11 +25,23 @@ namespace GlobeWander.Models.Services
                 return new UserDTO
                 {
                     Id = user.Id,
-                    UserName = user.UserName
+                    UserName = user.UserName,
+                    Token = await tokenService.GetToken(user, System.TimeSpan.FromMinutes(5))
                 };
             }
             return null;
         
+        }
+        public async Task<UserDTO> GetUser(ClaimsPrincipal principal)
+        {
+            var user = await _UserManager.GetUserAsync(principal);
+
+            return new UserDTO
+            {
+                Id = user.Id,
+                UserName = user.UserName,
+                Token = await tokenService.GetToken(user, System.TimeSpan.FromMinutes(5))
+            };
         }
 
         public async Task<UserDTO> Register(RegisterUserDTO registerUserDto, ModelStateDictionary modelState)
@@ -39,10 +55,14 @@ namespace GlobeWander.Models.Services
             var result = await _UserManager.CreateAsync(user, registerUserDto.Password);
             if(result.Succeeded)
             {
+                _UserManager.AddToRolesAsync(user, registerUserDto.Roles);
                 return new UserDTO
                 {
                     Id = user.Id,
                     UserName = user.UserName,
+                    Token = await tokenService.GetToken(user, System.TimeSpan.FromMinutes(5)),
+                    Roles= await _UserManager.GetRolesAsync(user)
+                    
                 };
             }
             foreach (var error in result.Errors)

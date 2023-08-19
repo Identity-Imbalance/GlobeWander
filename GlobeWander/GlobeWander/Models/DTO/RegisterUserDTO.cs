@@ -12,5 +12,6 @@ namespace GlobeWander.Models.DTO
         public string Email { get; set; }
         [Required]
         public string PhoneNumber { get; set; }
+        public IList<string> Roles { get; set; }
     }
 }

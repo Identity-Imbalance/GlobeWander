@@ -2,6 +2,7 @@ using GlobeWander.Data;
 using GlobeWander.Models;
 using GlobeWander.Models.Interfaces;
 using GlobeWander.Models.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -43,7 +44,24 @@ namespace GlobeWander
             builder.Services.AddTransient<IBookingRoom, BookingRoomService>();
             builder.Services.AddTransient<IBookingTrip, BookingTripService>();
             builder.Services.AddTransient<IRate, RateService>();
+            builder.Services.AddScoped<JWTTokenService>();
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
 
+                options.TokenValidationParameters = JWTTokenService.GetValidationPerameters(builder.Configuration);
+            });
+
+
+            builder.Services.AddAuthorization(options => { 
+                options.AddPolicy("create", policy => policy.RequireClaim("persmissions", "create"));
+                options.AddPolicy("update", policy => policy.RequireClaim("persmissions", "update"));
+                options.AddPolicy("delete", policy => policy.RequireClaim("persmissions", "delete")); 
+                options.AddPolicy("read", policy => policy.RequireClaim("persmissions", "read")); });
 
 
             builder.Services.AddSwaggerGen(options =>
@@ -57,7 +75,9 @@ namespace GlobeWander
 
 
             var app = builder.Build();
-
+            app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.UseSwagger(options =>
             {
                 options.RouteTemplate = "/api/{documentName}/swagger.json";

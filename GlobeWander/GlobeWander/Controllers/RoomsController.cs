@@ -68,7 +68,7 @@ namespace GlobeWander.Controllers
         // POST: api/Rooms
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Room>> PostRoom(newRoomDTo room)
+        public async Task<ActionResult<RoomDTO>> PostRoom(RoomDTO room)
         {
             
             if (_context == null)
