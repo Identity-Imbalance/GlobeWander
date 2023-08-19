@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GlobeWander.Migrations
 {
     [DbContext(typeof(GlobeWanderDbContext))]
-    [Migration("20230818120408_Identitysetup")]
-    partial class Identitysetup
+    [Migration("20230818195800_sas")]
+    partial class sas
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -342,6 +342,50 @@ namespace GlobeWander.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "admin manager",
+                            ConcurrencyStamp = "00000000-0000-0000-0000-000000000000",
+                            Name = "Admin Manager",
+                            NormalizedName = "ADMIN MANAGER"
+                        },
+                        new
+                        {
+                            Id = "tour manager",
+                            ConcurrencyStamp = "00000000-0000-0000-0000-000000000000",
+                            Name = "Tour Manager",
+                            NormalizedName = "TOUR MANAGER"
+                        },
+                        new
+                        {
+                            Id = "trip manager",
+                            ConcurrencyStamp = "00000000-0000-0000-0000-000000000000",
+                            Name = "Trip Manager",
+                            NormalizedName = "TRIP MANAGER"
+                        },
+                        new
+                        {
+                            Id = "hotel manager",
+                            ConcurrencyStamp = "00000000-0000-0000-0000-000000000000",
+                            Name = "Hotel Manager",
+                            NormalizedName = "HOTEL MANAGER"
+                        },
+                        new
+                        {
+                            Id = "user",
+                            ConcurrencyStamp = "00000000-0000-0000-0000-000000000000",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        },
+                        new
+                        {
+                            Id = "anonymoususer",
+                            ConcurrencyStamp = "00000000-0000-0000-0000-000000000000",
+                            Name = "AnonymousUser",
+                            NormalizedName = "ANONYMOUSUSER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace GlobeWander.Migrations
 {
     /// <inheritdoc />
-    public partial class Identitysetup : Migration
+    public partial class sas : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -322,6 +324,19 @@ namespace GlobeWander.Migrations
                         columns: x => new { x.HotelID, x.RoomNumber },
                         principalTable: "HotelRooms",
                         principalColumns: new[] { "HotelID", "RoomNumber" });
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "admin manager", "00000000-0000-0000-0000-000000000000", "Admin Manager", "ADMIN MANAGER" },
+                    { "anonymoususer", "00000000-0000-0000-0000-000000000000", "AnonymousUser", "ANONYMOUSUSER" },
+                    { "hotel manager", "00000000-0000-0000-0000-000000000000", "Hotel Manager", "HOTEL MANAGER" },
+                    { "tour manager", "00000000-0000-0000-0000-000000000000", "Tour Manager", "TOUR MANAGER" },
+                    { "trip manager", "00000000-0000-0000-0000-000000000000", "Trip Manager", "TRIP MANAGER" },
+                    { "user", "00000000-0000-0000-0000-000000000000", "User", "USER" }
                 });
 
             migrationBuilder.CreateIndex(

@@ -56,6 +56,14 @@ namespace GlobeWander
                 options.TokenValidationParameters = JWTTokenService.GetValidationPerameters(builder.Configuration);
             });
 
+
+            builder.Services.AddAuthorization(options => { 
+                options.AddPolicy("create", policy => policy.RequireClaim("persmissions", "create"));
+                options.AddPolicy("update", policy => policy.RequireClaim("persmissions", "update"));
+                options.AddPolicy("delete", policy => policy.RequireClaim("persmissions", "delete")); 
+                options.AddPolicy("read", policy => policy.RequireClaim("persmissions", "read")); });
+
+
             builder.Services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo()
