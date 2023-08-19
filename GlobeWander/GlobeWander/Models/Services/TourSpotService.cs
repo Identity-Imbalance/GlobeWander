@@ -82,7 +82,9 @@ namespace GlobeWander.Models.Services
                                 RoomNumber = hrooms.BookingRoom.RoomNumber,
                                 HotelID = hrooms.BookingRoom.HotelID,
                                 Cost = hrooms.BookingRoom.Cost,
-                                Duration = hrooms.BookingRoom.Duration
+                                Duration = hrooms.BookingRoom.Duration,
+                                TotalPrice = hrooms.BookingRoom.TotalPrice,
+                                Username = hrooms.BookingRoom.Username
                             }
                         }).ToList(),
                     }).ToList(),
@@ -161,7 +163,10 @@ namespace GlobeWander.Models.Services
                                 RoomNumber = hrooms.BookingRoom.RoomNumber,
                                 HotelID = hrooms.BookingRoom.HotelID,
                                 Cost = hrooms.BookingRoom.Cost,
-                                Duration = hrooms.BookingRoom.Duration
+                                Duration = hrooms.BookingRoom.Duration,
+                                TotalPrice = hrooms.BookingRoom.TotalPrice,
+                                Username = hrooms.BookingRoom.Username
+
                             }
                         }).ToList(),
                     }).ToList(),
