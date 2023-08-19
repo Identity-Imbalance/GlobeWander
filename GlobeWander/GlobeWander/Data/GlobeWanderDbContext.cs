@@ -51,9 +51,9 @@ namespace GlobeWander.Data
             seedRole(modelBuilder, "AnonymousUser", "read");
         }
 
+            int nextId = 1;
         private void seedRole(ModelBuilder modelBuilder, string roleName, params string[] permissions)
         {
-            int nextId = 1;
             var role = new IdentityRole
             {
                 Id = roleName.ToLower(),
@@ -68,7 +68,7 @@ namespace GlobeWander.Data
                 ClaimType="permissions",
                     ClaimValue = permissions
             }).ToArray();
-         ; modelBuilder.Entity<IdentityRole>().HasData(role);
+            modelBuilder.Entity<IdentityRole>().HasData(role);
 
         }
 
