@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace GlobeWander.Migrations
 {
     /// <inheritdoc />
-    public partial class dd : Migration
+    public partial class BookingRoomWithAuthrization : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -219,11 +219,13 @@ namespace GlobeWander.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Cost = table.Column<double>(type: "float", nullable: false),
+                    Cost = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Activity = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Theme = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Capacity = table.Column<int>(type: "int", nullable: false),
+                    Count = table.Column<int>(type: "int", nullable: false),
                     TourSpotID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -273,7 +275,9 @@ namespace GlobeWander.Migrations
                     TripID = table.Column<int>(type: "int", nullable: false),
                     NumberOfPersons = table.Column<int>(type: "int", nullable: false),
                     CostPerPerson = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Duration = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Duration = table.Column<int>(type: "int", nullable: false),
+                    TotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Username = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -375,12 +379,12 @@ namespace GlobeWander.Migrations
 
             migrationBuilder.InsertData(
                 table: "Trips",
-                columns: new[] { "Id", "Activity", "Cost", "Description", "EndDate", "Name", "StartDate", "Theme", "TourSpotID" },
+                columns: new[] { "Id", "Activity", "Capacity", "Cost", "Count", "Description", "EndDate", "Name", "StartDate", "Theme", "TourSpotID" },
                 values: new object[,]
                 {
-                    { 1, "walking", 20.0, "trip start at 8 am and going from Amman to Petra", new DateTime(2023, 8, 19, 22, 28, 29, 128, DateTimeKind.Utc).AddTicks(8046), "Petra ride", new DateTime(2023, 8, 20, 1, 28, 29, 128, DateTimeKind.Local).AddTicks(8005), "Discovering", 1 },
-                    { 2, "visiting", 30.0, "Amman to Jerash with a trip manager who can speak many languages", new DateTime(2023, 8, 19, 22, 28, 29, 128, DateTimeKind.Utc).AddTicks(8050), "Jerash ride", new DateTime(2023, 8, 20, 1, 28, 29, 128, DateTimeKind.Local).AddTicks(8049), "Discovering", 2 },
-                    { 3, "climbing", 40.0, "Amman to Irbid with a trip manager who can speak many languages", new DateTime(2023, 8, 19, 22, 28, 29, 128, DateTimeKind.Utc).AddTicks(8054), "Um-Qais ride", new DateTime(2023, 8, 20, 1, 28, 29, 128, DateTimeKind.Local).AddTicks(8052), "Discovering", 3 }
+                    { 1, "walking", 0, 20m, 0, "trip start at 8 am and going from Amman to Petra", new DateTime(2023, 8, 20, 17, 20, 24, 700, DateTimeKind.Utc).AddTicks(7114), "Petra ride", new DateTime(2023, 8, 20, 20, 20, 24, 700, DateTimeKind.Local).AddTicks(7064), "Discovering", 1 },
+                    { 2, "visiting", 0, 30m, 0, "Amman to Jerash with a trip manager who can speak many languages", new DateTime(2023, 8, 20, 17, 20, 24, 700, DateTimeKind.Utc).AddTicks(7118), "Jerash ride", new DateTime(2023, 8, 20, 20, 20, 24, 700, DateTimeKind.Local).AddTicks(7117), "Discovering", 2 },
+                    { 3, "climbing", 0, 40m, 0, "Amman to Irbid with a trip manager who can speak many languages", new DateTime(2023, 8, 20, 17, 20, 24, 700, DateTimeKind.Utc).AddTicks(7121), "Um-Qais ride", new DateTime(2023, 8, 20, 20, 20, 24, 700, DateTimeKind.Local).AddTicks(7120), "Discovering", 3 }
                 });
 
             migrationBuilder.CreateIndex(
