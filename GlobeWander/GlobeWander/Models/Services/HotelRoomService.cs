@@ -26,7 +26,7 @@ namespace GlobeWander.Models.Services
                 RoomNumber= hotelRoomdto.HotelID*100 + hotelRoomdto.RoomID,
                 HotelID= hotelRoomdto.HotelID,
                 RoomID= hotelRoomdto.RoomID,
-                Price= hotelRoomdto.Price,
+                PricePerDay= hotelRoomdto.PricePerDay,
                 IsAvailable=true,
 
             };
@@ -37,7 +37,7 @@ namespace GlobeWander.Models.Services
             await _context.SaveChangesAsync();
             return hotelRoomdto;
         }
-        public async Task<HotelRoomDTO> GetHotelRoomId(int hotelID,int roomNumber)
+        public async Task<HotelRoomDTO> GetHotelRoomId(int hotelID, int roomNumber)
         {
 
             var hotelRoomDTO = await _context.HotelRooms.Select(b => new HotelRoomDTO
@@ -45,11 +45,31 @@ namespace GlobeWander.Models.Services
                 HotelID = b.HotelID,
                 RoomNumber = b.RoomNumber,
                 RoomID = b.RoomID,
-                Price = b.Price,
+                PricePerDay = b.PricePerDay,
                 IsAvailable = b.IsAvailable,
-                Rooms = _context.Rooms.Select(x => new RoomDTO { ID = x.ID, Name = x.Name, Layout = x.Layout }
-            ).Where(x => x.ID == b.RoomID).FirstOrDefault()
-            }).Where(x=>x.HotelID== hotelID && x.RoomNumber== roomNumber).FirstOrDefaultAsync();
+                Rooms = _context.Rooms.Select(x =>
+                new RoomDTO
+                {
+                    ID = x.ID,
+                    Name = x.Name,
+                    Layout = x.Layout
+                }
+            ).Where(x => x.ID == b.RoomID)
+            .FirstOrDefault(),
+                BookingRoom = _context.BookingRooms.Select(x =>
+                   new BookingRoomDTO()
+                   {
+                       ID = x.ID,
+                       HotelID = x.HotelID,
+                       RoomNumber = x.RoomNumber,
+                       Cost = x.Cost,
+                       Duration = b.BookingRoom.Duration,
+                       TotalPrice = x.TotalPrice,
+                       Username = x.Username
+                   })
+                .FirstOrDefault(x=> x.RoomNumber == b.RoomNumber)
+            }).Where(x => x.HotelID == hotelID && x.RoomNumber == roomNumber)
+                .FirstOrDefaultAsync();
             return hotelRoomDTO;
 
 
@@ -70,17 +90,39 @@ namespace GlobeWander.Models.Services
         public async Task<List<HotelRoomDTO>> GetHotelRooms()
         {
 
-            var hotelRoomDTO = await _context.HotelRooms.Select(b => new HotelRoomDTO {
+            var hotelRoomDTO = await _context.HotelRooms.Select(b => new HotelRoomDTO
+            {
                 HotelID = b.HotelID,
                 RoomNumber = b.RoomNumber,
                 RoomID = b.RoomID,
-                Price = b.Price,
+                PricePerDay = b.PricePerDay,
                 IsAvailable = b.IsAvailable,
-                Rooms =  _context.Rooms.Select(x => new RoomDTO { ID = x.ID, Name = x.Name, Layout = x.Layout }
-             ).Where(x => x.ID == b.RoomID).FirstOrDefault()
+                Rooms = _context.Rooms.Select(
+                    x => new RoomDTO
+                    {
+                        ID = x.ID,
+                        Name = x.Name,
+                        Layout = x.Layout
+                    })
+                .Where(x => x.ID == b.RoomID)
+                .FirstOrDefault(),
+                BookingRoom = _context.BookingRooms.Select(x =>
+                new BookingRoomDTO()
+                {
+                    ID = x.ID,
+                    HotelID = x.HotelID,
+                    RoomNumber = x.RoomNumber,
+                    Cost = x.Cost,
+                    Duration = b.BookingRoom.Duration,
+                    TotalPrice = x.TotalPrice,
+                    Username = x.Username
+                })
+                .FirstOrDefault(),
             }).ToListAsync();
 
-          
+
+
+
             return hotelRoomDTO;
         }
 
@@ -88,7 +130,7 @@ namespace GlobeWander.Models.Services
         {
             HotelRoom hotelRoom = await _context.HotelRooms.FindAsync(hotelId, roomNumber);
             
-                hotelRoom.Price = updatedHotelRoom.Price;
+                hotelRoom.PricePerDay = updatedHotelRoom.PricePerDay;
                 hotelRoom.IsAvailable = updatedHotelRoom.IsAvailable;
                 _context.Entry(hotelRoom).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
