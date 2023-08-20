@@ -14,7 +14,7 @@ namespace Test
         {
             _connection = new SqliteConnection("Filename=:memory:");
             _connection.Open();
-            
+
             _db = new GlobeWanderDbContext(
                   new DbContextOptionsBuilder<GlobeWanderDbContext>()
                           .UseSqlite(_connection).Options);
@@ -57,6 +57,18 @@ namespace Test
 
         }
 
+
+        protected async Task<Hotel> CreateAndSaveTestHotel()
+        {
+            var hotel = new Hotel() { Name = "Test", Description = "Test", TourSpotID = 1 };
+            _db.Hotels.Add(hotel);
+            await _db.SaveChangesAsync();
+
+            Assert.NotEqual(0, hotel.Id);
+
+            return hotel;
+        }
+                
         public void Dispose()
         {
             _db?.Dispose();
