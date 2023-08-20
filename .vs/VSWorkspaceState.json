@@ -3,10 +3,9 @@
     "",
     "\\GlobeWander",
     "\\GlobeWander\\GlobeWander",
-    "\\GlobeWander\\GlobeWander\\Migrations",
     "\\GlobeWander\\GlobeWander\\Models",
     "\\GlobeWander\\GlobeWander\\Models\\Services"
   ],
-  "SelectedNode": "\\GlobeWander\\GlobeWander\\Models\\Services\\BookingRoomService.cs",
+  "SelectedNode": "\\GlobeWander\\GlobeWander\\Models\\BookingRoom.cs",
   "PreviewInSolutionExplorer": false
 }
