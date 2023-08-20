@@ -10,6 +10,10 @@
 
         public decimal CostPerPerson { get; set; }
 
-        public string Duration { get; set; }
+        public int Duration { get; set; }
+
+        public decimal TotalPrice { get; set; }
+
+        public string Username { get; set; }
     }
 }

@@ -65,10 +65,13 @@ namespace GlobeWander
 
 
             builder.Services.AddAuthorization(options => { 
-                options.AddPolicy("create", policy => policy.RequireClaim("persmissions", "create"));
-                options.AddPolicy("update", policy => policy.RequireClaim("persmissions", "update"));
-                options.AddPolicy("delete", policy => policy.RequireClaim("persmissions", "delete")); 
-                options.AddPolicy("read", policy => policy.RequireClaim("persmissions", "read")); });
+                options.AddPolicy("create", policy => policy.RequireClaim("permissions", "create"));
+                options.AddPolicy("update", policy => policy.RequireClaim("permissions", "update"));
+                options.AddPolicy("delete", policy => policy.RequireClaim("permissions", "delete")); 
+                options.AddPolicy("read", policy => policy.RequireClaim("permissions", "read")); });
+
+
+            builder.Services.AddAuthorization();
 
             builder.Services.AddSwaggerGen(options =>
             {
