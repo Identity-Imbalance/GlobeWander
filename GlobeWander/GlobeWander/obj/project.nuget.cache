@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "ucuLCLSO7cVKxC55pXsSyDuf973CSxkpmuCQodADVGLePYGWNCo0SstS0JD+7inJ8Ph9xjj4PicOEuO2Zq+kFg==",
+  "dgSpecHash": "rS816U6iF0BFyqyRyPq7iEVHBRoGywxsxraMiDHXVubFhYi9JAmEShrcvU4CGTw/0d3o/fqf3jm1uPOmFWN13g==",
   "success": true,
   "projectFilePath": "C:\\Users\\tsnee\\OneDrive\\Desktop\\NewProject\\GlobeWander\\GlobeWander\\GlobeWander.csproj",
   "expectedPackageFiles": [
@@ -262,5 +262,12 @@
     "C:\\Users\\tsnee\\.nuget\\packages\\xunit.extensibility.execution\\2.5.0\\xunit.extensibility.execution.2.5.0.nupkg.sha512",
     "C:\\Users\\tsnee\\.nuget\\packages\\xunit.runner.visualstudio\\2.5.0\\xunit.runner.visualstudio.2.5.0.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file C:\\Users\\tsnee\\OneDrive\\Desktop\\NewProject\\GlobeWander\\GlobeWander\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }
