@@ -5,6 +5,7 @@ using GlobeWander.Models.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using System.Text.Json.Serialization;
 
 namespace GlobeWander
@@ -69,7 +70,6 @@ namespace GlobeWander
                 options.AddPolicy("delete", policy => policy.RequireClaim("persmissions", "delete")); 
                 options.AddPolicy("read", policy => policy.RequireClaim("persmissions", "read")); });
 
-
             builder.Services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo()
@@ -77,6 +77,26 @@ namespace GlobeWander
                     Title = "Globe Wander API",
                     Version = "v1",
                 });
+                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description = "add the JWT TOKEN"
+                });
+                options.AddSecurityRequirement(new OpenApiSecurityRequirement
+     {{
+         new OpenApiSecurityScheme {
+         Reference=
+         new OpenApiReference{
+             Type=ReferenceType.SecurityScheme,
+             Id= "Bearer"
+     }
+     },
+     new string[]{ } }
+     });
             });
 
 

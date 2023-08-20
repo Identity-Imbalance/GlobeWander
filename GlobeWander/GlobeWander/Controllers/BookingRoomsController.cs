@@ -10,7 +10,6 @@ using GlobeWander.Models;
 using GlobeWander.Models.Interfaces;
 using GlobeWander.Models.DTO;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Authorization;
 
 namespace GlobeWander.Controllers
 {
