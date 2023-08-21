@@ -11,9 +11,9 @@ namespace Test
         protected readonly GlobeWanderDbContext _db;
         public Mock()
         {
-            _connection = new SqliteConnection("Filename=:memory");
+            _connection = new SqliteConnection("Filename=:memory:");
             _connection.Open();
-            
+
             _db = new GlobeWanderDbContext(
                   new DbContextOptionsBuilder<GlobeWanderDbContext>()
                           .UseSqlite(_connection).Options);
@@ -21,6 +21,18 @@ namespace Test
 
         }
         //Write Your Code Here....
+
+        protected async Task<Hotel> CreateAndSaveTestHotel()
+        {
+            var hotel = new Hotel() { Name = "Test", Description = "Test", TourSpotID = 1 };
+            _db.Hotels.Add(hotel);
+            await _db.SaveChangesAsync();
+
+            Assert.NotEqual(0, hotel.Id);
+
+            return hotel;
+        }
+                
         protected async  Task<Room> CreateandSaveRoom ()
         {
             var room = new Room() {Name ="Room3" , Layout = Layout.OneBed };

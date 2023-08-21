@@ -31,17 +31,17 @@ namespace GlobeWander.Models.Services
             return hotelDTO;
         }
 
-        public async Task<HotelDTO> DeleteHotel(int id)
+        public async Task<Hotel> DeleteHotel(int id)
 
         {
-            HotelDTO hoteldto = await GetHotelId(id);
-            Hotel hotel= await _context.Hotels.FindAsync(id);
+           // Hotel hoteldto = await GetHotelId(id);
+            var hotel= await _context.Hotels.FindAsync(id);
              
             _context.Entry(hotel).State = EntityState.Deleted;
             await _context.SaveChangesAsync();
 
 
-            return hoteldto;
+            return hotel;
         }
 
         public async Task<HotelDTO> GetHotelId(int hotelId)
