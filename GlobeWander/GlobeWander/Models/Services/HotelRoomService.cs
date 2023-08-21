@@ -74,16 +74,20 @@ namespace GlobeWander.Models.Services
 
 
         }
-        public async Task<HotelRoomDTO> DeleteHotelRoom(int hotelID, int roomNumber)
+        public async Task DeleteHotelRoom(int hotelID, int roomNumber)
         {
 
-            HotelRoomDTO hotel = await GetHotelRoomId(hotelID, roomNumber);
-            HotelRoom hotelRoom = await _context.HotelRooms.FindAsync(hotelID, roomNumber);
-            _context.Entry(hotelRoom).State = EntityState.Deleted;
+            //HotelRoomDTO hotel = await GetHotelRoomId(hotelID, roomNumber);
+            //HotelRoom hotelRoom = await _context.HotelRooms.FindAsync(hotelID, roomNumber);
+            //_context.Entry(hotelRoom).State = EntityState.Deleted;
+            //await _context.SaveChangesAsync();
+            var hotel = await _context.HotelRooms.FindAsync(hotelID, roomNumber);
+            _context.HotelRooms.Remove(hotel);
             await _context.SaveChangesAsync();
 
 
-            return hotel;
+
+
         }
 
 
@@ -128,11 +132,11 @@ namespace GlobeWander.Models.Services
 
         public async Task<hotelroomDTOcreate> UpdateHotelRoom(int hotelId, int roomNumber, hotelroomDTOcreate updatedHotelRoom)
         {
-            HotelRoom hotelRoom = await _context.HotelRooms.FindAsync(hotelId, roomNumber);
+            var hotelRoom = await _context.HotelRooms.FindAsync(hotelId, roomNumber);
             
                 hotelRoom.PricePerDay = updatedHotelRoom.PricePerDay;
                 hotelRoom.IsAvailable = updatedHotelRoom.IsAvailable;
-                _context.Entry(hotelRoom).State = EntityState.Modified;
+                _context.HotelRooms.Update(hotelRoom);
                 await _context.SaveChangesAsync();
 
             updatedHotelRoom.HotelID = hotelId;

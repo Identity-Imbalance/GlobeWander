@@ -117,7 +117,10 @@ namespace GlobeWander.Models.Services
 
         public async Task<RateDTO> UpdateRate(int id,int tripId, UpdateRateDTO rate)
         {
-            var existRate = await _rateService.Rates.FindAsync(id, tripId);
+            var existRate = await _rateService.Rates
+                .Where(r => r.ID == id && r.TripID == tripId)
+                .FirstOrDefaultAsync();
+
             if (existRate != null)
             {
 
@@ -132,5 +135,8 @@ namespace GlobeWander.Models.Services
             }
             return null;
         }
+
+
+
     }
 }
