@@ -1,125 +1,113 @@
+using GlobeWander.Data;
 using GlobeWander.Models;
 using GlobeWander.Models.DTO;
+using GlobeWander.Models.Interfaces;
 using GlobeWander.Models.Services;
+using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.Metrics;
+
 
 namespace Test
 {
-    public class UnitTest1 :Mock
+    public class UnitTest1 : Mock
     {
-        //Get
-        [Fact]
-        public async Task CanGetHotel()
-        {
-            // Arrange
-            var hotel = await CreateAndSaveTestHotel();
 
-            var service = new HotelService(_db);
 
-            // Act
-            var actulalHotel = await service.GetHotelId(hotel.Id);
+         [Fact]
+         public async Task GetTourSpotIfExists()
+         {
+             var TourSpotService = new TourSpotService(_db);
+             var tourSpot = await CreateAndSaveTestTourSpot();
 
-            // Assert
-            Assert.NotNull(actulalHotel);
-            Assert.Equal(hotel.Id, actulalHotel.Id);
-            Assert.Equal(hotel.Name, actulalHotel.Name);
-            Assert.Equal(hotel.Description, actulalHotel.Description);
-            Assert.Equal(hotel.TourSpotID, actulalHotel.TourSpotID);
-            
+             var tourSpotDTO = await TourSpotService.GetSpotById(tourSpot.ID);
+
+             Assert.Equal(tourSpot.ID, tourSpotDTO.ID);
+             Assert.Equal(tourSpot.Name, tourSpotDTO.Name);
+             Assert.Equal(tourSpot.Country, tourSpotDTO.Country);
+             Assert.Equal(tourSpot.City, tourSpotDTO.City);
+             Assert.Equal(tourSpot.Description, tourSpotDTO.Description);
+             Assert.Equal(tourSpot.Category, tourSpotDTO.Category);
+             Assert.Equal(tourSpot.PhoneNumber, tourSpotDTO.PhoneNumber);
         }
-        //Create
-        [Fact]
-        public async Task CreatHotelTest()
-        {
-            var hotel = await CreateAndSaveTestHotel();
-            var service = new HotelService(_db);
 
-            var hotelDTO = new HotelDTO()
+     
+        [Fact]
+        public async Task UpdateTourSpot()
+        {
+            
+            var service = new TourSpotService(_db);
+
+            var tourSpot = await CreateAndSaveTestTourSpot();
+
+            var tourSpotDTO = new newTourSpotDTO
+            {
+
+                Name = tourSpot.Name,
+                Country = tourSpot.Country,
+                City = tourSpot.City,
+                Description = tourSpot.Description,
+                Category = tourSpot.Category,
+                PhoneNumber = tourSpot.PhoneNumber
+            };
+
+            await service.CreateTourSpot(tourSpotDTO);
+            var UpdatedTourSpot = new newTourSpotDTO()
+            {
+                Name = tourSpotDTO.Name,
+                Country = tourSpotDTO.Country,
+                City = tourSpotDTO.City,
+                Description = tourSpotDTO.Description,
+                Category = tourSpotDTO.Category,
+                PhoneNumber = tourSpotDTO.PhoneNumber
+            };
+            var actualTourSpot = await service.UpdateTourSpot(UpdatedTourSpot, tourSpotDTO.ID);
+            Assert.Equal(UpdatedTourSpot.Name, actualTourSpot.Name);
+            Assert.Equal(UpdatedTourSpot.Country, actualTourSpot.Country);
+            Assert.Equal(UpdatedTourSpot.City, actualTourSpot.City);
+            Assert.Equal(UpdatedTourSpot.Description, actualTourSpot.Description);
+            Assert.Equal(UpdatedTourSpot.Category, actualTourSpot.Category);
+            Assert.Equal(UpdatedTourSpot.PhoneNumber, actualTourSpot.PhoneNumber);
+        }
+
+
+
+        [Fact]
+         public async Task DeleteTourSpot_Successfully()
+         {
+             var tourSpotService = new TourSpotService(_db);
+             var tourSpot = await CreateAndSaveTestTourSpot();
+
+             await tourSpotService.DeleteTourSpot(tourSpot.ID);
+
+             var deletedTourSpot = await tourSpotService.GetSpotById(tourSpot.ID);
+             Assert.Null(deletedTourSpot);
+         }
+
+        [Fact]
+        public async Task CreateTourSpot_Successfully()
+        {
+            var TourSpotService = new TourSpotService(_db);
+
+            var tourSpot = await CreateAndSaveTestTourSpot();
+
+            var tourSpotDTO = new newTourSpotDTO
             {
                 
-                Name = "Test",
-                Description = "Test",
-                TourSpotID = 1
+                Name = tourSpot.Name,
+                Country = tourSpot.Country,
+                City = tourSpot.City,
+                Description = tourSpot.Description,
+                Category = tourSpot.Category,
+                PhoneNumber = tourSpot.PhoneNumber
             };
 
-            var actualHotel = await service.CreateHotel(hotelDTO);
+            await TourSpotService.CreateTourSpot(tourSpotDTO);
 
-            Assert.NotNull(actualHotel);
-            Assert.Equal(actualHotel.Name, hotelDTO.Name);
-        }
-
-        //update
-
-        [Fact]
-        public async void UpdateHotel()
-        {
-            var hotel = await CreateAndSaveTestHotel();
-            var service = new HotelService(_db);
-
-            var hotelDTO = new HotelDTO()
-            {
-                Id = hotel.Id,
-                Name = "Test",
-                Description = "Test",
-                TourSpotID = 1
-
-            };
-
-            var UpdatedHotel = new HotelDTO()
-            {
-                Name = hotelDTO.Name,
-                Description = hotelDTO.Description,
-                TourSpotID = hotelDTO.TourSpotID
-            };
-
-            var actualHotel = await service.UpdateHotel(hotelDTO.Id, UpdatedHotel);
-
-            Assert.Equal(UpdatedHotel.Name, actualHotel.Name);
-            Assert.Equal(UpdatedHotel.Description, actualHotel.Description);
-            Assert.Equal(UpdatedHotel.TourSpotID, actualHotel.TourSpotID);
+            Assert.NotNull(tourSpotDTO);
             
+            Assert.Equal("Test", tourSpotDTO.Name);
         }
 
-        //Delete
-        [Fact]
-        public async Task DeleteHotelTest()
-        {
-            var hotel = await CreateAndSaveTestHotel();
-            var service = new HotelService(_db);
 
-
-            var deleteHotel = await service.DeleteHotel(hotel.Id);
-            
-            Assert.NotNull(deleteHotel);
-        }
-        [Fact]
-        public async void enrol_Room_method()
-        {
-            var room = await CreateandSaveRoom();
-
-
-            var service = new RoomService(_db);
-            var actRoom = await service.GetRoomId(room.ID);
-            Assert.NotNull(actRoom);
-            Assert.Equal(room.ID, actRoom.ID);
-            Assert.Equal(room.Name, actRoom.Name);
-            Assert.Equal(room.Layout, actRoom.Layout);
-        }
-       
- 
-        [Fact]
-        public async void enrol_HotelRoom_method()
-        {
-            var hotelRoom = await CreateandSaveHotelRoom();
-            var service = new HotelRoomService(_db);
-            var actHotelRoom = await service.GetHotelRoomId(hotelRoom.HotelID ,hotelRoom.RoomNumber);
-            Assert.NotNull(actHotelRoom);
-            Assert.Equal(hotelRoom.RoomNumber, actHotelRoom.RoomNumber);
-            Assert.Equal(hotelRoom.RoomID, actHotelRoom.RoomID);
-            Assert.Equal(hotelRoom.HotelID , actHotelRoom.HotelID);
-            Assert.Equal(hotelRoom.PricePerDay, actHotelRoom.PricePerDay);
-            
-
-
-        }
     }
 }
