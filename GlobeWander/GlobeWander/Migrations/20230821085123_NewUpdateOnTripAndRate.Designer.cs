@@ -4,6 +4,7 @@ using GlobeWander.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GlobeWander.Migrations
 {
     [DbContext(typeof(GlobeWanderDbContext))]
-    partial class GlobeWanderDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230821085123_NewUpdateOnTripAndRate")]
+    partial class NewUpdateOnTripAndRate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -418,7 +421,7 @@ namespace GlobeWander.Migrations
                             Cost = 20m,
                             Count = 0,
                             Description = "trip start at 8 am and going from Amman to Petra",
-                            EndDate = new DateTime(2023, 8, 20, 10, 42, 14, 806, DateTimeKind.Utc).AddTicks(843),
+                            EndDate = new DateTime(2023, 8, 21, 8, 51, 22, 707, DateTimeKind.Utc).AddTicks(4072),
                             Name = "Petra ride",
                             StartDate = new DateTime(2023, 8, 21, 11, 51, 22, 707, DateTimeKind.Local).AddTicks(4049),
                             TourSpotID = 1

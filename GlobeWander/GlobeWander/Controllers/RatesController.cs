@@ -32,10 +32,10 @@ namespace GlobeWander.Controllers
         }
 
         // GET: api/Rates/5
-        [HttpGet("{id}/{TripID}")]
-        public async Task<ActionResult<RateDTO>> GetRate(int id,int TripID)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<RateDTO>> GetRate(int id)
         {
-         var rate = await _rate.GetRateById(id,TripID);
+         var rate = await _rate.GetRateById(id);
            if(rate == null)
             {
                 return NotFound();
@@ -43,26 +43,33 @@ namespace GlobeWander.Controllers
            return Ok(rate);
         }
 
+        [HttpGet]
+        [Route("/api/trips/{tripId}/Rates")]
+        public async Task<ActionResult<RateDTO>> GetRateByTripId(int tripId)
+        {
+            var rate = await _rate.GetRateByTripID(tripId);
+            if (rate == null)
+            {
+                return NotFound();
+            }
+            return Ok(rate);
+        }
+
         // PUT: api/Rates/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}/{TripID}")]
-        public async Task<IActionResult> PutRate(int id,int TripID, RateDTO rateDTO)
+        public async Task<IActionResult> PutRate(int id,int TripID, UpdateRateDTO rateDTO)
         {
-            if (TripID != rateDTO.TripID)
-            {
-                return BadRequest();
-            }
-
           var updateRate =await _rate.UpdateRate(id,TripID, rateDTO);
-            return Ok(updateRate);
+          return Ok(updateRate);
         }
 
         // POST: api/Rates
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Rate>> PostRate(RateDTO rateDTO)
+        public async Task<ActionResult<RateDTO>> PostRate(NewRateDTO rateDTO)
         {
-         var createRate = await _rate.Create(rateDTO);
+         var createRate = await _rate.Create(rateDTO,User);
             return Ok(createRate);
         }
 

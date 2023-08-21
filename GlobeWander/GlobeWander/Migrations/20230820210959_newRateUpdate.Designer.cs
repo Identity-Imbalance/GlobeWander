@@ -4,6 +4,7 @@ using GlobeWander.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GlobeWander.Migrations
 {
     [DbContext(typeof(GlobeWanderDbContext))]
-    partial class GlobeWanderDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230820210959_newRateUpdate")]
+    partial class newRateUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -241,8 +244,9 @@ namespace GlobeWander.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Rating")
-                        .HasColumnType("int");
+                    b.Property<string>("Rating")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("TripID")
                         .HasColumnType("int");
@@ -400,6 +404,10 @@ namespace GlobeWander.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Theme")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("TourSpotID")
                         .HasColumnType("int");
 
@@ -414,39 +422,42 @@ namespace GlobeWander.Migrations
                         {
                             Id = 1,
                             Activity = "walking",
-                            Capacity = 30,
+                            Capacity = 0,
                             Cost = 20m,
                             Count = 0,
                             Description = "trip start at 8 am and going from Amman to Petra",
-                            EndDate = new DateTime(2023, 8, 20, 10, 42, 14, 806, DateTimeKind.Utc).AddTicks(843),
+                            EndDate = new DateTime(2023, 8, 20, 21, 9, 59, 120, DateTimeKind.Utc).AddTicks(4014),
                             Name = "Petra ride",
-                            StartDate = new DateTime(2023, 8, 21, 11, 51, 22, 707, DateTimeKind.Local).AddTicks(4049),
+                            StartDate = new DateTime(2023, 8, 21, 0, 9, 59, 120, DateTimeKind.Local).AddTicks(4002),
+                            Theme = "Discovering",
                             TourSpotID = 1
                         },
                         new
                         {
                             Id = 2,
                             Activity = "visiting",
-                            Capacity = 22,
+                            Capacity = 0,
                             Cost = 30m,
                             Count = 0,
                             Description = "Amman to Jerash with a trip manager who can speak many languages",
-                            EndDate = new DateTime(2023, 8, 21, 8, 51, 22, 707, DateTimeKind.Utc).AddTicks(4075),
+                            EndDate = new DateTime(2023, 8, 20, 21, 9, 59, 120, DateTimeKind.Utc).AddTicks(4017),
                             Name = "Jerash ride",
-                            StartDate = new DateTime(2023, 8, 21, 11, 51, 22, 707, DateTimeKind.Local).AddTicks(4074),
+                            StartDate = new DateTime(2023, 8, 21, 0, 9, 59, 120, DateTimeKind.Local).AddTicks(4016),
+                            Theme = "Discovering",
                             TourSpotID = 2
                         },
                         new
                         {
                             Id = 3,
                             Activity = "climbing",
-                            Capacity = 40,
+                            Capacity = 0,
                             Cost = 40m,
                             Count = 0,
                             Description = "Amman to Irbid with a trip manager who can speak many languages",
-                            EndDate = new DateTime(2023, 8, 21, 8, 51, 22, 707, DateTimeKind.Utc).AddTicks(4078),
+                            EndDate = new DateTime(2023, 8, 20, 21, 9, 59, 120, DateTimeKind.Utc).AddTicks(4020),
                             Name = "Um-Qais ride",
-                            StartDate = new DateTime(2023, 8, 21, 11, 51, 22, 707, DateTimeKind.Local).AddTicks(4077),
+                            StartDate = new DateTime(2023, 8, 21, 0, 9, 59, 120, DateTimeKind.Local).AddTicks(4019),
+                            Theme = "Discovering",
                             TourSpotID = 3
                         });
                 });
