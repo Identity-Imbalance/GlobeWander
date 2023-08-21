@@ -62,36 +62,21 @@ namespace GlobeWander.Models.Services
              ).FirstOrDefaultAsync();
         }
 
-        //       public async Task<RateDTO> UpdateRate(int id, int tripId, RateDTO rateDTO)
-        //{
-        //    var existRate = await _rateService.Rates.FindAsync(id, tripId);
-        //    if (existRate != null)
-        //    {
-        //        existRate.Rating = rateDTO.Rating;
-        //        existRate.Comments = rateDTO.Comments;
-        //        await _rateService.SaveChangesAsync();
-        //        return rateDTO;
-        //    }
-        //    return null;
-        //}
-
-        public async Task<RateDTO> UpdateRate(int id, int tripId, RateDTO rateDTO)
+        public async Task<RateDTO> UpdateRate(int id,int tripId, RateDTO rate)
         {
-            var existRate = await _rateService.Rates
-                .Where(r => r.ID == id && r.TripID == tripId)
-                .FirstOrDefaultAsync();
-
+            var existRate = await _rateService.Rates.FindAsync(id, tripId);
             if (existRate != null)
             {
-                existRate.Rating = rateDTO.Rating;
-                existRate.Comments = rateDTO.Comments;
-                await _rateService.SaveChangesAsync();
-                return rateDTO;
+
+            existRate.ID = rate.ID;
+            existRate.TripID = rate.TripID;
+            existRate.Rating = rate.Rating;
+            existRate.Comments = rate.Comments;
+            _rateService.Entry(existRate).State = EntityState.Modified;
+            await _rateService.SaveChangesAsync();
+            return rate;
             }
             return null;
         }
-
-
-
     }
 }

@@ -9,7 +9,7 @@ namespace GlobeWander.Models.Interfaces
         Task<List<HotelRoomDTO>> GetHotelRooms();
         Task<HotelRoomDTO> GetHotelRoomId(int hotelID,int roomNumber);
         Task<hotelroomDTOcreate> UpdateHotelRoom(int hotelId, int roomNumber, hotelroomDTOcreate hotelRoom);
-        Task DeleteHotelRoom(int hotelID,int roomNumber);
+        Task<HotelRoomDTO> DeleteHotelRoom(int hotelID,int roomNumber);
 
     }
 }

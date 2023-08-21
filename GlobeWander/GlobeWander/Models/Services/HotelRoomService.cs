@@ -56,38 +56,34 @@ namespace GlobeWander.Models.Services
                 }
             ).Where(x => x.ID == b.RoomID)
             .FirstOrDefault(),
-               //bashar updated here and I add the null condition I just do it for the unit test 
-                BookingRoom =b.BookingRoom !=null ?
-                new BookingRoomDTO()
-                {
-                    ID = b.BookingRoom.ID,
-                    HotelID = b.BookingRoom.HotelID,
-                    RoomNumber = b.BookingRoom.RoomNumber,
-                    Cost = b.BookingRoom.Cost,
-                    Duration = b.BookingRoom.Duration ,
-                    TotalPrice = b.BookingRoom.TotalPrice 
-                }:null
-            })
-                .Where(x => x.HotelID == hotelID && x.RoomNumber == roomNumber)
+                BookingRoom = _context.BookingRooms.Select(x =>
+                   new BookingRoomDTO()
+                   {
+                       ID = x.ID,
+                       HotelID = x.HotelID,
+                       RoomNumber = x.RoomNumber,
+                       Cost = x.Cost,
+                       Duration = b.BookingRoom.Duration,
+                       TotalPrice = x.TotalPrice,
+                       Username = x.Username
+                   })
+                .FirstOrDefault(x=> x.RoomNumber == b.RoomNumber)
+            }).Where(x => x.HotelID == hotelID && x.RoomNumber == roomNumber)
                 .FirstOrDefaultAsync();
             return hotelRoomDTO;
 
 
         }
-        public async Task DeleteHotelRoom(int hotelID, int roomNumber)
+        public async Task<HotelRoomDTO> DeleteHotelRoom(int hotelID, int roomNumber)
         {
 
-            //HotelRoomDTO hotel = await GetHotelRoomId(hotelID, roomNumber);
-            //HotelRoom hotelRoom = await _context.HotelRooms.FindAsync(hotelID, roomNumber);
-            //_context.Entry(hotelRoom).State = EntityState.Deleted;
-            //await _context.SaveChangesAsync();
-            var hotel = await _context.HotelRooms.FindAsync(hotelID, roomNumber);
-            _context.HotelRooms.Remove(hotel);
+            HotelRoomDTO hotel = await GetHotelRoomId(hotelID, roomNumber);
+            HotelRoom hotelRoom = await _context.HotelRooms.FindAsync(hotelID, roomNumber);
+            _context.Entry(hotelRoom).State = EntityState.Deleted;
             await _context.SaveChangesAsync();
 
 
-
-
+            return hotel;
         }
 
 
@@ -132,11 +128,11 @@ namespace GlobeWander.Models.Services
 
         public async Task<hotelroomDTOcreate> UpdateHotelRoom(int hotelId, int roomNumber, hotelroomDTOcreate updatedHotelRoom)
         {
-            var hotelRoom = await _context.HotelRooms.FindAsync(hotelId, roomNumber);
+            HotelRoom hotelRoom = await _context.HotelRooms.FindAsync(hotelId, roomNumber);
             
                 hotelRoom.PricePerDay = updatedHotelRoom.PricePerDay;
                 hotelRoom.IsAvailable = updatedHotelRoom.IsAvailable;
-                _context.HotelRooms.Update(hotelRoom);
+                _context.Entry(hotelRoom).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
 
             updatedHotelRoom.HotelID = hotelId;
