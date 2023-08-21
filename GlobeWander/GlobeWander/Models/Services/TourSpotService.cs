@@ -99,7 +99,8 @@ namespace GlobeWander.Models.Services
                         Activity = trips.Activity,
                         StartDate = trips.StartDate,
                         EndDate = trips.EndDate,
-                        Theme = trips.Theme,
+                        Capacity = trips.Capacity,
+                        Count = trips.Count,
                         TourSpotID = trips.TourSpotID,
                         BookingTrips = trips.BookingTrips.Select(bt => new BookingTripDTO
                         {
@@ -107,14 +108,17 @@ namespace GlobeWander.Models.Services
                             TripID = bt.TripID,
                             NumberOfPersons = bt.NumberOfPersons,
                             CostPerPerson = bt.CostPerPerson,
-                            Duration = bt.Duration
+                            TotalPrice = bt.TotalPrice,
+                            Duration = bt.Duration,
+                            Username = bt.Username
                         }).ToList(),
                         Rates = trips.Rates.Select(r => new RateDTO
                         {
                             ID = r.ID,
                             TripID = r.TripID,
                             Comments = r.Comments,
-                            Rating = r.Rating
+                            Rating = r.Rating,
+                            Username = r.Username
                         }).ToList()
                     }).ToList()
 
@@ -181,7 +185,8 @@ namespace GlobeWander.Models.Services
                         Activity = trips.Activity,
                         StartDate = trips.StartDate,
                         EndDate = trips.EndDate,
-                        Theme = trips.Theme,
+                        Capacity = trips.Capacity,
+                        Count = trips.Count,
                         TourSpotID = trips.TourSpotID,
                         BookingTrips = trips.BookingTrips.Select(bt => new BookingTripDTO
                         {
@@ -189,14 +194,17 @@ namespace GlobeWander.Models.Services
                             TripID = bt.TripID,
                             NumberOfPersons = bt.NumberOfPersons,
                             CostPerPerson = bt.CostPerPerson,
-                            Duration = bt.Duration
+                            TotalPrice = bt.TotalPrice,
+                            Duration = bt.Duration,
+                            Username = bt.Username
                         }).ToList(),
                         Rates = trips.Rates.Select(r => new RateDTO
                         {
                             ID = r.ID,
                             TripID = r.TripID,
                             Comments = r.Comments,
-                            Rating = r.Rating
+                            Rating = r.Rating,
+                            Username = r.Username
                         }).ToList()
                     }).ToList()
 

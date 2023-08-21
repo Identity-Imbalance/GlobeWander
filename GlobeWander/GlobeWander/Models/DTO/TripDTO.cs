@@ -16,7 +16,11 @@
 
         public DateTime EndDate { get; set; }
 
-        public string Theme { get; set; }
+        public int Capacity { get; set; }
+
+        public int Count { get; set; }
+
+        public int TourSpotID { get; set; }
 
         public int TourSpotID { get; set; }
 

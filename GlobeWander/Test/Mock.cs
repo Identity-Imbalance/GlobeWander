@@ -22,6 +22,18 @@ namespace Test
 
         }
         //Write Your Code Here....
+        protected async Task<Rate> CreateRatesAndSave()
+        {
+            var rate = new Rate()
+            {
+                ID = 1,
+                TripID = 1,
+                Comments = "Test Comment",
+                Rating = "4"
+            };
+            _db.Rates.Add(rate);
+            await _db.SaveChangesAsync();
+            return rate;
 
 
         protected async Task<TourSpot> CreateAndSaveTestTourSpot()
@@ -44,6 +56,7 @@ namespace Test
 
 
         }
+
 
         protected async Task<Hotel> CreateAndSaveTestHotel()
         {
