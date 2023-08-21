@@ -35,6 +35,25 @@ namespace Test
 
             return hotel;
         }
+                
+        protected async  Task<Room> CreateandSaveRoom ()
+        {
+            var room = new Room() {Name ="Room3" , Layout = Layout.OneBed };
+             _db.Add(room);
+            await _db.SaveChangesAsync();
+
+                    return room;
+        }
+        protected async Task<HotelRoom> CreateandSaveHotelRoom()
+        {
+            var HotelRooms = new HotelRoom() {RoomNumber=5, PricePerDay =100 , IsAvailable=true};
+            _db.Add(HotelRooms);
+            await _db.SaveChangesAsync();
+
+            return HotelRooms;
+        }
+
+
 
 
         protected async Task<Trip> CreateAndSaveTestTrip()

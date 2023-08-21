@@ -27,7 +27,6 @@ namespace GlobeWander.Models.Services
                 Theme = trip.Theme,
                 TourSpotID = trip.TourSpotID
                 
-                
             };
             _context.Entry(newTrip).State = EntityState.Added;
 
@@ -73,7 +72,10 @@ namespace GlobeWander.Models.Services
                         TripID  = bt.TripID,
                         NumberOfPersons = bt.NumberOfPersons,
                         CostPerPerson = bt.CostPerPerson,
-                        Duration = bt.Duration
+                        Duration = bt.Duration,
+                        TotalPrice = bt.TotalPrice,
+                        Username = bt.Username
+
                     }).ToList(),
                     Rates = tr.Rates.Select(r=> new RateDTO
                     {
@@ -107,7 +109,9 @@ namespace GlobeWander.Models.Services
                         TripID = bt.TripID,
                         NumberOfPersons = bt.NumberOfPersons,
                         CostPerPerson = bt.CostPerPerson,
-                        Duration = bt.Duration
+                        Duration = bt.Duration,
+                        TotalPrice = bt.TotalPrice,
+                        Username = bt.Username
                     }).ToList(),
                     Rates = tr.Rates.Select(r => new RateDTO
                     {
