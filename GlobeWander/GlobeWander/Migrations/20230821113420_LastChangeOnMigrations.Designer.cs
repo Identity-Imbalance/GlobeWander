@@ -12,18 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GlobeWander.Migrations
 {
     [DbContext(typeof(GlobeWanderDbContext))]
-<<<<<<<< HEAD:GlobeWander/GlobeWander/Migrations/20230819222829_dd.Designer.cs
-<<<<<<<< HEAD:GlobeWander/GlobeWander/Migrations/20230819185135_UpdateDataBase.Designer.cs
-    [Migration("20230819185135_UpdateDataBase")]
-    partial class UpdateDataBase
-========
-    [Migration("20230819222829_dd")]
-    partial class dd
->>>>>>>> 835d49d (test Hotel Room And Room):GlobeWander/GlobeWander/Migrations/20230819222829_dd.Designer.cs
-========
-    [Migration("20230819185135_UpdateDataBase")]
-    partial class UpdateDataBase
->>>>>>>> sub-main:GlobeWander/GlobeWander/Migrations/20230819185135_UpdateDataBase.Designer.cs
+    [Migration("20230821113420_LastChangeOnMigrations")]
+    partial class LastChangeOnMigrations
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -123,16 +113,10 @@ namespace GlobeWander.Migrations
                     b.Property<decimal>("TotalPrice")
                         .HasColumnType("decimal(18,2)");
 
-<<<<<<<< HEAD:GlobeWander/GlobeWander/Migrations/20230819222829_dd.Designer.cs
-<<<<<<<< HEAD:GlobeWander/GlobeWander/Migrations/20230819185135_UpdateDataBase.Designer.cs
-========
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
->>>>>>>> 835d49d (test Hotel Room And Room):GlobeWander/GlobeWander/Migrations/20230819222829_dd.Designer.cs
-========
->>>>>>>> sub-main:GlobeWander/GlobeWander/Migrations/20230819185135_UpdateDataBase.Designer.cs
                     b.HasKey("ID");
 
                     b.HasIndex("HotelID", "RoomNumber")
@@ -152,15 +136,21 @@ namespace GlobeWander.Migrations
                     b.Property<decimal>("CostPerPerson")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("Duration")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Duration")
+                        .HasColumnType("int");
 
                     b.Property<int>("NumberOfPersons")
                         .HasColumnType("int");
 
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<int>("TripID")
                         .HasColumnType("int");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 
@@ -254,12 +244,15 @@ namespace GlobeWander.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Rating")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
 
                     b.Property<int>("TripID")
                         .HasColumnType("int");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 
@@ -387,8 +380,14 @@ namespace GlobeWander.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Cost")
-                        .HasColumnType("float");
+                    b.Property<int>("Capacity")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Cost")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -404,10 +403,6 @@ namespace GlobeWander.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Theme")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("TourSpotID")
                         .HasColumnType("int");
 
@@ -422,72 +417,39 @@ namespace GlobeWander.Migrations
                         {
                             Id = 1,
                             Activity = "walking",
-                            Cost = 20.0,
+                            Capacity = 30,
+                            Cost = 20m,
+                            Count = 0,
                             Description = "trip start at 8 am and going from Amman to Petra",
-<<<<<<<< HEAD:GlobeWander/GlobeWander/Migrations/20230819222829_dd.Designer.cs
-<<<<<<<< HEAD:GlobeWander/GlobeWander/Migrations/20230819185135_UpdateDataBase.Designer.cs
-                            EndDate = new DateTime(2023, 8, 19, 18, 51, 34, 914, DateTimeKind.Utc).AddTicks(3698),
+                            EndDate = new DateTime(2023, 8, 21, 11, 34, 20, 107, DateTimeKind.Utc).AddTicks(6282),
                             Name = "Petra ride",
-                            StartDate = new DateTime(2023, 8, 19, 21, 51, 34, 914, DateTimeKind.Local).AddTicks(3685),
-========
-                            EndDate = new DateTime(2023, 8, 19, 22, 28, 29, 128, DateTimeKind.Utc).AddTicks(8046),
-                            Name = "Petra ride",
-                            StartDate = new DateTime(2023, 8, 20, 1, 28, 29, 128, DateTimeKind.Local).AddTicks(8005),
->>>>>>>> 835d49d (test Hotel Room And Room):GlobeWander/GlobeWander/Migrations/20230819222829_dd.Designer.cs
-========
-                            EndDate = new DateTime(2023, 8, 19, 18, 51, 34, 914, DateTimeKind.Utc).AddTicks(3698),
-                            Name = "Petra ride",
-                            StartDate = new DateTime(2023, 8, 19, 21, 51, 34, 914, DateTimeKind.Local).AddTicks(3685),
->>>>>>>> sub-main:GlobeWander/GlobeWander/Migrations/20230819185135_UpdateDataBase.Designer.cs
-                            Theme = "Discovering",
+                            StartDate = new DateTime(2023, 8, 21, 14, 34, 20, 107, DateTimeKind.Local).AddTicks(6270),
                             TourSpotID = 1
                         },
                         new
                         {
                             Id = 2,
                             Activity = "visiting",
-                            Cost = 30.0,
+                            Capacity = 22,
+                            Cost = 30m,
+                            Count = 0,
                             Description = "Amman to Jerash with a trip manager who can speak many languages",
-<<<<<<<< HEAD:GlobeWander/GlobeWander/Migrations/20230819222829_dd.Designer.cs
-<<<<<<<< HEAD:GlobeWander/GlobeWander/Migrations/20230819185135_UpdateDataBase.Designer.cs
-                            EndDate = new DateTime(2023, 8, 19, 18, 51, 34, 914, DateTimeKind.Utc).AddTicks(3701),
+                            EndDate = new DateTime(2023, 8, 21, 11, 34, 20, 107, DateTimeKind.Utc).AddTicks(6286),
                             Name = "Jerash ride",
-                            StartDate = new DateTime(2023, 8, 19, 21, 51, 34, 914, DateTimeKind.Local).AddTicks(3701),
-========
-                            EndDate = new DateTime(2023, 8, 19, 22, 28, 29, 128, DateTimeKind.Utc).AddTicks(8050),
-                            Name = "Jerash ride",
-                            StartDate = new DateTime(2023, 8, 20, 1, 28, 29, 128, DateTimeKind.Local).AddTicks(8049),
->>>>>>>> 835d49d (test Hotel Room And Room):GlobeWander/GlobeWander/Migrations/20230819222829_dd.Designer.cs
-========
-                            EndDate = new DateTime(2023, 8, 19, 18, 51, 34, 914, DateTimeKind.Utc).AddTicks(3701),
-                            Name = "Jerash ride",
-                            StartDate = new DateTime(2023, 8, 19, 21, 51, 34, 914, DateTimeKind.Local).AddTicks(3701),
->>>>>>>> sub-main:GlobeWander/GlobeWander/Migrations/20230819185135_UpdateDataBase.Designer.cs
-                            Theme = "Discovering",
+                            StartDate = new DateTime(2023, 8, 21, 14, 34, 20, 107, DateTimeKind.Local).AddTicks(6285),
                             TourSpotID = 2
                         },
                         new
                         {
                             Id = 3,
                             Activity = "climbing",
-                            Cost = 40.0,
+                            Capacity = 40,
+                            Cost = 40m,
+                            Count = 0,
                             Description = "Amman to Irbid with a trip manager who can speak many languages",
-<<<<<<<< HEAD:GlobeWander/GlobeWander/Migrations/20230819222829_dd.Designer.cs
-<<<<<<<< HEAD:GlobeWander/GlobeWander/Migrations/20230819185135_UpdateDataBase.Designer.cs
-                            EndDate = new DateTime(2023, 8, 19, 18, 51, 34, 914, DateTimeKind.Utc).AddTicks(3704),
+                            EndDate = new DateTime(2023, 8, 21, 11, 34, 20, 107, DateTimeKind.Utc).AddTicks(6289),
                             Name = "Um-Qais ride",
-                            StartDate = new DateTime(2023, 8, 19, 21, 51, 34, 914, DateTimeKind.Local).AddTicks(3703),
-========
-                            EndDate = new DateTime(2023, 8, 19, 22, 28, 29, 128, DateTimeKind.Utc).AddTicks(8054),
-                            Name = "Um-Qais ride",
-                            StartDate = new DateTime(2023, 8, 20, 1, 28, 29, 128, DateTimeKind.Local).AddTicks(8052),
->>>>>>>> 835d49d (test Hotel Room And Room):GlobeWander/GlobeWander/Migrations/20230819222829_dd.Designer.cs
-========
-                            EndDate = new DateTime(2023, 8, 19, 18, 51, 34, 914, DateTimeKind.Utc).AddTicks(3704),
-                            Name = "Um-Qais ride",
-                            StartDate = new DateTime(2023, 8, 19, 21, 51, 34, 914, DateTimeKind.Local).AddTicks(3703),
->>>>>>>> sub-main:GlobeWander/GlobeWander/Migrations/20230819185135_UpdateDataBase.Designer.cs
-                            Theme = "Discovering",
+                            StartDate = new DateTime(2023, 8, 21, 14, 34, 20, 107, DateTimeKind.Local).AddTicks(6288),
                             TourSpotID = 3
                         });
                 });

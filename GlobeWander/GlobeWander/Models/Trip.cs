@@ -22,8 +22,6 @@
 
         public int TourSpotID { get; set; }
 
-        public int TourSpotID { get; set; }
-
         public TourSpot? TourSpots { get; set; }
 
         public List<BookingTrip>? BookingTrips { get; set; }

@@ -67,11 +67,16 @@ namespace GlobeWander.Controllers
         // DELETE: api/HotelRooms/5
         [HttpDelete("Hotels/{hotelID}/Rooms/{roomNumber}")]
         [Authorize(Roles = "Admin Manager,Hotel Manager")]
-        public async Task<HotelRoomDTO> DeleteHotelRoom(int hotelID,int roomNumber)
+        public async Task<HotelRoom> DeleteHotelRoom(int hotelID,int roomNumber)
         {
-            // return Ok(await _hoteRoom.Delete(hotelId, idRoom));
 
-            return await _hotelRoom.DeleteHotelRoom(hotelID, roomNumber);
+            if (_hotelRoom == null)
+            {
+                return null;
+            }
+             return await _hotelRoom.DeleteHotelRoom(hotelID, roomNumber);
+            
+
         }
 
     }

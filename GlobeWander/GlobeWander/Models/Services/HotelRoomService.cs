@@ -74,16 +74,17 @@ namespace GlobeWander.Models.Services
 
 
         }
-        public async Task<HotelRoomDTO> DeleteHotelRoom(int hotelID, int roomNumber)
+        public async Task<HotelRoom> DeleteHotelRoom(int hotelID, int roomNumber)
         {
 
-            HotelRoomDTO hotel = await GetHotelRoomId(hotelID, roomNumber);
             HotelRoom hotelRoom = await _context.HotelRooms.FindAsync(hotelID, roomNumber);
-            _context.Entry(hotelRoom).State = EntityState.Deleted;
-            await _context.SaveChangesAsync();
+            if (hotelRoom != null)
+            {
+                _context.Entry(hotelRoom).State = EntityState.Deleted;
+                await _context.SaveChangesAsync();
+            }
+            return hotelRoom;
 
-
-            return hotel;
         }
 
 

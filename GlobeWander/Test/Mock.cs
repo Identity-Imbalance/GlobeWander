@@ -1,6 +1,7 @@
 using GlobeWander.Data;
 using GlobeWander.Models;
 using GlobeWander.Models.DTO;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,6 +11,8 @@ namespace Test
     {
         private readonly SqliteConnection _connection;
         protected readonly GlobeWanderDbContext _db;
+
+        protected readonly UserManager<ApplicationUser> _UserManager;
         public Mock()
         {
             _connection = new SqliteConnection("Filename=:memory:");
@@ -29,12 +32,12 @@ namespace Test
                 ID = 1,
                 TripID = 1,
                 Comments = "Test Comment",
-                Rating = "4"
+                Rating = 4
             };
             _db.Rates.Add(rate);
             await _db.SaveChangesAsync();
             return rate;
-
+        }
 
         protected async Task<TourSpot> CreateAndSaveTestTourSpot()
         {
@@ -79,7 +82,7 @@ namespace Test
         }
         protected async Task<HotelRoom> CreateandSaveHotelRoom()
         {
-            var HotelRooms = new HotelRoom() {RoomNumber=5, PricePerDay =100 , IsAvailable=true};
+            var HotelRooms = new HotelRoom() {HotelID = 1,RoomID = 1,  RoomNumber=101, PricePerDay =100 , IsAvailable=true};
             _db.Add(HotelRooms);
             await _db.SaveChangesAsync();
 
