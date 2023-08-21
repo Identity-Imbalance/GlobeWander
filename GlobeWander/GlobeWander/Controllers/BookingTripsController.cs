@@ -9,6 +9,8 @@ using GlobeWander.Data;
 using GlobeWander.Models;
 using GlobeWander.Models.Interfaces;
 using GlobeWander.Models.DTO;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GlobeWander.Controllers
 {
@@ -24,6 +26,8 @@ namespace GlobeWander.Controllers
         }
 
         // GET: api/BookingTrips
+        [Authorize(Roles = "Admin Manager")]
+        
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BookingTripDTO>>> GetbookingTrips()
         {
@@ -41,13 +45,8 @@ namespace GlobeWander.Controllers
         // PUT: api/BookingTrips/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}/{tripId}")]
-        public async Task<IActionResult> PutBookingTrip(int id, BookingTripDTO bookingTrip, int tripId)
+        public async Task<IActionResult> PutBookingTrip(int id, UpdateBookingTripDTO bookingTrip, int tripId)
         {
-
-            if (id != bookingTrip.ID)
-            {
-                return BadRequest();
-            }
 
             var updatebookingTrip = await _bookTrip.UpdateBookingTrip(id, bookingTrip, tripId);
 
@@ -57,9 +56,12 @@ namespace GlobeWander.Controllers
         // POST: api/BookingTrips
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<BookingTripDTO>> PostBookingTrip(BookingTripDTO bookingTrip)
+        public async Task<ActionResult<BookingTripDTO>> PostBookingTrip(NewBookingTripDTO bookingTrip)
         {
-            return await _bookTrip.Create(bookingTrip);
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            return await _bookTrip.Create(bookingTrip,userId);
 
         }
 

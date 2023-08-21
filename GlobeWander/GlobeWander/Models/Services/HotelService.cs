@@ -52,7 +52,23 @@ namespace GlobeWander.Models.Services
                 RoomID = v.RoomID,
                 IsAvailable = v.IsAvailable,
                 RoomNumber = v.RoomNumber,
-                PricePerDay = v.PricePerDay
+                PricePerDay = v.PricePerDay,
+                Rooms=_context.Rooms.Select(r => new RoomDTO
+                {
+                    ID = r.ID,
+                    Layout = r.Layout,
+                    Name = r.Name
+                }).Where(r=>r.ID== v.RoomID).FirstOrDefault(),
+                BookingRoom=_context.BookingRooms.Select(bk=>new BookingRoomDTO
+                {
+                    ID = bk.ID,
+                    HotelID= bk.HotelID,
+                    Cost = bk.Cost,
+                    RoomNumber= bk.RoomNumber,
+                    TotalPrice= bk.TotalPrice,
+                    Duration= bk.Duration,
+                    Username=bk.Username
+                }).Where(bk=>bk.RoomNumber==v.RoomNumber).FirstOrDefault()
 
             }).ToListAsync();
 
@@ -85,7 +101,24 @@ namespace GlobeWander.Models.Services
                     RoomID = v.RoomID,
                     IsAvailable = v.IsAvailable,
                     RoomNumber = v.RoomNumber,
-                    PricePerDay = v.PricePerDay
+                    PricePerDay = v.PricePerDay,
+                    Rooms = _context.Rooms.Select(r => new RoomDTO
+                    {
+                        ID = r.ID,
+                        Layout = r.Layout,
+                        Name = r.Name
+                    }).Where(r => r.ID == v.RoomID).FirstOrDefault(),
+                    BookingRoom = _context.BookingRooms.Select(bk => new BookingRoomDTO
+                    {
+                        ID = bk.ID,
+                        HotelID = bk.HotelID,
+                        Cost = bk.Cost,
+                        RoomNumber = bk.RoomNumber,
+                        TotalPrice = bk.TotalPrice,
+                        Duration = bk.Duration,
+                        Username = bk.Username
+                    }).Where(bk => bk.RoomNumber == v.RoomNumber).FirstOrDefault()
+
 
                 }).ToList()
         }).ToListAsync();

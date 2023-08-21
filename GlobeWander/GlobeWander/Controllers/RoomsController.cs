@@ -9,6 +9,7 @@ using GlobeWander.Data;
 using GlobeWander.Models;
 using GlobeWander.Models.Interfaces;
 using GlobeWander.Models.DTO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GlobeWander.Controllers
 {
@@ -25,7 +26,7 @@ namespace GlobeWander.Controllers
 
         // GET: api/Rooms
         [HttpGet]
-
+        [Authorize(Roles = "Admin Manager,Hotel Manager")]
         public async Task<ActionResult<IEnumerable<RoomDTO>>> GetRooms()
         {
             if (_context == null)
@@ -37,6 +38,7 @@ namespace GlobeWander.Controllers
 
         // GET: api/Rooms/5
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin Manager,Hotel Manager")]
         public async Task<ActionResult<RoomDTO>> GetRoom(int id)
         {
             if (_context == null)
@@ -56,6 +58,7 @@ namespace GlobeWander.Controllers
         // PUT: api/Rooms/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin Manager,Hotel Manager")]
         public async Task<IActionResult> PutRoom(int id, RoomDTO room)
         {
            var updateRoom = await _context.UpdateRoom(id, room);    
@@ -68,6 +71,7 @@ namespace GlobeWander.Controllers
         // POST: api/Rooms
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize(Roles = "Admin Manager,Hotel Manager")]
         public async Task<ActionResult<RoomDTO>> PostRoom(RoomDTO room)
         {
             
@@ -83,6 +87,7 @@ namespace GlobeWander.Controllers
 
         // DELETE: api/Rooms/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin Manager,Hotel Manager")]
         public async Task<IActionResult> DeleteRoom(int id)
         {
             if (_context == null)
