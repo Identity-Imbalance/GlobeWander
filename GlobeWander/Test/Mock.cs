@@ -1,4 +1,5 @@
 using GlobeWander.Data;
+using GlobeWander.Models;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,8 +21,24 @@ namespace Test
 
         }
         //Write Your Code Here....
-        
-       
+        protected async  Task<Room> CreateandSaveRoom ()
+        {
+            var room = new Room() {Name ="Room3" , Layout = Layout.OneBed };
+             _db.Add(room);
+            await _db.SaveChangesAsync();
+
+                    return room;
+        }
+        protected async Task<HotelRoom> CreateandSaveHotelRoom()
+        {
+            var HotelRooms = new HotelRoom() {RoomNumber=5, PricePerDay =100 , IsAvailable=true};
+            _db.Add(HotelRooms);
+            await _db.SaveChangesAsync();
+
+            return HotelRooms;
+        }
+
+
         public void Dispose()
         {
             _db?.Dispose();
