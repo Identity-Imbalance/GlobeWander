@@ -71,8 +71,7 @@ namespace GlobeWander.Controllers
         {
             // return Ok(await _hoteRoom.Delete(hotelId, idRoom));
 
-             await _hotelRoom.DeleteHotelRoom(hotelID, roomNumber);
-            return NoContent();
+            return await _hotelRoom.DeleteHotelRoom(hotelID, roomNumber);
         }
 
     }

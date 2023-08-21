@@ -92,22 +92,5 @@ namespace Test
             _db?.Dispose();
             _connection?.Dispose();
         }
-
-        protected async Task<HotelRoom> CreateHotelRoom()
-        {
-            var hotelRoom = new HotelRoom()
-            {
-                
-                RoomNumber = 202,
-                HotelID = 1,
-                RoomID = 1,
-                PricePerDay = 200,
-                IsAvailable = true,
-
-            };
-            _db.HotelRooms.Add(hotelRoom);
-            await _db.SaveChangesAsync();
-            return hotelRoom;
-        }
     }
 }
