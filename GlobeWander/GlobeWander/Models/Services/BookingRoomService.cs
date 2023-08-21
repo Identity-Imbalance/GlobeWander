@@ -17,7 +17,12 @@ namespace GlobeWander.Models.Services
             _context = context;
             _UserManager = userManager;
         }
-
+        /// <summary>
+        /// Creates a new booking for a hotel room.
+        /// </summary>
+        /// <param name="bookingRoomDTO">The DTO containing booking details.</param>
+        /// <param name="userId">The ID of the user making the booking.</param>
+        /// <returns>The newly created booking as a DTO.</returns>
         public async Task<BookingRoomDTO> CreateBookingRoom(NewBookingRoomDTO bookingRoomDTO, string userId)
         {
             var getHotelRoom = await _context.HotelRooms.FindAsync(bookingRoomDTO.HotelID,bookingRoomDTO.RoomNumber);
@@ -44,7 +49,10 @@ namespace GlobeWander.Models.Services
             return null;
            
         }
-
+        /// <summary>
+        /// Deletes a booking room by ID and marks the associated hotel room as available.
+        /// </summary>
+        /// <param name="id">The ID of the booking room to delete.</param>
         public async Task DeleteBookingRoom(int id)
         {
             var deleteBookingRoom = await _context.BookingRooms.FindAsync(id);
@@ -58,7 +66,10 @@ namespace GlobeWander.Models.Services
                 await _context.SaveChangesAsync();
             }
         }
-
+        /// <summary>
+        /// Retrieves a list of all booking rooms as DTOs.
+        /// </summary>
+        /// <returns>A list of booking room DTOs.</returns>
         public async Task<List<BookingRoomDTO>> GetAllBookingRooms()
         {
 
@@ -78,7 +89,12 @@ namespace GlobeWander.Models.Services
 
             return bookingRoomDTOs;
         }
-
+        /// <summary>
+        /// Retrieves a booking room by ID as a DTO.
+        /// </summary>
+        /// <param name="id">The ID of the booking room to retrieve.</param>
+        /// <param name="userId">The ID of the user making the request.</param>
+        /// <returns>The booking room as a DTO.</returns>
         public async Task<BookingRoomDTO> GetBookingRoomById(int id,string userId)
         {
             var bookingRoom = await _context.BookingRooms.FindAsync(id);
@@ -100,6 +116,16 @@ namespace GlobeWander.Models.Services
 
             return bookingRoomDTO;
             }
+
+        /// <summary>
+        /// Updates the duration and total price of a booking room.
+        /// </summary>
+        /// <param name="id">The ID of the booking room to update.</param>
+        /// <param name="updatedBookingRoomDTO">The updated booking room details.</param>
+        /// <param name="userId">The ID of the user making the update.</param>
+        /// <returns>The updated booking room as a DTO.</returns>
+        /// <remarks>User cannot update the booking room.</remarks>
+        
         // user cannot update the booking room 
         public async Task<BookingRoomDTO> UpdateBookingRoom(int id, DurationBookingRoomDTO updatedBookingRoomDTO, string userId)
         {

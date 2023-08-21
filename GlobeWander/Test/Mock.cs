@@ -24,7 +24,10 @@ namespace Test
 
         protected async Task<Hotel> CreateAndSaveTestHotel()
         {
-            var hotel = new Hotel() { Name = "Test", Description = "Test", TourSpotID = 1 };
+            var hotel = new Hotel() { 
+                Name = "Test", 
+                Description = "Test", 
+                TourSpotID = 1 };
             _db.Hotels.Add(hotel);
             await _db.SaveChangesAsync();
 
@@ -32,7 +35,29 @@ namespace Test
 
             return hotel;
         }
-                
+
+
+        protected async Task<Trip> CreateAndSaveTestTrip()
+        {
+            var trip = new Trip() { 
+                Name = "Test", 
+                Description = "Test", 
+                Cost = 1.0, 
+                Activity = "Test",
+                StartDate = DateTime.Parse("2020-01-01"),
+                EndDate = DateTime.Parse("2020-02-02"),
+                Theme = "Test",
+                TourSpotID = 2
+            };
+            _db.Trips.Add(trip);
+            await _db.SaveChangesAsync();
+
+            Assert.NotEqual(0, trip.Id);
+
+            return trip;
+        }
+
+
         public void Dispose()
         {
             _db?.Dispose();

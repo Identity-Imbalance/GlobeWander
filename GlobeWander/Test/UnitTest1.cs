@@ -6,6 +6,8 @@ namespace Test
 {
     public class UnitTest1 : Mock
     {
+        // Hotel Tests //
+
         //Get
         [Fact]
         public async Task CanGetHotel()
@@ -90,6 +92,121 @@ namespace Test
             var deleteHotel = await service.DeleteHotel(hotel.Id);
             
             Assert.NotNull(deleteHotel);
+
+        }
+
+        // Trip Tests //
+
+        //Get
+        [Fact]
+        public async Task CanGetTrip()
+        {
+            // Arrange
+            var trip = await CreateAndSaveTestTrip();
+
+            var service = new TripService(_db);
+
+            // Act
+            var actulalTrip = await service.GetTripByID(trip.Id);
+
+            // Assert
+            Assert.NotNull(actulalTrip);
+            Assert.Equal(trip.Id, actulalTrip.Id);
+            Assert.Equal(trip.Name, actulalTrip.Name);
+            Assert.Equal(trip.Description, actulalTrip.Description);
+            Assert.Equal(trip.Cost, actulalTrip.Cost);
+            Assert.Equal(trip.Activity, actulalTrip.Activity);
+            Assert.Equal(trip.StartDate, actulalTrip.StartDate);
+            Assert.Equal(trip.EndDate, actulalTrip.EndDate);
+            Assert.Equal(trip.Theme, actulalTrip.Theme);
+            Assert.Equal(trip.TourSpotID, actulalTrip.TourSpotID);
+        }
+
+        //Create
+        [Fact]
+        public async Task CreatTripTest()
+        {
+            var trip = await CreateAndSaveTestTrip();
+            var service = new TripService(_db);
+
+            var newTripDTO = new NewTripDTO()
+            {
+                Name = "Test",
+                Description = "Test",
+                Cost = 1.0,
+                Activity = "Test",
+                StartDate = DateTime.Parse("2020-01-01"),
+                EndDate = DateTime.Parse("2020-02-02"),
+                Theme = "Test",
+                TourSpotID = 1
+            };
+
+            var actualTrip = await service.CreateTrip(newTripDTO);
+
+            Assert.NotNull(actualTrip);
+            Assert.Equal(actualTrip.Name, newTripDTO.Name);
+        }
+
+        //update
+
+        [Fact]
+        public async void UpdateTrip()
+        {
+            var trip = await CreateAndSaveTestTrip();
+            var service = new TripService(_db);
+
+            var newTripDTO = new NewTripDTO()
+            {
+                Id = trip.Id,
+                Name = "Test",
+                Description = "Test",
+                Cost = 1.0,
+                Activity = "Test",
+                StartDate = DateTime.Parse("2020-01-01"),
+                EndDate = DateTime.Parse("2020-02-02"),
+                Theme = "Test",
+                TourSpotID = 1
+            };
+
+            var x = await service.CreateTrip(newTripDTO);
+
+            var UpdatedTrip = new NewTripDTO()
+            {
+                Name = newTripDTO.Name,
+                Description = newTripDTO.Description,
+                Cost = newTripDTO.Cost,
+                Activity = newTripDTO.Activity,
+                StartDate = newTripDTO.StartDate,
+                EndDate = newTripDTO.EndDate,
+                Theme = newTripDTO.Theme,
+                TourSpotID = newTripDTO.TourSpotID
+            };
+
+            var actualTrip = await service.UpdateTrip(UpdatedTrip, x.Id);
+            var y = await service.GetTripByID(actualTrip.Id);
+
+            Assert.Equal(UpdatedTrip.Name, y.Name);
+            Assert.Equal(UpdatedTrip.Description, y.Description);
+            Assert.Equal(UpdatedTrip.Cost, y.Cost);
+            Assert.Equal(UpdatedTrip.Activity, y.Activity);
+            Assert.Equal(UpdatedTrip.StartDate, y.StartDate);
+            Assert.Equal(UpdatedTrip.EndDate, y.EndDate);
+            Assert.Equal(UpdatedTrip.Theme, y.Theme);
+            Assert.Equal(UpdatedTrip.TourSpotID, y.TourSpotID);
+
+        }
+
+        //Delete
+        [Fact]
+        public async Task DeleteTripTest()
+        {
+            var trip = await CreateAndSaveTestTrip();
+            var service = new TripService(_db);
+            
+
+            await service.DeleteTrip(trip.Id);
+            var deletedTrip = await service.GetTripByID(trip.Id);
+            Assert.Null(deletedTrip);
 
         }
     }
