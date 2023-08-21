@@ -14,6 +14,8 @@
 
         public decimal TotalPrice { get; set; }
 
+        public string Username { get; set; }
+
         public HotelRoom? HotelRooms { get; set; }
     }
 }

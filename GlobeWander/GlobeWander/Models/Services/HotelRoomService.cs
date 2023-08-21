@@ -94,37 +94,39 @@ namespace GlobeWander.Models.Services
         public async Task<List<HotelRoomDTO>> GetHotelRooms()
         {
 
-            var hotelRoomDTO = await _context.HotelRooms.Select(b => new HotelRoomDTO {
+            var hotelRoomDTO = await _context.HotelRooms.Select(b => new HotelRoomDTO
+            {
                 HotelID = b.HotelID,
                 RoomNumber = b.RoomNumber,
                 RoomID = b.RoomID,
                 PricePerDay = b.PricePerDay,
                 IsAvailable = b.IsAvailable,
-                Rooms =  _context.Rooms.Select(
-                    x => new RoomDTO 
-                    { 
-                        ID = x.ID, 
+                Rooms = _context.Rooms.Select(
+                    x => new RoomDTO
+                    {
+                        ID = x.ID,
                         Name = x.Name,
                         Layout = x.Layout
                     })
                 .Where(x => x.ID == b.RoomID)
                 .FirstOrDefault(),
-                BookingRoom = 
+                BookingRoom = _context.BookingRooms.Select(x =>
                 new BookingRoomDTO()
                 {
-                    ID = b.BookingRoom.ID,
-                    HotelID= b.BookingRoom.HotelID,
-                    RoomNumber = b.BookingRoom.RoomNumber,
-                    Cost = b.BookingRoom.Cost,
+                    ID = x.ID,
+                    HotelID = x.HotelID,
+                    RoomNumber = x.RoomNumber,
+                    Cost = x.Cost,
                     Duration = b.BookingRoom.Duration,
-                    TotalPrice = b.BookingRoom.TotalPrice
-                }
-                
-                
-                
+                    TotalPrice = x.TotalPrice,
+                    Username = x.Username
+                })
+                .FirstOrDefault(),
             }).ToListAsync();
 
-          
+
+
+
             return hotelRoomDTO;
         }
 

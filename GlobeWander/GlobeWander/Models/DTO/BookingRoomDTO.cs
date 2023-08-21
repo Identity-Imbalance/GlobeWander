@@ -13,5 +13,7 @@
         public int Duration { get; set; }
 
         public decimal TotalPrice { get; set; }
+
+        public string Username { get; set; }
     }
 }

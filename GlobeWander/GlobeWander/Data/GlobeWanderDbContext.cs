@@ -103,7 +103,8 @@ namespace GlobeWander.Data
                 NormalizedName = roleName.ToUpper(),
                 ConcurrencyStamp = Guid.Empty.ToString()
             };
-            var roleClaim = permissions.Select(permissions => new IdentityRoleClaim<string>
+            var roleClaim = permissions.Select(permissions => 
+            new IdentityRoleClaim<string>
             {
                 Id = nextId++,
                 RoleId = role.Id,
