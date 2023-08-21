@@ -22,20 +22,6 @@ namespace Test
 
         }
         //Write Your Code Here....
-        protected async Task<Rate> CreateRatesAndSave()
-        {
-            var rate = new Rate()
-            {
-                ID = 1,
-                TripID = 1,
-                Comments = "Test Comment",
-                Rating = "4"
-            };
-            _db.Rates.Add(rate);
-            await _db.SaveChangesAsync();
-            return rate;
-        }
-
 
 
         protected async Task<TourSpot> CreateAndSaveTestTourSpot()
@@ -92,23 +78,6 @@ namespace Test
         {
             _db?.Dispose();
             _connection?.Dispose();
-        }
-
-        protected async Task<HotelRoom> CreateHotelRoom()
-        {
-            var hotelRoom = new HotelRoom()
-            {
-                
-                RoomNumber = 202,
-                HotelID = 1,
-                RoomID = 1,
-                PricePerDay = 200,
-                IsAvailable = true,
-
-            };
-            _db.HotelRooms.Add(hotelRoom);
-            await _db.SaveChangesAsync();
-            return hotelRoom;
         }
     }
 }
