@@ -5,7 +5,7 @@ namespace GlobeWander.Models.Interfaces
     public interface IHotelRoom
     {
 
-        Task<hotelroomDTOcreate> CreateHotelRoom(hotelroomDTOcreate hotelRoom);
+        Task<HotelRoomDTO> CreateHotelRoom(hotelroomDTOcreate hotelRoom);
 
         Task<List<HotelRoomDTO>> GetHotelRooms();
 

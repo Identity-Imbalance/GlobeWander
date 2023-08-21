@@ -47,7 +47,7 @@ namespace GlobeWander.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         [Authorize(Roles = "Admin Manager,Hotel Manager")]
-        public async Task<ActionResult<hotelroomDTOcreate>> PostHotelRoom(hotelroomDTOcreate hotelRoom)
+        public async Task<ActionResult<HotelRoomDTO>> PostHotelRoom(hotelroomDTOcreate hotelRoom)
         {
             return await _hotelRoom.CreateHotelRoom(hotelRoom);
 

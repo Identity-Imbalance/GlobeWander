@@ -261,7 +261,6 @@ public async Task UpdateTourSpot()
         [Fact]
         public async Task DeleteRate_ReturnsDeletedRate()
         {
-
             var rate = await CreateRatesAndSave();
             var rateService = new RateService(_db,_UserManager);
             var deletedRate = await rateService.DeleteRate(rate.ID, rate.TripID);

@@ -32,7 +32,8 @@ namespace Test
                 ID = 1,
                 TripID = 1,
                 Comments = "Test Comment",
-                Rating = 4
+                Rating = 4,
+                Username = "user"
             };
             _db.Rates.Add(rate);
             await _db.SaveChangesAsync();
@@ -82,7 +83,7 @@ namespace Test
         }
         protected async Task<HotelRoom> CreateandSaveHotelRoom()
         {
-            var HotelRooms = new HotelRoom() {HotelID = 1,RoomID = 1,  RoomNumber=101, PricePerDay =100 , IsAvailable=true};
+            var HotelRooms = new HotelRoom() {HotelID = 2,RoomID = 2, PricePerDay =100 , IsAvailable=true};
             _db.Add(HotelRooms);
             await _db.SaveChangesAsync();
 
