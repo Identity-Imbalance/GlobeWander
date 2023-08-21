@@ -13225,19 +13225,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ammar\\.nuget\\packages\\": {}
+    "C:\\Users\\yaman\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ammar\\source\\repos\\Identity-Imbalance\\GlobeWander\\GlobeWander\\Test\\Test.csproj",
+      "projectUniqueName": "E:\\Labs\\Identity-Imbalance\\GlobeWander\\GlobeWander\\Test\\Test.csproj",
       "projectName": "Test",
-      "projectPath": "C:\\Users\\ammar\\source\\repos\\Identity-Imbalance\\GlobeWander\\GlobeWander\\Test\\Test.csproj",
-      "packagesPath": "C:\\Users\\ammar\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ammar\\source\\repos\\Identity-Imbalance\\GlobeWander\\GlobeWander\\Test\\obj\\",
+      "projectPath": "E:\\Labs\\Identity-Imbalance\\GlobeWander\\GlobeWander\\Test\\Test.csproj",
+      "packagesPath": "C:\\Users\\yaman\\.nuget\\packages\\",
+      "outputPath": "E:\\Labs\\Identity-Imbalance\\GlobeWander\\GlobeWander\\Test\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\ammar\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\yaman\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -13251,8 +13251,8 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "C:\\Users\\ammar\\source\\repos\\Identity-Imbalance\\GlobeWander\\GlobeWander\\GlobeWander\\GlobeWander.csproj": {
-              "projectPath": "C:\\Users\\ammar\\source\\repos\\Identity-Imbalance\\GlobeWander\\GlobeWander\\GlobeWander\\GlobeWander.csproj"
+            "E:\\Labs\\Identity-Imbalance\\GlobeWander\\GlobeWander\\GlobeWander\\GlobeWander.csproj": {
+              "projectPath": "E:\\Labs\\Identity-Imbalance\\GlobeWander\\GlobeWander\\GlobeWander\\GlobeWander.csproj"
             }
           }
         }

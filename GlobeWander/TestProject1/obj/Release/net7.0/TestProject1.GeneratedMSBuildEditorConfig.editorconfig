@@ -8,8 +8,4 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = TestProject1
-<<<<<<< HEAD
-build_property.ProjectDir = C:\Users\tsnee\OneDrive\Desktop\NewProject\GlobeWander\TestProject1\
-=======
-build_property.ProjectDir = C:\Users\SOKKER\Source\Repos\Identity-Imbalance\GlobeWander\GlobeWander\TestProject1\
->>>>>>> 88935cf41a48ebf8100114571c1de26f6f2148de
+build_property.ProjectDir = E:\Labs\Identity-Imbalance\GlobeWander\GlobeWander\TestProject1\
