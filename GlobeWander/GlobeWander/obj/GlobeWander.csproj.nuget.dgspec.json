@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Labs\\Identity-Imbalance\\GlobeWander\\GlobeWander\\GlobeWander\\GlobeWander.csproj": {}
+    "C:\\Users\\SOKKER\\Source\\Repos\\Identity-Imbalance\\GlobeWander\\GlobeWander\\GlobeWander\\GlobeWander.csproj": {}
   },
   "projects": {
-    "E:\\Labs\\Identity-Imbalance\\GlobeWander\\GlobeWander\\GlobeWander\\GlobeWander.csproj": {
+    "C:\\Users\\SOKKER\\Source\\Repos\\Identity-Imbalance\\GlobeWander\\GlobeWander\\GlobeWander\\GlobeWander.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Labs\\Identity-Imbalance\\GlobeWander\\GlobeWander\\GlobeWander\\GlobeWander.csproj",
+        "projectUniqueName": "C:\\Users\\SOKKER\\Source\\Repos\\Identity-Imbalance\\GlobeWander\\GlobeWander\\GlobeWander\\GlobeWander.csproj",
         "projectName": "GlobeWander",
-        "projectPath": "E:\\Labs\\Identity-Imbalance\\GlobeWander\\GlobeWander\\GlobeWander\\GlobeWander.csproj",
-        "packagesPath": "C:\\Users\\yaman\\.nuget\\packages\\",
-        "outputPath": "E:\\Labs\\Identity-Imbalance\\GlobeWander\\GlobeWander\\GlobeWander\\obj\\",
+        "projectPath": "C:\\Users\\SOKKER\\Source\\Repos\\Identity-Imbalance\\GlobeWander\\GlobeWander\\GlobeWander\\GlobeWander.csproj",
+        "packagesPath": "C:\\Users\\SOKKER\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\SOKKER\\Source\\Repos\\Identity-Imbalance\\GlobeWander\\GlobeWander\\GlobeWander\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\yaman\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\SOKKER\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,6 +22,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files (x86)\\dotnet\\sdk\\7.0.302\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {

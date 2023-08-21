@@ -2,6 +2,7 @@
 using GlobeWander.Models.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace GlobeWander.Controllers
 {
@@ -9,28 +10,42 @@ namespace GlobeWander.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private IUser _user;
-        public UserController(IUser user) {
-        _user = user;
+        private readonly IUser _user;
+        public UserController(IUser user)
+        {
+            _user = user;
         }
         [HttpPost("Register")]
-        public async Task<ActionResult<UserDTO>>Register(RegisterUserDTO Data)
+        public async Task<ActionResult<UserDTO>> Register(RegisterUserDTO Data)
         {
             var user = await _user.Register(Data, this.ModelState);
-            if (ModelState.IsValid) {
-                return user;
+            if (ModelState.IsValid)
+            {
+                if (user != null)
+                    return user;
+
+                else
+                    return NotFound();
             }
             return BadRequest(new ValidationProblemDetails(ModelState));
         }
         [HttpPost("Login")]
-        public async Task<ActionResult<UserDTO>>Login(LogInDTO loginDto)
+        public async Task<ActionResult<UserDTO>> Login(LogInDTO loginDto)
         {
             var user = await _user.Authenticate(loginDto.UserName, loginDto.Password);
-            if(user == null)
+            if (user == null)
             {
                 return Unauthorized();
             }
             return user;
+        }
+
+        [HttpGet("Profile")]
+        public async Task<ActionResult<UserDTO>> Profile()
+        {
+            var profile = await _user.GetUser(this.User);
+
+            return Ok(profile);
         }
     }
 }
