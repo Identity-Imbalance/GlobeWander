@@ -12,7 +12,7 @@ namespace Test
         protected readonly GlobeWanderDbContext _db;
         public Mock()
         {
-            _connection = new SqliteConnection("Filename=:memory");
+            _connection = new SqliteConnection("Filename=:memory:");
             _connection.Open();
             
             _db = new GlobeWanderDbContext(
@@ -34,6 +34,27 @@ namespace Test
             _db.Rates.Add(rate);
             await _db.SaveChangesAsync();
             return rate;
+
+
+        protected async Task<TourSpot> CreateAndSaveTestTourSpot()
+        {
+            var tourSpot = new TourSpot()
+            {
+                Name = "Test",
+                Country = "Test",
+                City = "Test",
+                Description = "Test",
+                Category = Category.Historical,
+                PhoneNumber = 24343
+            };
+
+            _db.TourSpots.Add(tourSpot);
+            await _db.SaveChangesAsync();
+
+
+            return tourSpot;
+
+
         }
 
         public void Dispose()
