@@ -1,7 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\GlobeWander",
+    "\\GlobeWander\\GlobeWander",
+    "\\GlobeWander\\GlobeWander\\Properties"
   ],
-  "SelectedNode": "\\GlobeWander.sln",
+  "SelectedNode": "\\GlobeWander\\GlobeWander\\Program.cs",
   "PreviewInSolutionExplorer": false
 }

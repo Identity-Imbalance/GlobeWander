@@ -24,7 +24,8 @@ namespace GlobeWander.Models.Services
                 Description = trip.Description,
                 StartDate = trip.StartDate,
                 EndDate = trip.EndDate,
-                Theme = trip.Theme,
+                Capacity = trip.Capacity,
+                Count = trip.Count,
                 TourSpotID = trip.TourSpotID
                 
             };
@@ -64,7 +65,8 @@ namespace GlobeWander.Models.Services
                     Activity = tr.Activity,
                     StartDate = tr.StartDate,
                     EndDate = tr.EndDate,
-                    Theme = tr.Theme,
+                    Capacity = tr.Capacity,
+                    Count = tr.Count,
                     TourSpotID = tr.TourSpotID,
                     BookingTrips = tr.BookingTrips.Select(bt => new BookingTripDTO
                     {
@@ -82,7 +84,8 @@ namespace GlobeWander.Models.Services
                         ID=r.ID,
                         TripID=r.TripID,
                         Comments = r.Comments,
-                        Rating = r.Rating
+                        Rating = r.Rating,
+                        Username =r.Username
                     }).ToList()
                 }).ToListAsync();
         }
@@ -101,7 +104,8 @@ namespace GlobeWander.Models.Services
                     Activity = tr.Activity,
                     StartDate = tr.StartDate,
                     EndDate = tr.EndDate,
-                    Theme = tr.Theme,
+                    Capacity = tr.Capacity,
+                    Count = tr.Count,
                     TourSpotID = tr.TourSpotID,
                     BookingTrips = tr.BookingTrips.Select(bt => new BookingTripDTO
                     {
@@ -118,7 +122,8 @@ namespace GlobeWander.Models.Services
                         ID = r.ID,
                         TripID = r.TripID,
                         Comments = r.Comments,
-                        Rating = r.Rating
+                        Rating = r.Rating,
+                        Username = r.Username
                     }).ToList()
                 }).FirstOrDefaultAsync();
             return trip;
@@ -137,7 +142,8 @@ namespace GlobeWander.Models.Services
                 updateTrip.Cost = trip.Cost;
                 updateTrip.EndDate = trip.EndDate;
                 updateTrip.Activity = trip.Activity;
-                updateTrip.Theme = trip.Theme;
+                updateTrip.Capacity = trip.Capacity;
+                updateTrip.Count = trip.Count;
 
                 _context.Entry(updateTrip).State = EntityState.Modified;
 

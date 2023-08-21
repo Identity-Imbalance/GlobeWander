@@ -26,7 +26,7 @@ namespace GlobeWander.Models.Services
                 {
                     Id = user.Id,
                     UserName = user.UserName,
-                    Token = await tokenService.GetToken(user, System.TimeSpan.FromMinutes(5)),
+                    Token = await tokenService.GetToken(user, System.TimeSpan.FromMinutes(100)),
                     Roles = await _UserManager.GetRolesAsync(user)
                 };
             }
@@ -41,7 +41,7 @@ namespace GlobeWander.Models.Services
             {
                 Id = user.Id,
                 UserName = user.UserName,
-                Token = await tokenService.GetToken(user, System.TimeSpan.FromMinutes(5)),
+                Token = await tokenService.GetToken(user, System.TimeSpan.FromMinutes(100)),
                 Roles = await _UserManager.GetRolesAsync(user)
             };
         }
@@ -57,12 +57,12 @@ namespace GlobeWander.Models.Services
             var result = await _UserManager.CreateAsync(user, registerUserDto.Password);
             if(result.Succeeded)
             {
-                _UserManager.AddToRolesAsync(user, registerUserDto.Roles);
+                await _UserManager.AddToRolesAsync(user, registerUserDto.Roles);
                 return new UserDTO
                 {
                     Id = user.Id,
                     UserName = user.UserName,
-                    Token = await tokenService.GetToken(user, System.TimeSpan.FromMinutes(5)),
+                    Token = await tokenService.GetToken(user, System.TimeSpan.FromMinutes(100)),
                     Roles= await _UserManager.GetRolesAsync(user)
                     
                 };
