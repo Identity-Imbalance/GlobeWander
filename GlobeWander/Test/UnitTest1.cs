@@ -230,7 +230,6 @@ namespace Test
         /// </summary>
         [Fact]
         public async void CreateRoomTest()
-        public async void enrol_Room_method()
         {
             var room = await CreateandSaveRoom();
 
@@ -249,7 +248,6 @@ namespace Test
 
         [Fact]
         public async void CreateHotelRoomTest()
-        public async void enrol_HotelRoom_method()
         {
             var hotelRoom = await CreateandSaveHotelRoom();
             var service = new HotelRoomService(_db);
