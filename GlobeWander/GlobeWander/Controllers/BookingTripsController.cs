@@ -61,8 +61,8 @@ namespace GlobeWander.Controllers
 
 
            var createdBookingTrip =  await _bookTrip.Create(bookingTrip,User);
-
-            return CreatedAtAction(nameof(GetBookingTrip), new { id = createdBookingTrip.ID, tripId = createdBookingTrip.TripID, TotalPrice = createdBookingTrip.TotalPrice, CostPerPerson = createdBookingTrip.CostPerPerson ,createdBookingTrip.Duration, userName = createdBookingTrip.Username }, createdBookingTrip);
+           
+           return CreatedAtAction(nameof(GetBookingTrip), new { id = createdBookingTrip.ID, tripId = createdBookingTrip.TripID, TotalPrice = createdBookingTrip.TotalPrice, CostPerPerson = createdBookingTrip.CostPerPerson ,createdBookingTrip.Duration, userName = createdBookingTrip.Username }, createdBookingTrip);
 
         }
 

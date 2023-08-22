@@ -3,8 +3,10 @@
     "",
     "\\GlobeWander",
     "\\GlobeWander\\GlobeWander",
-    "\\GlobeWander\\GlobeWander\\Properties"
+    "\\GlobeWander\\GlobeWander\\Controllers",
+    "\\GlobeWander\\GlobeWander\\Models",
+    "\\GlobeWander\\GlobeWander\\Models\\Services"
   ],
-  "SelectedNode": "\\GlobeWander\\GlobeWander\\Program.cs",
+  "SelectedNode": "\\GlobeWander\\GlobeWander\\Data",
   "PreviewInSolutionExplorer": false
 }

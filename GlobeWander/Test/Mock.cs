@@ -19,6 +19,7 @@ namespace Test
     {
         private readonly SqliteConnection _connection;
         protected readonly GlobeWanderDbContext _db;
+
         protected readonly UserManager<ApplicationUser> _UserManager;
         public Mock()
         {
@@ -46,8 +47,8 @@ namespace Test
             await _db.SaveChangesAsync();
             return rate;
         }
-        
-       
+
+
 
         protected async Task<TourSpot> CreateAndSaveTestTourSpot()
         {
@@ -81,31 +82,31 @@ namespace Test
 
             return hotel;
         }
-                
-        protected async  Task<Room> CreateandSaveRoom ()
+
+        protected async Task<Room> CreateandSaveRoom()
         {
-            var room = new Room() {Name ="Room3" , Layout = Layout.OneBed };
-             _db.Add(room);
+            var room = new Room() { Name = "Room3", Layout = Layout.OneBed };
+            _db.Add(room);
             await _db.SaveChangesAsync();
 
-                    return room;
+            return room;
         }
         protected async Task<HotelRoom> CreateandSaveHotelRoom()
         {
-            var HotelRooms = new HotelRoom() {HotelID = 2,RoomNumber = 102, RoomID = 2, PricePerDay =100 , IsAvailable=true};
+            var HotelRooms = new HotelRoom() { HotelID = 2, RoomNumber = 102, RoomID = 2, PricePerDay = 100, IsAvailable = true };
             _db.Add(HotelRooms);
             await _db.SaveChangesAsync();
 
             return HotelRooms;
         }
 
-       
+
 
         protected async Task<Trip> CreateTripAndSave()
         {
             var trip = new Trip()
             {
-                
+
                 Name = "Test",
                 Description = "Test",
                 Cost = 2,
@@ -136,7 +137,7 @@ namespace Test
             await _db.SaveChangesAsync();
             return bookingTrip;
         }
-      
+
         protected async Task<BookingRoom> CreateBookRoom()
         {
             var bookingRoom = new BookingRoom()
@@ -177,7 +178,7 @@ namespace Test
                 Capacity = 30,
                 Count = 0,
                 TourSpotID = 1
-                
+
             };
             _db.Trips.Add(trip);
             await _db.SaveChangesAsync();
