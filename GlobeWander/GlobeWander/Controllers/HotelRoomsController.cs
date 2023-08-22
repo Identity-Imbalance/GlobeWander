@@ -28,7 +28,7 @@ namespace GlobeWander.Controllers
 
         // GET: api/HotelRooms
         [HttpGet]
-       
+        [Authorize(Roles = "Admin Manager,Hotel Manager")]
         public async Task<ActionResult<IEnumerable<HotelRoomDTO>>> GetHotelRooms()
         {
             return await _hotelRoom.GetHotelRooms();
@@ -36,6 +36,7 @@ namespace GlobeWander.Controllers
 
         // GET: api/HotelRooms/5
         [HttpGet("Hotels/{hotelID}/Rooms/{roomNumber}")]
+        [Authorize(Roles = "Admin Manager,Hotel Manager")]
         public async Task<ActionResult<HotelRoomDTO>> GetHotelRoom(int hotelID, int roomNumber)
         {
             return await _hotelRoom.GetHotelRoomId(hotelID, roomNumber);
@@ -45,6 +46,7 @@ namespace GlobeWander.Controllers
         // POST: api/HotelRooms
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize(Roles = "Admin Manager,Hotel Manager")]
         public async Task<ActionResult<hotelroomDTOcreate>> PostHotelRoom(hotelroomDTOcreate hotelRoom)
         {
             return await _hotelRoom.CreateHotelRoom(hotelRoom);
@@ -55,6 +57,7 @@ namespace GlobeWander.Controllers
         // PUT: api/HotelRooms/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("Hotel/{hotelId}/Room/{roomNumber}")]
+        [Authorize(Roles = "Admin Manager,Hotel Manager")]
         public async Task<IActionResult> PutHotelRoom(int hotelId,int roomNumber, hotelroomDTOcreate hotelRoom)
         {
             var ret = await _hotelRoom.UpdateHotelRoom(hotelId, roomNumber, hotelRoom);
@@ -62,7 +65,8 @@ namespace GlobeWander.Controllers
         }
 
         // DELETE: api/HotelRooms/5
-        [HttpDelete("Hotels/{hotelID}/Rooms/{roomNumber}")]
+         [HttpDelete("Hotels/{hotelID}/Rooms/{roomNumber}")]
+        [Authorize(Roles = "Admin Manager,Hotel Manager")]
         public async Task<IActionResult> DeleteHotelRoom(int hotelID,int roomNumber)
         {
             // return Ok(await _hoteRoom.Delete(hotelId, idRoom));

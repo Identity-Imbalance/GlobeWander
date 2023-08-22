@@ -8,7 +8,7 @@
 
         public string Description { get; set; }
 
-        public double Cost { get; set; }
+        public decimal Cost { get; set; }
 
         public string Activity  { get; set; }
 
@@ -17,6 +17,10 @@
         public DateTime EndDate { get; set; }
 
         public string Theme { get; set; }
+            
+        public int Capacity { get; set; }
+
+        public int Count { get; set; }
 
         public int TourSpotID { get; set; }
 
