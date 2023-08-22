@@ -4,7 +4,9 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 
 namespace GlobeWander.Models.Services
-{
+{/// <summary>
+/// Service for generating and validating JWT tokens.
+/// </summary>
     public class JWTTokenService
 
     {
@@ -15,6 +17,11 @@ namespace GlobeWander.Models.Services
             configuration = config;
             signInManager = manager;
         }
+
+        /// <summary>
+        /// Get the validation parameters for JWT token validation.
+        /// </summary>
+        /// <param name="configuration">Configuration object.</param>
         public static TokenValidationParameters GetValidationPerameters(IConfiguration configuration)
         {
             return new TokenValidationParameters
@@ -26,6 +33,10 @@ namespace GlobeWander.Models.Services
             };
         }
 
+        /// <summary>
+        /// Get the security key for generating JWT tokens.
+        /// </summary>
+        /// <param name="configuration">Configuration object.</param>
         private static SecurityKey GetSecurityKey(IConfiguration configuration)
         {
             var secret = configuration["JWT:Secret"];
@@ -38,6 +49,11 @@ namespace GlobeWander.Models.Services
             return new SymmetricSecurityKey(secretBytes);
         }
 
+        /// <summary>
+        /// Generate a JWT token for the given user.
+        /// </summary>
+        /// <param name="user">User for whom the token is generated.</param>
+        /// <param name="expiresIn">Token expiration time.</param>
         public async Task<string> GetToken(ApplicationUser user, TimeSpan expiresIn)
         {
             var principle = await signInManager.CreateUserPrincipalAsync(user);

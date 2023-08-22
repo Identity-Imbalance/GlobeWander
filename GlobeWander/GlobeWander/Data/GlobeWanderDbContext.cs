@@ -71,26 +71,81 @@ namespace GlobeWander.Data
                 .OnDelete(DeleteBehavior.NoAction);
 
 
-            //modelBuilder.Entity<Rate>().HasKey(
-            //    rate => new
-            //    {
-            //        rate.ID,
-            //        rate.TripID
-            //    });
-            //modelBuilder.Entity<BookingTrip>().HasKey(
-            //    bookingTrip => new
-            //    {
-            //        bookingTrip.ID,
-            //        bookingTrip.TripID
-            //    });
 
-            ///seeding roles 
+            // Seed Users
+            var hasher = new PasswordHasher<ApplicationUser>();
+            var Admin = new ApplicationUser
+            {
+                Id = "1",
+                UserName = "admin",
+                NormalizedUserName = "ADMIN",
+                Email = "adminUser@example.com",
+                PhoneNumber = "1234567890",
+                NormalizedEmail = "adminUser@EXAMPLE.COM",
+                EmailConfirmed = true,
+                LockoutEnabled = false
+            };
+            Admin.PasswordHash = hasher.HashPassword(Admin, "Admin@1+");
+            var HotelManager = new ApplicationUser
+            {
+                Id = "2",
+                UserName = "hotel",
+                NormalizedUserName = "HOTEL",
+                Email = "hotel@example.com",
+                PhoneNumber = "1234567890",
+                NormalizedEmail = "hotel@EXAMPLE.COM",
+                EmailConfirmed = true,
+                LockoutEnabled = false
+            };
+            HotelManager.PasswordHash = hasher.HashPassword(HotelManager, "Hotel@1+");
+            var TripManager = new ApplicationUser
+            {
+                Id = "3",
+                UserName = "trip",
+                NormalizedUserName = "TRIP",
+                Email = "trip@example.com",
+                PhoneNumber = "1234567890",
+                NormalizedEmail = "trip@EXAMPLE.COM",
+                EmailConfirmed = true,
+                LockoutEnabled = false
+            };
+            TripManager.PasswordHash = hasher.HashPassword(TripManager, "Trip@1+");
+
+            var User = new ApplicationUser
+            {
+                Id = "4",
+                UserName = "User",
+                NormalizedUserName = "USER",
+                Email = "User@example.com",
+                PhoneNumber = "1234567890",
+                EmailConfirmed = true,
+                LockoutEnabled = false
+            };
+            User.PasswordHash = hasher.HashPassword(User, "User@1+");
+            modelBuilder.Entity<ApplicationUser>().HasData(User);
+            modelBuilder.Entity<ApplicationUser>().HasData(Admin);
+            modelBuilder.Entity<ApplicationUser>().HasData(TripManager);
+            modelBuilder.Entity<ApplicationUser>().HasData(HotelManager);
+
+            // Seed User Roles
+            List<IdentityUserRole<string>> userRoles = new List<IdentityUserRole<string>>()
+    {
+        new IdentityUserRole<string> { UserId ="1" , RoleId = "admin manager" }, 
+            new IdentityUserRole<string> { UserId = "2", RoleId = "hotel manager" } ,
+            new IdentityUserRole<string> { UserId = "3", RoleId = "trip manager" } ,
+             new IdentityUserRole<string> { UserId = "4", RoleId = "user" } 
+
+    };
+    modelBuilder.Entity<IdentityUserRole<string>>().HasData(userRoles);
+
             seedRole(modelBuilder, "Admin Manager", "create", "update", "delete", "read");
             seedRole(modelBuilder, "Tour Manager", "create", "update", "delete", "read");
             seedRole(modelBuilder, "Trip Manager", "create", "update", "delete", "read");
             seedRole(modelBuilder, "Hotel Manager", "create", "update", "delete", "read");
             seedRole(modelBuilder, "User", "create", "update", "delete", "read");
             seedRole(modelBuilder, "AnonymousUser", "read");
+
+
         }
 
             int nextId = 1;
@@ -138,5 +193,5 @@ namespace GlobeWander.Data
 
 
 
-    }
-}
+    }}
+ 

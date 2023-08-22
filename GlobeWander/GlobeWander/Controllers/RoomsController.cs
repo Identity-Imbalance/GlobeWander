@@ -12,7 +12,9 @@ using GlobeWander.Models.DTO;
 using Microsoft.AspNetCore.Authorization;
 
 namespace GlobeWander.Controllers
-{
+{/// <summary>
+/// API controller for managing rooms.
+/// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class RoomsController : ControllerBase
@@ -24,6 +26,10 @@ namespace GlobeWander.Controllers
             _context = context;
         }
 
+
+        /// <summary>
+        /// Get a list of all rooms.
+        /// </summary>
         // GET: api/Rooms
         [HttpGet]
         [Authorize(Roles = "Admin Manager,Hotel Manager")]
@@ -36,6 +42,10 @@ namespace GlobeWander.Controllers
             return await _context.GetRooms();
         }
 
+        /// <summary>
+        /// Get a specific room by its ID.
+        /// </summary>
+        /// <param name="id">The ID of the room.</param>
         // GET: api/Rooms/5
         [HttpGet("{id}")]
         [Authorize(Roles = "Admin Manager,Hotel Manager")]
@@ -55,6 +65,11 @@ namespace GlobeWander.Controllers
             return room;
         }
 
+        /// <summary>
+        /// Update a room.
+        /// </summary>
+        /// <param name="id">The ID of the room.</param>
+        /// <param name="room">The updated room data.</param>
         // PUT: api/Rooms/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -68,6 +83,10 @@ namespace GlobeWander.Controllers
 
         }
 
+        /// <summary>
+        /// Create a new room.
+        /// </summary>
+        /// <param name="room">The room data to create.</param>
         // POST: api/Rooms
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
@@ -85,6 +104,10 @@ namespace GlobeWander.Controllers
             return CreatedAtAction("GetRoom", new { id = room1.ID }, room);
         }
 
+        /// <summary>
+        /// Delete a room by its ID.
+        /// </summary>
+        /// <param name="id">The ID of the room to delete.</param>
         // DELETE: api/Rooms/5
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin Manager,Hotel Manager")]

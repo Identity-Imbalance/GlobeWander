@@ -4,7 +4,9 @@ using GlobeWander.Models.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace GlobeWander.Models.Services
-{
+{/// <summary>
+/// Service implementation for managing hotels.
+/// </summary>
     public class HotelService : IHotel
     {
 
@@ -16,6 +18,10 @@ namespace GlobeWander.Models.Services
             _context = context;
         }
 
+        /// <summary>
+        /// Create a new hotel.
+        /// </summary>
+        /// <param name="hotelDTO">Data for the new hotel.</param>
         public async Task<HotelDTO> CreateHotel(HotelDTO hotelDTO)
         {
             Hotel hotel =new Hotel() {    Name= hotelDTO.Name,
@@ -31,6 +37,10 @@ namespace GlobeWander.Models.Services
             return hotelDTO;
         }
 
+        /// <summary>
+        /// Delete a hotel by its ID.
+        /// </summary>
+        /// <param name="id">ID of the hotel.</param>
         public async Task<Hotel> DeleteHotel(int id)
 
         {
@@ -43,6 +53,11 @@ namespace GlobeWander.Models.Services
 
             return hotel;
         }
+
+        /// <summary>
+        /// Get a hotel by its ID.
+        /// </summary>
+        /// <param name="hotelId">ID of the hotel.</param>
 
         public async Task<HotelDTO> GetHotelId(int hotelId)
         {
@@ -85,6 +100,9 @@ namespace GlobeWander.Models.Services
 
         }
 
+        /// <summary>
+        /// Get a list of all hotels.
+        /// </summary>
         public async Task<List<HotelDTO>> GetAllHotels()
         {
             
@@ -127,6 +145,11 @@ namespace GlobeWander.Models.Services
             return hotel;
         }
 
+        /// <summary>
+        /// Update a hotel's information.
+        /// </summary>
+        /// <param name="id">ID of the hotel.</param>
+        /// <param name="updatedHotel">Updated hotel data.</param>
         public async Task<HotelDTO> UpdateHotel(int id, HotelDTO updatedHotel)
         {
             Hotel hotel = await _context.Hotels.FindAsync(id);

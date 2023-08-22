@@ -7,7 +7,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GlobeWander.Models.Services
 {
-
+    /// <summary>
+    /// Service implementation for managing hotel rooms.
+    /// </summary>
     public class HotelRoomService : IHotelRoom
     {
 
@@ -19,6 +21,11 @@ namespace GlobeWander.Models.Services
             _context = context;
 
         }
+
+        /// <summary>
+        /// Create a new hotel room.
+        /// </summary>
+        /// <param name="hotelRoomdto">Data for the new hotel room.</param>
         public async Task<HotelRoomDTO> CreateHotelRoom(hotelroomDTOcreate hotelRoomdto)
         {
             HotelRoom hotelRooms = new HotelRoom()
@@ -30,7 +37,9 @@ namespace GlobeWander.Models.Services
                 IsAvailable=true,
 
             };
-         
+
+
+          
             //hotelRoomdto.RoomNumber = hotelRooms.RoomNumber;
 
             _context.HotelRooms.Add(hotelRooms);
@@ -40,6 +49,12 @@ namespace GlobeWander.Models.Services
 
             return hotelRoom;
         }
+
+        /// <summary>
+        /// Get a hotel room by its hotel ID and room number.
+        /// </summary>
+        /// <param name="hotelID">ID of the hotel.</param>
+        /// <param name="roomNumber">Number of the room.</param>
         public async Task<HotelRoomDTO> GetHotelRoomId(int hotelID, int roomNumber)
         {
 
@@ -90,6 +105,12 @@ namespace GlobeWander.Models.Services
 
 
         }
+
+        /// <summary>
+        /// Delete a hotel room by its hotel ID and room number.
+        /// </summary>
+        /// <param name="hotelID">ID of the hotel.</param>
+        /// <param name="roomNumber">Number of the room.</param>
         public async Task<HotelRoom> DeleteHotelRoom(int hotelID, int roomNumber)
         {
 
@@ -103,7 +124,9 @@ namespace GlobeWander.Models.Services
 
         }
 
-
+        /// <summary>
+        /// Get a list of all hotel rooms.
+        /// </summary>
         public async Task<List<HotelRoomDTO>> GetHotelRooms()
         {
 
@@ -143,6 +166,12 @@ namespace GlobeWander.Models.Services
             return hotelRoomDTO;
         }
 
+        /// <summary>
+        /// Update a hotel room's information.
+        /// </summary>
+        /// <param name="hotelId">ID of the hotel.</param>
+        /// <param name="roomNumber">Number of the room.</param>
+        /// <param name="updatedHotelRoom">Updated hotel room data.</param>
         public async Task<hotelroomDTOcreate> UpdateHotelRoom(int hotelId, int roomNumber, hotelroomDTOcreate updatedHotelRoom)
         {
             HotelRoom hotelRoom = await _context.HotelRooms.FindAsync(hotelId, roomNumber);
