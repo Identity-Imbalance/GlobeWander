@@ -73,13 +73,12 @@ namespace GlobeWander.Models.Services
             return null;
         }
 
-        public async Task<BookingTripDTO> GetBookingTripById(int id)
         /// <summary>
         /// Get a booking trip by its ID and trip ID.
         /// </summary>
         /// <param name="id">ID of the booking trip.</param>
         /// <param name="tripId">ID of the trip associated with the booking trip.</param>
-        public async Task<BookingTripDTO> GetBookingTripById(int id, int tripId)
+        public async Task<BookingTripDTO> GetBookingTripById(int id)
         {
             BookingTripDTO? bookingTrip = await _context.bookingTrips
 
