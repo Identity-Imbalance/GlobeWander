@@ -4,7 +4,9 @@ using GlobeWander.Models.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace GlobeWander.Models.Services
-{
+{/// <summary>
+/// Service for managing trips.
+/// </summary>
     public class TripService : ITrip
     {
         private readonly GlobeWanderDbContext _context;
@@ -13,6 +15,11 @@ namespace GlobeWander.Models.Services
         {
             _context = context;
         }
+
+        /// <summary>
+        /// Create a new trip.
+        /// </summary>
+        /// <param name="trip">Trip data.</param>
 
         public async Task<TripDTO> CreateTrip(NewTripDTO trip)
         {
@@ -41,6 +48,10 @@ namespace GlobeWander.Models.Services
             return returnedTrip;
         }
 
+        /// <summary>
+        /// Delete a trip by ID.
+        /// </summary>
+        /// <param name="id">ID of the trip to be deleted.</param>
         public async Task DeleteTrip(int id)
         {
             var tripId = await _context.Trips.FindAsync(id);
@@ -53,6 +64,9 @@ namespace GlobeWander.Models.Services
             }
         }
 
+        /// <summary>
+        /// Get a list of all trips.
+        /// </summary>
         public async Task<List<TripDTO>> GetAllTrips()
         {
             return await _context.Trips.Select(
@@ -90,6 +104,10 @@ namespace GlobeWander.Models.Services
                 }).ToListAsync();
         }
 
+        /// <summary>
+        /// Get trip data by ID.
+        /// </summary>
+        /// <param name="id">ID of the trip.</param>
         public async Task<TripDTO> GetTripByID(int id)
         {
             TripDTO? trip = await _context.Trips
@@ -129,6 +147,11 @@ namespace GlobeWander.Models.Services
             return trip;
         }
 
+        /// <summary>
+        /// Update trip data by ID.
+        /// </summary>
+        /// <param name="trip">Updated trip data.</param>
+        /// <param name="id">ID of the trip to be updated.</param>
         public async Task<TripDTO> UpdateTrip(NewTripDTO trip, int id)
         {
            var updateTrip = await _context.Trips.FindAsync(id);

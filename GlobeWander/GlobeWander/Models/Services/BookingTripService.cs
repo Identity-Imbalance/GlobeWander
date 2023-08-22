@@ -7,7 +7,9 @@ using System.Security.Claims;
 using Xunit.Sdk;
 
 namespace GlobeWander.Models.Services
-{
+{/// <summary>
+/// Service implementation for managing booking trips.
+/// </summary>
     public class BookingTripService : IBookingTrip
     {
 
@@ -86,6 +88,9 @@ namespace GlobeWander.Models.Services
             return bookingTrip;
         }
 
+        /// <summary>
+        /// Get a list of all booking trips.
+        /// </summary>
         public async Task<List<BookingTripDTO>> GetAllBookingTrips()
         {
             return await _context.bookingTrips
@@ -103,6 +108,12 @@ namespace GlobeWander.Models.Services
         }
 
 
+        /// <summary>
+        /// Update a booking trip's information.
+        /// </summary>
+        /// <param name="id">ID of the booking trip to update.</param>
+        /// <param name="updateBookingTrip">Updated booking trip data.</param>
+        /// <param name="tripId">ID of the associated trip.</param>
         public async Task<BookingTripDTO> UpdateBookingTrip(int id, UpdateBookingTripDTO updateBookingTrip, int tripId)
         {
             var newbookingTrip = await _context.bookingTrips.FindAsync(id);
@@ -133,6 +144,11 @@ namespace GlobeWander.Models.Services
             return returnBookingTrip;
         }
 
+        /// <summary>
+        /// Delete a booking trip by its ID and associated trip ID.
+        /// </summary>
+        /// <param name="id">ID of the booking trip.</param>
+        /// <param name="tripId">ID of the associated trip.</param>
         public async Task Delete(int id, int tripId)
         {
             var DeleteBookingTrip = await _context.bookingTrips.FindAsync(id);
