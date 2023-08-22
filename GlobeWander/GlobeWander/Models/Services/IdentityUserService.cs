@@ -46,7 +46,12 @@ namespace GlobeWander.Models.Services
             };
         }
 
-        public async Task<UserDTO> Register(RegisterUserDTO registerUserDto, ModelStateDictionary modelState)
+        public async Task<ApplicationUser> GetUserByIdAsync(string userId)
+        {
+           return  await _UserManager.FindByIdAsync(userId);
+        }
+
+        public async Task<UserDTO> Register(RegisterUserDTO registerUserDto, ModelStateDictionary modelState,ClaimsPrincipal User)
         {
             var user = new ApplicationUser()
             {

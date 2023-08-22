@@ -1,17 +1,18 @@
 ﻿using GlobeWander.Models.DTO;
+using System.Security.Claims;
 
 namespace GlobeWander.Models.Interfaces
 {
     public interface IBookingTrip
     {
         // Create Booking Trip
-        Task<BookingTripDTO> Create(NewBookingTripDTO bookingTrip, string userId);
+        Task<BookingTripDTO> Create(NewBookingTripDTO bookingTrip, ClaimsPrincipal userPrincipal);
 
         // GET All Booking Trips
         Task<List<BookingTripDTO>> GetAllBookingTrips();
 
         // GET by ID
-        Task<BookingTripDTO> GetBookingTripById(int id, int tripId);
+        Task<BookingTripDTO> GetBookingTripById(int id);
 
         // UPDATE
         Task<BookingTripDTO> UpdateBookingTrip(int id, UpdateBookingTripDTO updateBookingTrip, int tripId);

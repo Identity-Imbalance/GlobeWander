@@ -1,17 +1,27 @@
+using GlobeWander.Controllers;
 using GlobeWander.Data;
 using GlobeWander.Models;
 using GlobeWander.Models.DTO;
 using GlobeWander.Models.Interfaces;
 using GlobeWander.Models.Services;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
+using Moq;
 using System.Diagnostics.Metrics;
-
+using System.Security.Claims;
 
 namespace Test
 {
     public class UnitTest1 : Mock
     {
-
+        /// <summary>
+        /// Get Tour Tip test if exist 
+        /// </summary>
+        /// <returns></returns>
          [Fact]
          public async Task GetTourSpotIfExists()
          {
@@ -28,10 +38,12 @@ namespace Test
              Assert.Equal(tourSpot.Category, tourSpotDTO.Category);
              Assert.Equal(tourSpot.PhoneNumber, tourSpotDTO.PhoneNumber);
         }
-
-     
+        /// <summary>
+        /// Update Tour trip test
+        /// </summary>
+        /// <returns></returns>
         [Fact]
-public async Task UpdateTourSpot()
+        public async Task UpdateTourSpot()
 {
     var service = new TourSpotService(_db);
     var tourSpot = await CreateAndSaveTestTourSpot();
@@ -62,11 +74,12 @@ public async Task UpdateTourSpot()
     Assert.Equal(UpdatedTourSpot.Category, actualTourSpot.Category);
     Assert.Equal(UpdatedTourSpot.PhoneNumber, actualTourSpot.PhoneNumber);
 }
-
-
-
+        /// <summary>
+        /// delete tour trip by id test
+        /// </summary>
+        /// <returns></returns>
         [Fact]
-         public async Task DeleteTourSpot_Successfully()
+        public async Task DeleteTourSpot_Successfully()
          {
              var tourSpotService = new TourSpotService(_db);
              var tourSpot = await CreateAndSaveTestTourSpot();
@@ -76,7 +89,10 @@ public async Task UpdateTourSpot()
              var deletedTourSpot = await tourSpotService.GetSpotById(tourSpot.ID);
              Assert.Null(deletedTourSpot);
          }
-
+        /// <summary>
+        /// Create Tour trip test 
+        /// </summary>
+        /// <returns></returns>
         [Fact]
         public async Task CreateTourSpot_Successfully()
         {
@@ -101,7 +117,10 @@ public async Task UpdateTourSpot()
             
             Assert.Equal("Test", tourSpotDTO.Name);
         }
-
+        /// <summary>
+        /// Get Hotel test 
+        /// </summary>
+        /// <returns></returns>
         [Fact]
         public async Task CanGetHotel()
         {
@@ -121,7 +140,10 @@ public async Task UpdateTourSpot()
             Assert.Equal(hotel.TourSpotID, actulalHotel.TourSpotID);
             
         }
-        //Create
+        /// <summary>
+        /// create hotel test
+        /// </summary>
+        /// <returns></returns>
         [Fact]
         public async Task CreatHotelTest()
         {
@@ -143,7 +165,9 @@ public async Task UpdateTourSpot()
         }
 
         //update
-
+        /// <summary>
+        /// update hotel test 
+        /// </summary>
         [Fact]
         public async void UpdateHotel()
         {
@@ -174,7 +198,10 @@ public async Task UpdateTourSpot()
             
         }
 
-        //Delete
+        /// <summary>
+        /// delete hotel test 
+        /// </summary>
+        /// <returns></returns>
         [Fact]
         public async Task DeleteHotelTest()
         {
@@ -186,8 +213,11 @@ public async Task UpdateTourSpot()
             
             Assert.NotNull(deleteHotel);
         }
+        /// <summary>
+        /// create room test
+        /// </summary>
         [Fact]
-        public async void enrol_Room_method()
+        public async void CreateRoomTest()
         {
             var room = await CreateandSaveRoom();
 
@@ -199,10 +229,12 @@ public async Task UpdateTourSpot()
             Assert.Equal(room.Name, actRoom.Name);
             Assert.Equal(room.Layout, actRoom.Layout);
         }
-       
- 
+
+        /// <summary>
+        /// CreateHotel Room Test
+        /// </summary>
         [Fact]
-        public async void enrol_HotelRoom_method()
+        public async void CreateHotelRoomTest()
         {
             var hotelRoom = await CreateandSaveHotelRoom();
             var service = new HotelRoomService(_db);
@@ -213,27 +245,11 @@ public async Task UpdateTourSpot()
             Assert.Equal(hotelRoom.HotelID , actHotelRoom.HotelID);
             Assert.Equal(hotelRoom.PricePerDay, actHotelRoom.PricePerDay);
         }
-
-        [Fact]
-        public async void CreateRate_ReturnsCreatedRate()
-        {
-            // Arrange
-            var hotel = await CreateAndSaveTestHotel();
-
-            var service = new HotelService(_db);
-
-            // Act
-            var actulalHotel = await service.GetHotelId(hotel.Id);
-
-            // Assert
-            Assert.NotNull(actulalHotel);
-            Assert.Equal(hotel.Id, actulalHotel.Id);
-            Assert.Equal(hotel.Name, actulalHotel.Name);
-            Assert.Equal(hotel.Description, actulalHotel.Description);
-            Assert.Equal(hotel.TourSpotID, actulalHotel.TourSpotID);
-            
-        }
-      
+        
+        /// <summary>
+        ///  can update the rate 
+        /// </summary>
+        /// <returns></returns>
         [Fact]
         public async Task UpdateRate_ReturnsUpdatedRate()
         {
@@ -258,7 +274,11 @@ public async Task UpdateTourSpot()
             Assert.Equal(updatedRateDTO.Rating, newRateUpdate.Rating);
         }
 
-        [Fact]
+        /// <summary>
+        /// can delete the rate
+        /// </summary>
+        /// <returns></returns>
+        [Fact]  
         public async Task DeleteRate_ReturnsDeletedRate()
         {
             var rate = await CreateRatesAndSave();
@@ -269,28 +289,10 @@ public async Task UpdateTourSpot()
             Assert.Equal(rate.ID, deletedRate.ID);
         }
 
-        [Fact]
-        public async void Crate_HotelRoom()
-        {
-            var HotelRoomService = new HotelRoomService(_db);
-            var hotelRoomDTO = new hotelroomDTOcreate
-            {
-                RoomNumber = 101,
-                HotelID = 1,
-                RoomID = 1,
-                PricePerDay = 100,
-                IsAvailable = true,
-            };
-            var createHotelRoom = await HotelRoomService.CreateHotelRoom(hotelRoomDTO);
-
-            Assert.NotNull(createHotelRoom);
-            Assert.Equal(101, createHotelRoom.RoomNumber);
-
-
-
-            await _db.SaveChangesAsync();
-        }
-
+        /// <summary>
+        /// can get the hotel room 
+        /// </summary>
+        /// <returns></returns>
         [Fact]
         public async Task Get_HotelRoom()
         {
@@ -299,7 +301,10 @@ public async Task UpdateTourSpot()
             var RetrievedHotelRoom = await hotelRoomService.GetHotelRoomId(hotelRoom.HotelID,hotelRoom.RoomNumber);
             Assert.NotNull(RetrievedHotelRoom);
         }
-
+        /// <summary>
+        /// can update a hotel room
+        /// </summary>
+        /// <returns></returns>
         [Fact]
         public async Task Update_HotelRoom()
         {
@@ -338,6 +343,11 @@ public async Task UpdateTourSpot()
             Assert.Equal(hotelRoomDtoToUpdate.IsAvailable, updatedHotelRoom.IsAvailable);
 
         }
+
+        /// <summary>
+        /// can delete a hotel room 
+        /// </summary>
+        /// <returns></returns>
         [Fact]
         public async Task Delete_HotelRoom()
         {
@@ -348,7 +358,11 @@ public async Task UpdateTourSpot()
             Assert.Null(deletedHotRoom);
 
         }
-     
+        
+        /// <summary>
+        /// can get a rate 
+        /// </summary>
+        /// <returns></returns>
         [Fact]
         public async Task GetRate_ReturnsRate()
         {
@@ -363,6 +377,419 @@ public async Task UpdateTourSpot()
             Assert.NotNull(retrievedRate);
             Assert.Equal(rate.ID, retrievedRate.ID);
 
+        }
+
+        /// <summary>
+        ///  updating the book trip 
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task Update_BookingTripTest()
+        { 
+            await CreateTripAndSave();
+            var bookTrip = await CreateBookTrip();
+            var service = new BookingTripService(_db, _UserManager);
+            var bookingTripDTO = new BookingTripDTO
+            {
+                TripID = bookTrip.TripID,
+                Duration = bookTrip.Duration,
+                NumberOfPersons = bookTrip.NumberOfPersons,
+                CostPerPerson = bookTrip.CostPerPerson,
+                TotalPrice = bookTrip.TotalPrice,
+
+            };
+
+            var updateBookingTrip = new UpdateBookingTripDTO
+            {
+                NumberOfPersons = 3,
+                Duration = 10
+            };
+            var actualUpdate = await service.UpdateBookingTrip(bookTrip.ID, updateBookingTrip, bookTrip.TripID);
+            var newRateUpdate = await service.GetBookingTripById(bookTrip.ID);
+            Assert.NotNull(actualUpdate);
+            Assert.Equal(newRateUpdate.NumberOfPersons, actualUpdate.NumberOfPersons);
+            Assert.Equal(newRateUpdate.Duration, actualUpdate.Duration);
+        }
+
+
+        /// <summary>
+        /// user can book a trip
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task PostBookingTrip_ValidData_ReturnsCreatedResult()
+        {
+            // Arrange
+            var bookingTrip = new NewBookingTripDTO
+            {
+                TripID = 123,
+                Duration = 5,
+                NumberOfPersons = 8
+            };
+            var bookingTripServiceMock = new Mock<IBookingTrip>();
+            bookingTripServiceMock.Setup(service => service.Create(It.IsAny<NewBookingTripDTO>(), It.IsAny<ClaimsPrincipal>()))
+                .ReturnsAsync(new BookingTripDTO { ID = 1, TripID = bookingTrip.TripID, Duration = bookingTrip.Duration, NumberOfPersons = bookingTrip.NumberOfPersons }); // Replace with your expected result
+                var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[] {
+                    new Claim(ClaimTypes.Role, "Admin Manager"),
+                new Claim(ClaimTypes.NameIdentifier, "UserId"),
+                new Claim(ClaimTypes.Name, "TestUser") // Add the username claim
+                }));
+
+            var controller = new BookingTripsController(bookingTripServiceMock.Object);
+            controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = new DefaultHttpContext { User = user }
+            };
+
+            // Act
+            var result = await controller.PostBookingTrip(bookingTrip);
+
+            // Assert
+            var createdResult = Assert.IsType<CreatedAtActionResult>(result.Result);
+            var bookingTripResult = Assert.IsAssignableFrom<BookingTripDTO>(createdResult.Value);
+            Assert.Equal(1, bookingTripResult.ID); // Replace with your expected result
+            Assert.Equal(123, bookingTripResult.TripID);
+            Assert.Equal(5, bookingTripResult.Duration);
+            var claimsIdentity = user.Identity as ClaimsIdentity;
+            Assert.NotNull(claimsIdentity);
+            var nameIdentifierClaim = claimsIdentity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+            var NameClaim = claimsIdentity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
+            var RoleClaim = claimsIdentity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role);
+
+            Assert.Equal("UserId", nameIdentifierClaim.Value);
+            Assert.Equal("TestUser", NameClaim.Value);
+            Assert.Equal("Admin Manager", RoleClaim.Value);
+        }
+
+
+        /// <summary>
+        /// can get a trip
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task CanGetTrip()
+        {
+            // Arrange
+            var trip = await CreateAndSaveTestTrip();
+
+            var service = new TripService(_db);
+
+            // Act
+            var actulalTrip = await service.GetTripByID(trip.Id);
+
+            // Assert
+            Assert.NotNull(actulalTrip);
+            Assert.Equal(trip.Id, actulalTrip.Id);
+            Assert.Equal(trip.Name, actulalTrip.Name);
+            Assert.Equal(trip.Description, actulalTrip.Description);
+            Assert.Equal(trip.Cost, actulalTrip.Cost);
+            Assert.Equal(trip.Activity, actulalTrip.Activity);
+            Assert.Equal(trip.StartDate, actulalTrip.StartDate);
+            Assert.Equal(trip.EndDate, actulalTrip.EndDate);
+            Assert.Equal(trip.Capacity, actulalTrip.Capacity);
+            Assert.Equal(trip.Count, actulalTrip.Count);
+            Assert.Equal(trip.TourSpotID, actulalTrip.TourSpotID);
+        }
+
+        /// <summary>
+        /// can create a trip
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task CreateTripTest()
+        {
+            var trip = await CreateAndSaveTestTrip();
+            var service = new TripService(_db);
+
+            var newTripDTO = new NewTripDTO()
+            {
+                Name = "Test",
+                Description = "Test",
+                Cost = 1,
+                Activity = "Test",
+                StartDate = DateTime.Parse("2020-01-01"),
+                EndDate = DateTime.Parse("2020-02-02"),
+                Capacity = 20,
+                Count = 15,
+                TourSpotID = 1
+            };
+
+            var actualTrip = await service.CreateTrip(newTripDTO);
+
+            Assert.NotNull(actualTrip);
+            Assert.Equal(actualTrip.Name, newTripDTO.Name);
+        }
+
+        /// <summary>
+        /// can update a trip 
+        /// </summary>
+        [Fact]
+        public async void UpdateTrip()
+        {
+            var trip = await CreateAndSaveTestTrip();
+            var service = new TripService(_db);
+
+            var newTripDTO = new NewTripDTO()
+            {
+                Id = trip.Id,
+                Name = "Test",
+                Description = "Test",
+                Cost = 1,
+                Activity = "Test",
+                StartDate = DateTime.Parse("2020-01-01"),
+                EndDate = DateTime.Parse("2020-02-02"),
+                Capacity = 20,
+                Count = 15,
+                TourSpotID = 1
+            };
+
+            var x = await service.CreateTrip(newTripDTO);
+
+            var UpdatedTrip = new NewTripDTO()
+            {
+                Name = newTripDTO.Name,
+                Description = newTripDTO.Description,
+                Cost = newTripDTO.Cost,
+                Activity = newTripDTO.Activity,
+                StartDate = newTripDTO.StartDate,
+                EndDate = newTripDTO.EndDate,
+                Capacity = newTripDTO.Capacity,
+                Count = newTripDTO.Count,
+                TourSpotID = newTripDTO.TourSpotID
+            };
+
+            var actualTrip = await service.UpdateTrip(UpdatedTrip, x.Id);
+            var y = await service.GetTripByID(actualTrip.Id);
+
+            Assert.Equal(UpdatedTrip.Name, y.Name);
+            Assert.Equal(UpdatedTrip.Description, y.Description);
+            Assert.Equal(UpdatedTrip.Cost, y.Cost);
+            Assert.Equal(UpdatedTrip.Activity, y.Activity);
+            Assert.Equal(UpdatedTrip.StartDate, y.StartDate);
+            Assert.Equal(UpdatedTrip.EndDate, y.EndDate);
+            Assert.Equal(UpdatedTrip.Capacity, y.Capacity);
+            Assert.Equal(UpdatedTrip.Count, y.Count);
+            Assert.Equal(UpdatedTrip.TourSpotID, y.TourSpotID);
+
+        }
+
+        /// <summary>
+        /// can delete a trip
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task DeleteTripTest()
+        {
+            var trip = await CreateAndSaveTestTrip();
+            var service = new TripService(_db);
+
+
+            await service.DeleteTrip(trip.Id);
+            var deletedTrip = await service.GetTripByID(trip.Id);
+            Assert.Null(deletedTrip);
+
+        }
+        /// <summary>
+        /// can get the record of booking trip
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task Get_BookingTripTest()
+        {
+            var bookingTrip = await CreateBookTrip();
+            var service = new BookingTripService(_db, _UserManager);
+            var bookingTripDTO = await service.GetBookingTripById(bookingTrip.ID);
+            Assert.NotNull(bookingTripDTO);
+
+        }
+        /// <summary>
+        /// can delete the booking trip 
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task Delete_BookingTripTest()
+        {
+            var bookingTrip = await CreateBookTrip();
+            var service = new BookingTripService(_db, null);
+            await service.Delete(bookingTrip.ID, bookingTrip.TripID);
+            var bookingTripDeleted = await service.GetBookingTripById(bookingTrip.ID);
+            Assert.Null(bookingTripDeleted);
+        }
+
+
+        /// <summary>
+        /// user can book a room
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task PostBookingRoom_ValidData_ReturnsCreatedResult()
+        {
+            // Arrange
+            await CreateandSaveHotelRoom();
+            var bookingRoom = new NewBookingRoomDTO
+            {
+                HotelID = 1,
+                RoomNumber = 101,
+                Duration = 5
+            };
+
+            var bookingRoomServiceMock = new Mock<IBookingRoom>();
+            bookingRoomServiceMock.Setup(service => service.CreateBookingRoom(It.IsAny<NewBookingRoomDTO>(), It.IsAny<string>()))
+                .ReturnsAsync(new BookingRoomDTO { ID = 1, HotelID = bookingRoom.HotelID, Duration = bookingRoom.Duration, RoomNumber = bookingRoom.RoomNumber }); // Replace with your expected result
+            var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[] {
+                    new Claim(ClaimTypes.Role, "Admin Manager"),
+                new Claim(ClaimTypes.NameIdentifier, "UserId"),
+                new Claim(ClaimTypes.Name, "TestUser") // Add the username claim
+                }));
+
+            var controller = new BookingRoomsController(bookingRoomServiceMock.Object);
+            controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = new DefaultHttpContext { User = user }
+            };
+
+            // Act
+            var result = await controller.PostBookingRoom(bookingRoom);
+
+            // Assert
+            var createdResult = Assert.IsType<CreatedAtActionResult>(result.Result);
+            var bookingRoomResult = Assert.IsAssignableFrom<BookingRoomDTO>(createdResult.Value);
+            Assert.Equal(1, bookingRoomResult.ID); // Replace with your expected result
+            Assert.Equal(101, bookingRoomResult.RoomNumber);
+            Assert.Equal(5, bookingRoomResult.Duration);
+            Assert.Equal(1, bookingRoomResult.HotelID);
+            var claimsIdentity = user.Identity as ClaimsIdentity;
+            Assert.NotNull(claimsIdentity);
+            var nameIdentifierClaim = claimsIdentity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+            var NameClaim = claimsIdentity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
+            var RoleClaim = claimsIdentity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role);
+
+            Assert.Equal("UserId", nameIdentifierClaim.Value);
+            Assert.Equal("TestUser", NameClaim.Value);
+            Assert.Equal("Admin Manager", RoleClaim.Value);
+        }
+
+        /// <summary>
+        /// can get a booking room 
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task Get_BookingRoomTest()
+        {
+            await CreateandSaveHotelRoom();
+                var bookingRoom = await CreateBookRoom();
+            var service = new BookingRoomService(_db, _UserManager);
+            var bookingRoomDTO = await service.GetBookingRoomById(bookingRoom.ID);
+            Assert.NotNull(bookingRoomDTO);
+            Assert.Equal(1, bookingRoomDTO.ID);
+
+        }
+        /// <summary>
+        /// can delete the booking trip 
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task Delete_BookingRoomTest()
+        {
+            await CreateandSaveHotelRoom();
+            var bookingRoom = await CreateBookRoom();
+            var service = new BookingRoomService(_db,_UserManager);
+            await service.DeleteBookingRoom(bookingRoom.ID);
+            var bookingRoomDeleted = await service.GetBookingRoomById(bookingRoom.ID);
+            Assert.Null(bookingRoomDeleted);
+        }
+
+
+        /// <summary>
+        /// Register as a role admin 
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task Register_User_As_Admin_Manager()
+        {
+            // Arrange
+            var userMock = new Mock<IUser>();
+            var userManagerMock = new Mock<UserManager<ApplicationUser>>(MockBehavior.Strict, null, null, null, null, null, null, null, null);
+            var jwtTokenServiceMock = new Mock<JWTTokenService>(null, null);
+
+            var roles = new List<Claim> { new Claim(ClaimTypes.Role, "Admin Manager") };
+            var userPrincipal = new ClaimsPrincipal(new ClaimsIdentity(roles));
+
+            var controller = new UserController(userMock.Object);
+            controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = new DefaultHttpContext
+                {
+                    User = userPrincipal
+                }
+            };
+
+            var registerDto = new RegisterUserDTO
+            {
+                UserName = "TestUser",
+                Email = "test@example.com",
+                PhoneNumber = "123456789",
+                Password = "P@ssw0rd",
+                Roles = new List<string> { "Admin Manager" } // Adjust the roles as needed
+            };
+
+            var expectedResult = new UserDTO
+            {
+                Id = "UserId",
+                UserName = registerDto.UserName,
+                Token = "MockedToken",
+                Roles = new List<string> { "Admin Manager" } // Adjust the roles as needed
+            };
+
+            userMock.Setup(u => u.Register(It.IsAny<RegisterUserDTO>(), It.IsAny<ModelStateDictionary>(), It.IsAny<ClaimsPrincipal>()))
+                            .ReturnsAsync(expectedResult);
+
+            // Act
+            var result = await controller.Register(registerDto);
+
+            // Assert
+            var actionResult = Assert.IsType<ActionResult<UserDTO>>(result);
+            var userDto = Assert.IsType<UserDTO>(actionResult.Value);
+
+            Assert.Equal(expectedResult.UserName, userDto.UserName);
+            Assert.Equal(expectedResult.Roles, userDto.Roles);
+
+        }
+
+        /// <summary>
+        /// user can log in successfully 
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task SignIn_User_Successfully()
+        {
+            // Arrange
+            var expectedResult = new UserDTO
+            {
+                Id = "UserId",
+                UserName = "TestUser",
+                Token = "MockedToken",
+                Roles = new List<string> { "Admin Manager" }
+            };
+
+            var userMock = SetupUserMock(expectedResult);
+            var controller = new UserController(userMock);
+
+            var loginDto = new LogInDTO
+            {
+                UserName = "TestUser",
+                Password = "P@ssw0rd"
+            };
+
+            // Act
+            var result = await controller.Login(loginDto);
+
+            // Assert
+            var actionResult = Assert.IsType<ActionResult<UserDTO>>(result);
+            var userDto = Assert.IsType<UserDTO>(actionResult.Value);
+
+            Assert.Equal(expectedResult.UserName, userDto.UserName);
+            Assert.Equal(expectedResult.Roles, userDto.Roles);
         }
 
     }
