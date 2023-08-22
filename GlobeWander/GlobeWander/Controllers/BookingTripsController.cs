@@ -36,10 +36,10 @@ namespace GlobeWander.Controllers
         }
 
         // GET: api/BookingTrips/5
-        [HttpGet("{id}/{tripId}")]
-        public async Task<ActionResult<BookingTripDTO>> GetBookingTrip(int id, int tripId)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<BookingTripDTO>> GetBookingTrip(int id)
         {
-            return await _bookTrip.GetBookingTripById(id, tripId);
+            return await _bookTrip.GetBookingTripById(id);
         }
 
         // PUT: api/BookingTrips/5
@@ -59,9 +59,10 @@ namespace GlobeWander.Controllers
         public async Task<ActionResult<BookingTripDTO>> PostBookingTrip(NewBookingTripDTO bookingTrip)
         {
 
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            return await _bookTrip.Create(bookingTrip,userId);
+           var createdBookingTrip =  await _bookTrip.Create(bookingTrip,User);
+           
+           return CreatedAtAction(nameof(GetBookingTrip), new { id = createdBookingTrip.ID, tripId = createdBookingTrip.TripID, TotalPrice = createdBookingTrip.TotalPrice, CostPerPerson = createdBookingTrip.CostPerPerson ,createdBookingTrip.Duration, userName = createdBookingTrip.Username }, createdBookingTrip);
 
         }
 

@@ -8,9 +8,9 @@ namespace GlobeWander.Models.Interfaces
 
         public Task<List<BookingRoomDTO>> GetAllBookingRooms();
 
-        public Task<BookingRoomDTO> GetBookingRoomById(int Id,string userId);
+        public Task<BookingRoomDTO> GetBookingRoomById(int Id);
 
-        public Task<BookingRoomDTO> UpdateBookingRoom(int id, DurationBookingRoomDTO bookingRoom, string userId);
+        public Task<BookingRoomDTO> UpdateBookingRoom(int id, DurationBookingRoomDTO bookingRoom);
 
         public Task DeleteBookingRoom(int id);
     }
