@@ -93,13 +93,12 @@ namespace GlobeWander.Models.Services
             return bookingRoomDTOs;
         }
 
-        public async Task<BookingRoomDTO> GetBookingRoomById(int id)
         /// <summary>
         /// Get a booking room by its ID.
         /// </summary>
         /// <param name="id">ID of the booking room.</param>
         /// <param name="userId">ID of the user.</param>
-        public async Task<BookingRoomDTO> GetBookingRoomById(int id,string userId)
+        public async Task<BookingRoomDTO> GetBookingRoomById(int id)
         {
             var bookingRoom = await _context.BookingRooms.FindAsync(id);
             if (bookingRoom == null)

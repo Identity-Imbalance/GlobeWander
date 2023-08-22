@@ -47,10 +47,10 @@ namespace GlobeWander.Controllers
         /// <param name="tripId">The ID of the trip associated with the booking.</param>
         // GET: api/BookingTrips/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<BookingTripDTO>> GetBookingTrip(int id)
         [HttpGet("{id}/{tripId}")]
         [Authorize(Roles = "Admin Manager,Trip Manager")]
 
+        public async Task<ActionResult<BookingTripDTO>> GetBookingTrip(int id)
         {
             return await _bookTrip.GetBookingTripById(id);
         }
