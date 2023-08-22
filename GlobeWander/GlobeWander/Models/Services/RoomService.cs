@@ -4,7 +4,9 @@ using GlobeWander.Models.Interfaces;
 using GlobeWander.Models.DTO;
 
 namespace GlobeWander.Models.Services
-{
+{/// <summary>
+/// Service for managing hotel room types.
+/// </summary>
     public class RoomService : IRoom
     {
         private readonly GlobeWanderDbContext _context;
@@ -14,7 +16,10 @@ namespace GlobeWander.Models.Services
             _context = context;
         }
 
-
+        /// <summary>
+        /// Create a new room type.
+        /// </summary>
+        /// <param name="room">Room data.</param>
         public async Task<RoomDTO> CreateRoom(RoomDTO room)
         {
             Room room1 = new Room()
@@ -28,6 +33,10 @@ namespace GlobeWander.Models.Services
             return addroom;
         }
 
+        /// <summary>
+        /// Delete a room type by ID.
+        /// </summary>
+        /// <param name="roomId">ID of the room to be deleted.</param>
         public async Task<RoomDTO> DeleteRoom(int roomId)
         {
             RoomDTO room1 = await GetRoomId(roomId);
@@ -42,6 +51,11 @@ namespace GlobeWander.Models.Services
             
         }
 
+
+        /// <summary>
+        /// Get room data by ID.
+        /// </summary>
+        /// <param name="roomId">ID of the room.</param>
         public async Task<RoomDTO> GetRoomId(int roomId)
         {
             // Room room = await _context.Rooms.FindAsync(roomId);
@@ -58,6 +72,9 @@ namespace GlobeWander.Models.Services
             return RoomDTO;
         }
 
+        /// <summary>
+        /// Get a list of all room types.
+        /// </summary>
         public async Task<List<RoomDTO>> GetRooms()
         {
             //return await _context.Rooms.ToListAsync();
@@ -72,6 +89,12 @@ namespace GlobeWander.Models.Services
 
         }
 
+
+        /// <summary>
+        /// Update room data by ID.
+        /// </summary>
+        /// <param name="roomId">ID of the room to be updated.</param>
+        /// <param name="room">Updated room data.</param>
         public async Task<RoomDTO> UpdateRoom(int roomId, RoomDTO room)
         {
             var room1 = await _context.Rooms.FindAsync(roomId);

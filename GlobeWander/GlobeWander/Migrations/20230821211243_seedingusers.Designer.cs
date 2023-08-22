@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GlobeWander.Migrations
 {
     [DbContext(typeof(GlobeWanderDbContext))]
-    [Migration("20230821113420_LastChangeOnMigrations")]
-    partial class LastChangeOnMigrations
+    [Migration("20230821211243_seedingusers")]
+    partial class seedingusers
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -88,6 +88,75 @@ namespace GlobeWander.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "4",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "5f1d1bf3-3174-49e3-9840-28197ca6ee43",
+                            Email = "User@example.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedUserName = "USER",
+                            PasswordHash = "AQAAAAIAAYagAAAAEDyAYX3sm7I2GGETQrJZasfyfFpCwguGd08oCEjXK33taBZoE/34TXQ1/kNvW+bjYQ==",
+                            PhoneNumber = "1234567890",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "c7263789-b4bb-410e-a0da-3fe897380077",
+                            TwoFactorEnabled = false,
+                            UserName = "User"
+                        },
+                        new
+                        {
+                            Id = "1",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "f25f97e3-e90c-4cbe-af59-f435ab291251",
+                            Email = "adminUser@example.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "adminUser@EXAMPLE.COM",
+                            NormalizedUserName = "ADMIN",
+                            PasswordHash = "AQAAAAIAAYagAAAAEE2uIRPYVNo9Ifw5AgC5zNpVHH+hY1nMfOBv+x6hMbL4R15319Kj23GjIC5MeZibTw==",
+                            PhoneNumber = "1234567890",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "2c0bd26e-6ed0-436d-b0e2-04504486a15b",
+                            TwoFactorEnabled = false,
+                            UserName = "admin"
+                        },
+                        new
+                        {
+                            Id = "3",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "02b192a3-6996-452e-b52a-c382417fd060",
+                            Email = "trip@example.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "trip@EXAMPLE.COM",
+                            NormalizedUserName = "TRIP",
+                            PasswordHash = "AQAAAAIAAYagAAAAECi4ollBuEPeMoVaxAZGZNH2Pua9W/+03cpC7GzRy8JMRuN8uqsHH2EEQAXnW2DHTw==",
+                            PhoneNumber = "1234567890",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "cfbfeef6-3b11-433a-a9ad-5fe8be6f373d",
+                            TwoFactorEnabled = false,
+                            UserName = "trip"
+                        },
+                        new
+                        {
+                            Id = "2",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "511e6655-3a1b-4950-9c08-ae17020e32f6",
+                            Email = "hotel@example.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "hotel@EXAMPLE.COM",
+                            NormalizedUserName = "HOTEL",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOMHstQ2B4dCqbb2vBVQE7lCKI5Umc3Wqv/1wchpIPnRC7kr5ESyY0BN1jTOJM5zEg==",
+                            PhoneNumber = "1234567890",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "27a42e39-73e5-4f07-bb5d-a122487e297d",
+                            TwoFactorEnabled = false,
+                            UserName = "hotel"
+                        });
                 });
 
             modelBuilder.Entity("GlobeWander.Models.BookingRoom", b =>
@@ -421,9 +490,9 @@ namespace GlobeWander.Migrations
                             Cost = 20m,
                             Count = 0,
                             Description = "trip start at 8 am and going from Amman to Petra",
-                            EndDate = new DateTime(2023, 8, 21, 11, 34, 20, 107, DateTimeKind.Utc).AddTicks(6282),
+                            EndDate = new DateTime(2023, 8, 21, 21, 12, 43, 519, DateTimeKind.Utc).AddTicks(6857),
                             Name = "Petra ride",
-                            StartDate = new DateTime(2023, 8, 21, 14, 34, 20, 107, DateTimeKind.Local).AddTicks(6270),
+                            StartDate = new DateTime(2023, 8, 22, 0, 12, 43, 519, DateTimeKind.Local).AddTicks(6808),
                             TourSpotID = 1
                         },
                         new
@@ -434,9 +503,9 @@ namespace GlobeWander.Migrations
                             Cost = 30m,
                             Count = 0,
                             Description = "Amman to Jerash with a trip manager who can speak many languages",
-                            EndDate = new DateTime(2023, 8, 21, 11, 34, 20, 107, DateTimeKind.Utc).AddTicks(6286),
+                            EndDate = new DateTime(2023, 8, 21, 21, 12, 43, 519, DateTimeKind.Utc).AddTicks(6862),
                             Name = "Jerash ride",
-                            StartDate = new DateTime(2023, 8, 21, 14, 34, 20, 107, DateTimeKind.Local).AddTicks(6285),
+                            StartDate = new DateTime(2023, 8, 22, 0, 12, 43, 519, DateTimeKind.Local).AddTicks(6860),
                             TourSpotID = 2
                         },
                         new
@@ -447,9 +516,9 @@ namespace GlobeWander.Migrations
                             Cost = 40m,
                             Count = 0,
                             Description = "Amman to Irbid with a trip manager who can speak many languages",
-                            EndDate = new DateTime(2023, 8, 21, 11, 34, 20, 107, DateTimeKind.Utc).AddTicks(6289),
+                            EndDate = new DateTime(2023, 8, 21, 21, 12, 43, 519, DateTimeKind.Utc).AddTicks(6865),
                             Name = "Um-Qais ride",
-                            StartDate = new DateTime(2023, 8, 21, 14, 34, 20, 107, DateTimeKind.Local).AddTicks(6288),
+                            StartDate = new DateTime(2023, 8, 22, 0, 12, 43, 519, DateTimeKind.Local).AddTicks(6863),
                             TourSpotID = 3
                         });
                 });
@@ -610,6 +679,28 @@ namespace GlobeWander.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "1",
+                            RoleId = "admin manager"
+                        },
+                        new
+                        {
+                            UserId = "2",
+                            RoleId = "hotel manager"
+                        },
+                        new
+                        {
+                            UserId = "3",
+                            RoleId = "trip manager"
+                        },
+                        new
+                        {
+                            UserId = "4",
+                            RoleId = "user"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>

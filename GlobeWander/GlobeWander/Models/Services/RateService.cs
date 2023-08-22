@@ -7,7 +7,9 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace GlobeWander.Models.Services
-{
+{/// <summary>
+/// Service for managing ratings and comments for trips.
+/// </summary>
     public class RateService : IRate
     {
         private readonly GlobeWanderDbContext _rateService;
@@ -21,7 +23,12 @@ namespace GlobeWander.Models.Services
             _UserManager = UserManager;
         }
 
-        //create not
+
+        /// <summary>
+        /// Create a new rating and comment for a trip.
+        /// </summary>
+        /// <param name="rateDTO">Rating and comment data.</param>
+        /// <param name="userPrincipal">User's claims principal.</param>
         public async Task<RateDTO> Create(NewRateDTO rateDTO, ClaimsPrincipal userPrincipal)
         {
             var getUserId = userPrincipal.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -54,11 +61,17 @@ namespace GlobeWander.Models.Services
 
         }
 
+
         public Task DeleteAllRatesByTripID(int tripId)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Delete a rating and comment for a trip by ID.
+        /// </summary>
+        /// <param name="id">ID of the rating to be deleted.</param>
+        /// <param name="TripId">ID of the trip.</param>
         public async Task<Rate> DeleteRate(int id ,int TripId)
         {
             var rate = await _rateService.Rates.Where(x => x.ID == id && x.TripID ==TripId).FirstOrDefaultAsync();
@@ -68,6 +81,10 @@ namespace GlobeWander.Models.Services
             return rate;
            
         }
+
+        /// <summary>
+        /// Get a list of all ratings and comments for trips.
+        /// </summary>
         public async Task<List<RateDTO>> GetAllRate()
         {
             return await _rateService.Rates.Select(r => new RateDTO
@@ -81,6 +98,10 @@ namespace GlobeWander.Models.Services
             ).ToListAsync();         
         }
 
+        /// <summary>
+        /// Get a rating and comment for a trip by ID.
+        /// </summary>
+        /// <param name="id">ID of the rating.</param>
         public async Task<RateDTO> GetRateById(int id)
         {
             var rate =  await _rateService.Rates.Where(x => x.ID == id)
@@ -97,6 +118,10 @@ namespace GlobeWander.Models.Services
             return rate;
         }
 
+        /// <summary>
+        /// Get a list of ratings and comments for a specific trip.
+        /// </summary>
+        /// <param name="tripId">ID of the trip.</param>
         public async Task<List<RateDTO>> GetRateByTripID(int tripId)
         {
             var rateByTripId = await _rateService.Rates.Where(
@@ -115,6 +140,12 @@ namespace GlobeWander.Models.Services
 
         }
 
+        /// <summary>
+        /// Update a rating and comment for a trip.
+        /// </summary>
+        /// <param name="id">ID of the rating to be updated.</param>
+        /// <param name="tripId">ID of the trip.</param>
+        /// <param name="rate">Updated rating and comment data.</param>
         public async Task<RateDTO> UpdateRate(int id,int tripId, UpdateRateDTO rate)
         {
             var existRate = await _rateService.Rates.Where(x=> x.ID == id && x.TripID == tripId).FirstOrDefaultAsync();

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace GlobeWander.Migrations
 {
     /// <inheritdoc />
-    public partial class LastChangeOnMigrations : Migration
+    public partial class controllercheack : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -382,9 +382,9 @@ namespace GlobeWander.Migrations
                 columns: new[] { "Id", "Activity", "Capacity", "Cost", "Count", "Description", "EndDate", "Name", "StartDate", "TourSpotID" },
                 values: new object[,]
                 {
-                    { 1, "walking", 30, 20m, 0, "trip start at 8 am and going from Amman to Petra", new DateTime(2023, 8, 21, 11, 34, 20, 107, DateTimeKind.Utc).AddTicks(6282), "Petra ride", new DateTime(2023, 8, 21, 14, 34, 20, 107, DateTimeKind.Local).AddTicks(6270), 1 },
-                    { 2, "visiting", 22, 30m, 0, "Amman to Jerash with a trip manager who can speak many languages", new DateTime(2023, 8, 21, 11, 34, 20, 107, DateTimeKind.Utc).AddTicks(6286), "Jerash ride", new DateTime(2023, 8, 21, 14, 34, 20, 107, DateTimeKind.Local).AddTicks(6285), 2 },
-                    { 3, "climbing", 40, 40m, 0, "Amman to Irbid with a trip manager who can speak many languages", new DateTime(2023, 8, 21, 11, 34, 20, 107, DateTimeKind.Utc).AddTicks(6289), "Um-Qais ride", new DateTime(2023, 8, 21, 14, 34, 20, 107, DateTimeKind.Local).AddTicks(6288), 3 }
+                    { 1, "walking", 30, 20m, 0, "trip start at 8 am and going from Amman to Petra", new DateTime(2023, 8, 21, 19, 9, 49, 702, DateTimeKind.Utc).AddTicks(3984), "Petra ride", new DateTime(2023, 8, 21, 22, 9, 49, 702, DateTimeKind.Local).AddTicks(3946), 1 },
+                    { 2, "visiting", 22, 30m, 0, "Amman to Jerash with a trip manager who can speak many languages", new DateTime(2023, 8, 21, 19, 9, 49, 702, DateTimeKind.Utc).AddTicks(3988), "Jerash ride", new DateTime(2023, 8, 21, 22, 9, 49, 702, DateTimeKind.Local).AddTicks(3986), 2 },
+                    { 3, "climbing", 40, 40m, 0, "Amman to Irbid with a trip manager who can speak many languages", new DateTime(2023, 8, 21, 19, 9, 49, 702, DateTimeKind.Utc).AddTicks(3991), "Um-Qais ride", new DateTime(2023, 8, 21, 22, 9, 49, 702, DateTimeKind.Local).AddTicks(3989), 3 }
                 });
 
             migrationBuilder.CreateIndex(

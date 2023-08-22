@@ -5,7 +5,9 @@ using Microsoft.EntityFrameworkCore;
 using System.Diagnostics.Metrics;
 
 namespace GlobeWander.Models.Services
-{
+{/// <summary>
+/// Service for managing tour spots.
+/// </summary>
     public class TourSpotService : ITourSpot
     {
         private readonly GlobeWanderDbContext _context;
@@ -14,6 +16,11 @@ namespace GlobeWander.Models.Services
         {
             _context = context;
         }
+
+        /// <summary>
+        /// Create a new tour spot.
+        /// </summary>
+        /// <param name="tourSpot">Tour spot data.</param>
         public async Task<TourSpotDTO> CreateTourSpot(newTourSpotDTO tourSpot)
         {
             var newTourSpot = new TourSpot()
@@ -34,6 +41,10 @@ namespace GlobeWander.Models.Services
             return tourSpotDTO;
         }
 
+        /// <summary>
+        /// Delete a tour spot by ID.
+        /// </summary>
+        /// <param name="id">ID of the tour spot to be deleted.</param>
         public async Task DeleteTourSpot(int id)
         {
             TourSpot tourSpotToDelete = await _context.TourSpots.FindAsync(id);
@@ -44,6 +55,9 @@ namespace GlobeWander.Models.Services
             
         }
 
+        /// <summary>
+        /// Get a list of all tour spots.
+        /// </summary>
         public async Task<List<TourSpotDTO>> GetAllTourSpots()
         {
             return await _context.TourSpots.Select(
@@ -126,6 +140,11 @@ namespace GlobeWander.Models.Services
                 ).ToListAsync();
             
         }
+
+        /// <summary>
+        /// Get tour spot data by ID.
+        /// </summary>
+        /// <param name="id">ID of the tour spot.</param>
 
         public async Task<TourSpotDTO> GetSpotById(int id)
         {
@@ -216,6 +235,11 @@ namespace GlobeWander.Models.Services
             return tourSpot;
         }
 
+        /// <summary>
+        /// Update tour spot data by ID.
+        /// </summary>
+        /// <param name="tourSpot">Updated tour spot data.</param>
+        /// <param name="id">ID of the tour spot to be updated.</param>
         public async Task<TourSpotDTO> UpdateTourSpot(newTourSpotDTO tourSpot, int id)
         {
             var tourSpotRecord = await _context.TourSpots.FindAsync(id);

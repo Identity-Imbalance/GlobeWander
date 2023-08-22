@@ -5,7 +5,9 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Security.Claims;
 
 namespace GlobeWander.Models.Services
-{
+{/// <summary>
+/// Service implementation for user authentication and registration.
+/// </summary>
     public class IdentityUserService : IUser
     {
         private readonly UserManager<ApplicationUser> _UserManager;
@@ -16,6 +18,13 @@ namespace GlobeWander.Models.Services
             _UserManager = manager;
             this.tokenService = tokenService;
         }
+
+
+        /// <summary>
+        /// Authenticate a user based on username and password.
+        /// </summary>
+        /// <param name="username">Username of the user.</param>
+        /// <param name="password">Password of the user.</param>
         public async Task<UserDTO> Authenticate(string username, string password)
         {
             var user = await _UserManager.FindByNameAsync(username);
@@ -33,6 +42,11 @@ namespace GlobeWander.Models.Services
             return null;
         
         }
+
+        /// <summary>
+        /// Get user information based on the ClaimsPrincipal.
+        /// </summary>
+        /// <param name="principal">ClaimsPrincipal representing the user.</param>
         public async Task<UserDTO> GetUser(ClaimsPrincipal principal)
         {
             var user = await _UserManager.GetUserAsync(principal);
@@ -46,6 +60,11 @@ namespace GlobeWander.Models.Services
             };
         }
 
+        /// <summary>
+        /// Register a new user.
+        /// </summary>
+        /// <param name="registerUserDto">Registration information for the user.</param>
+        /// <param name="modelState">ModelStateDictionary to store validation errors.</param>
         public async Task<UserDTO> Register(RegisterUserDTO registerUserDto, ModelStateDictionary modelState)
         {
             var user = new ApplicationUser()
