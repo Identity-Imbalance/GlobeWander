@@ -18,7 +18,7 @@ namespace GlobeWander.Controllers
         [HttpPost("Register")]
         public async Task<ActionResult<UserDTO>> Register(RegisterUserDTO Data)
         {
-            var user = await _user.Register(Data, this.ModelState);
+            var user = await _user.Register(Data, this.ModelState,User);
             if (ModelState.IsValid)
             {
                 if (user != null)

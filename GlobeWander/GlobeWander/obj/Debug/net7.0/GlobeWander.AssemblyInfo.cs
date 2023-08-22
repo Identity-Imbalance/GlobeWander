@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GlobeWander")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+39a9c720920a40e04cadb3328d06ab9b856d84de")]
 [assembly: System.Reflection.AssemblyProductAttribute("GlobeWander")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GlobeWander")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

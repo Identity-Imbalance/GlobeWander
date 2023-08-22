@@ -55,14 +55,22 @@ namespace GlobeWander.Controllers
 
         // POST: api/BookingTrips
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPost]
+        //public async Task<ActionResult<BookingTripDTO>> PostBookingTrip(NewBookingTripDTO bookingTrip)
+        //{
+
+        //    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        //    return await _bookTrip.Create(bookingTrip,User);
+
+        //}
         [HttpPost]
         public async Task<ActionResult<BookingTripDTO>> PostBookingTrip(NewBookingTripDTO bookingTrip)
         {
-
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var createdBookingTrip = await _bookTrip.Create(bookingTrip, User);
 
-            return await _bookTrip.Create(bookingTrip,userId);
-
+            return CreatedAtAction(nameof(GetBookingTrip), new { id = createdBookingTrip.ID, tripId = createdBookingTrip.TripID }, createdBookingTrip);
         }
 
         // DELETE: api/BookingTrips/5

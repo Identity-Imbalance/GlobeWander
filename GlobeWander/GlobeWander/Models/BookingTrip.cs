@@ -16,7 +16,7 @@
 
         public string Username { get; set; }
 
-        public Trip? Trip { get; set; }
+        public Trip Trip { get; set; }
 
     }
 }

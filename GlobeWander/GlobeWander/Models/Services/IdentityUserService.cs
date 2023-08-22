@@ -46,7 +46,7 @@ namespace GlobeWander.Models.Services
             };
         }
 
-        public async Task<UserDTO> Register(RegisterUserDTO registerUserDto, ModelStateDictionary modelState)
+        public async Task<UserDTO> Register(RegisterUserDTO registerUserDto, ModelStateDictionary modelState, ClaimsPrincipal claimsPrincipal)
         {
             var user = new ApplicationUser()
             {

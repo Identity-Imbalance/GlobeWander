@@ -1,11 +1,12 @@
 ﻿using GlobeWander.Models.DTO;
+using System.Security.Claims;
 
 namespace GlobeWander.Models.Interfaces
 {
     public interface IBookingTrip
     {
         // Create Booking Trip
-        Task<BookingTripDTO> Create(NewBookingTripDTO bookingTrip, string userId);
+        Task<BookingTripDTO> Create(NewBookingTripDTO bookingTrip, ClaimsPrincipal claim);
 
         // GET All Booking Trips
         Task<List<BookingTripDTO>> GetAllBookingTrips();
