@@ -48,6 +48,9 @@ namespace GlobeWander.Controllers
         // GET: api/BookingTrips/5
         [HttpGet("{id}")]
         public async Task<ActionResult<BookingTripDTO>> GetBookingTrip(int id)
+        [HttpGet("{id}/{tripId}")]
+        [Authorize(Roles = "Admin Manager,Trip Manager")]
+
         {
             return await _bookTrip.GetBookingTripById(id);
         }

@@ -65,6 +65,12 @@ namespace GlobeWander.Models.Services
            return  await _UserManager.FindByIdAsync(userId);
         }
 
+        
+        /// <summary>
+        /// Register a new user.
+        /// </summary>
+        /// <param name="registerUserDto">Registration information for the user.</param>
+        /// <param name="modelState">ModelStateDictionary to store validation errors.</param>
         public async Task<UserDTO> Register(RegisterUserDTO registerUserDto, ModelStateDictionary modelState,ClaimsPrincipal User)
         {
             var user = new ApplicationUser()

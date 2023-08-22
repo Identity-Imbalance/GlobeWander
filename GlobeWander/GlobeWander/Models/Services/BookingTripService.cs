@@ -23,6 +23,11 @@ namespace GlobeWander.Models.Services
             _UserManager = userManager;
         }
 
+        /// <summary>
+        /// Create a new booking trip.
+        /// </summary>
+        /// <param name="bookingTrip">Data for the new booking trip.</param>
+        /// <param name="userId">ID of the user making the booking.</param>
         public async Task<BookingTripDTO> Create(NewBookingTripDTO bookingTrip, ClaimsPrincipal userPrincipal)
         {
             var getUserId = userPrincipal.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -69,6 +74,12 @@ namespace GlobeWander.Models.Services
         }
 
         public async Task<BookingTripDTO> GetBookingTripById(int id)
+        /// <summary>
+        /// Get a booking trip by its ID and trip ID.
+        /// </summary>
+        /// <param name="id">ID of the booking trip.</param>
+        /// <param name="tripId">ID of the trip associated with the booking trip.</param>
+        public async Task<BookingTripDTO> GetBookingTripById(int id, int tripId)
         {
             BookingTripDTO? bookingTrip = await _context.bookingTrips
 
