@@ -3,6 +3,7 @@ using GlobeWander.Models.DTO;
 using GlobeWander.Models.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 using Xunit.Sdk;
 
 namespace GlobeWander.Models.Services
@@ -27,9 +28,11 @@ namespace GlobeWander.Models.Services
         /// </summary>
         /// <param name="bookingTrip">Data for the new booking trip.</param>
         /// <param name="userId">ID of the user making the booking.</param>
-        public async Task<BookingTripDTO> Create(NewBookingTripDTO bookingTrip, string userId)
+        public async Task<BookingTripDTO> Create(NewBookingTripDTO bookingTrip, ClaimsPrincipal userPrincipal)
         {
-            var user = await _UserManager.FindByIdAsync(userId);
+            var getUserId = userPrincipal.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _UserManager.FindByIdAsync(getUserId);
+
             var trip = await _context.Trips.FindAsync(bookingTrip.TripID);
 
             var existBookingTrip = await _context.bookingTrips
@@ -60,7 +63,7 @@ namespace GlobeWander.Models.Services
                     await _context.SaveChangesAsync();
 
 
-                    var BookingTripDTO = await GetBookingTripById(newBookingTrip.ID, newBookingTrip.TripID);
+                    var BookingTripDTO = await GetBookingTripById(newBookingTrip.ID);
                     BookingTripDTO.ID = newBookingTrip.ID;
 
                     return BookingTripDTO;
@@ -70,6 +73,7 @@ namespace GlobeWander.Models.Services
             return null;
         }
 
+        public async Task<BookingTripDTO> GetBookingTripById(int id)
         /// <summary>
         /// Get a booking trip by its ID and trip ID.
         /// </summary>
@@ -79,7 +83,7 @@ namespace GlobeWander.Models.Services
         {
             BookingTripDTO? bookingTrip = await _context.bookingTrips
 
-                .Where(x => x.ID == id && x.TripID == tripId)
+                .Where(x => x.ID == id )
                 .Select(bookingTrip => new BookingTripDTO
                 {
                     ID = bookingTrip.ID,
@@ -123,7 +127,7 @@ namespace GlobeWander.Models.Services
         /// <param name="tripId">ID of the associated trip.</param>
         public async Task<BookingTripDTO> UpdateBookingTrip(int id, UpdateBookingTripDTO updateBookingTrip, int tripId)
         {
-            var newbookingTrip = await _context.bookingTrips.FindAsync(id, tripId);
+            var newbookingTrip = await _context.bookingTrips.FindAsync(id);
 
             var trip = await _context.Trips.FindAsync(tripId);
 
@@ -146,7 +150,7 @@ namespace GlobeWander.Models.Services
                 
 
             }
-            var returnBookingTrip = await GetBookingTripById(newbookingTrip.ID, newbookingTrip.TripID);
+            var returnBookingTrip = await GetBookingTripById(newbookingTrip.ID);
 
             return returnBookingTrip;
         }

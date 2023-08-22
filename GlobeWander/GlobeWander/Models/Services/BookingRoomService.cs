@@ -44,7 +44,7 @@ namespace GlobeWander.Models.Services
                 _context.BookingRooms.Add(bookingRoom);
                 await _context.SaveChangesAsync();
 
-                var newBookingRoom = await GetBookingRoomById(bookingRoom.ID,user.Id);
+                var newBookingRoom = await GetBookingRoomById(bookingRoom.ID);
 
                 return newBookingRoom;
             }
@@ -93,6 +93,7 @@ namespace GlobeWander.Models.Services
             return bookingRoomDTOs;
         }
 
+        public async Task<BookingRoomDTO> GetBookingRoomById(int id)
         /// <summary>
         /// Get a booking room by its ID.
         /// </summary>
@@ -127,11 +128,10 @@ namespace GlobeWander.Models.Services
         /// <param name="updatedBookingRoomDTO">Updated booking room data.</param>
         /// <param name="userId">ID of the user making the update.</param>
         // user cannot update the booking room 
-        public async Task<BookingRoomDTO> UpdateBookingRoom(int id, DurationBookingRoomDTO updatedBookingRoomDTO, string userId)
+        public async Task<BookingRoomDTO> UpdateBookingRoom(int id, DurationBookingRoomDTO updatedBookingRoomDTO)
         {
             var bookingRoom = await _context.BookingRooms.FindAsync(id);
 
-            var user = await _UserManager.FindByIdAsync(userId);
             if (bookingRoom != null)
             {
                 bookingRoom.Duration = updatedBookingRoomDTO.Duration;
@@ -139,7 +139,7 @@ namespace GlobeWander.Models.Services
                 _context.Entry(bookingRoom).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
             }
-            var newBookingRoomUpdate = await GetBookingRoomById(id, user.Id);
+            var newBookingRoomUpdate = await GetBookingRoomById(id);
             return newBookingRoomUpdate;
         }
     }
