@@ -13,8 +13,8 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace GlobeWander.Controllers
 {/// <summary>
-/// API controller for managing rates.
-/// </summary>
+ /// API controller for managing rates.
+ /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class RatesController : ControllerBase
@@ -47,12 +47,12 @@ namespace GlobeWander.Controllers
         [Authorize(Roles = "Admin Manager,Trip Manager")]
         public async Task<ActionResult<RateDTO>> GetRate(int id)
         {
-         var rate = await _rate.GetRateById(id);
-           if(rate == null)
+            var rate = await _rate.GetRateById(id);
+            if (rate == null)
             {
                 return NotFound();
             }
-           return Ok(rate);
+            return Ok(rate);
         }
 
         /// <summary>
@@ -86,8 +86,13 @@ namespace GlobeWander.Controllers
         [Authorize(Roles = "User")]
         public async Task<IActionResult> PutRate(int TripID, int id, UpdateRateDTO rateDTO)
         {
-          var updateRate =await _rate.UpdateRate(id,TripID, rateDTO);
-          return Ok(updateRate);
+            if (rateDTO.Rating <= 10 && rateDTO.Rating >= 0)
+
+            {
+                var updateRate = await _rate.UpdateRate(id, TripID, rateDTO);
+                return Ok(updateRate);
+            }
+            return null;
         }
 
         /// <summary>
@@ -100,8 +105,12 @@ namespace GlobeWander.Controllers
         [Authorize(Roles = "User")]
         public async Task<ActionResult<RateDTO>> PostRate(NewRateDTO rateDTO)
         {
-         var createRate = await _rate.Create(rateDTO,User);
-            return Ok(createRate);
+            if (rateDTO.Rating <= 10 && rateDTO.Rating >= 0)
+            {
+                var createRate = await _rate.Create(rateDTO, User);
+                return Ok(createRate);
+            }
+            return NoContent();
         }
 
         /// <summary>
@@ -119,6 +128,6 @@ namespace GlobeWander.Controllers
             return NoContent();
         }
 
-      
+
     }
 }

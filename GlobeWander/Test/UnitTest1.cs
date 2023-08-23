@@ -68,7 +68,7 @@ namespace Test
                 City = "test",
                 Description = "test",
                 Category = Category.Medical,
-                PhoneNumber = "324"
+                PhoneNumber = "0787777777"
             };
             var actualTourSpot = await service.UpdateTourSpot(UpdatedTourSpot, tourSpotDTO.ID);
             Assert.Equal(UpdatedTourSpot.Name, actualTourSpot.Name);
