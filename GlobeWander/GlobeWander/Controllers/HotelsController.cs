@@ -30,11 +30,19 @@ namespace GlobeWander.Controllers
         /// Get a list of all hotels.
         /// </summary>
         // GET: api/Hotels
+        [AllowAnonymous]
         [HttpGet]
         [Authorize(Roles = "Admin Manager,Hotel Manager")]
         public async Task<ActionResult<IEnumerable<HotelDTO>>> Get()
         {
-            return await _hotel.GetAllHotels();
+                return await _hotel.GetAllHotels();
+        }
+
+        [AllowAnonymous]
+        [HttpGet("AvailableHotels")]
+        public async Task<ActionResult<IEnumerable<AnonymousHotelDTO>>> GetHotelsForAnonymous()
+        {
+            return await _hotel.AnonymousHotelDTOs();
         }
 
         /// <summary>
@@ -58,7 +66,7 @@ namespace GlobeWander.Controllers
         // POST: api/Hotels
         [HttpPost]
         [Authorize(Roles = "Admin Manager,Hotel Manager")]
-        public async Task<ActionResult<HotelDTO>> PostHotel(HotelDTO hotel)
+        public async Task<ActionResult<NewHotelDTO>> PostHotel(NewHotelDTO hotel)
         {
             return await _hotel.CreateHotel(hotel);
         }

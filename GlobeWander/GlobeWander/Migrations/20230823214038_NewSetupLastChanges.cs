@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace GlobeWander.Migrations
 {
     /// <inheritdoc />
-    public partial class controllercheack : Migration
+    public partial class NewSetupLastChanges : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -77,7 +77,7 @@ namespace GlobeWander.Migrations
                     City = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Category = table.Column<int>(type: "int", nullable: false),
-                    PhoneNumber = table.Column<long>(type: "bigint", nullable: false)
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -340,11 +340,20 @@ namespace GlobeWander.Migrations
                 values: new object[,]
                 {
                     { "admin manager", "00000000-0000-0000-0000-000000000000", "Admin Manager", "ADMIN MANAGER" },
-                    { "anonymoususer", "00000000-0000-0000-0000-000000000000", "AnonymousUser", "ANONYMOUSUSER" },
                     { "hotel manager", "00000000-0000-0000-0000-000000000000", "Hotel Manager", "HOTEL MANAGER" },
-                    { "tour manager", "00000000-0000-0000-0000-000000000000", "Tour Manager", "TOUR MANAGER" },
                     { "trip manager", "00000000-0000-0000-0000-000000000000", "Trip Manager", "TRIP MANAGER" },
                     { "user", "00000000-0000-0000-0000-000000000000", "User", "USER" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[,]
+                {
+                    { "1", 0, "477c5124-a3da-4d8e-8621-35799e4582d6", "adminUser@example.com", true, false, null, "adminUser@EXAMPLE.COM", "ADMIN", "AQAAAAIAAYagAAAAECa94HADwvhErWzvHWuast983NIo3+i2+L7e+nw58F95qVoTbycRdMColPbhlGCDDA==", "1234567890", false, "c6692053-4094-40f7-baad-513a2532b3dd", false, "admin" },
+                    { "2", 0, "1c8a2b58-cb45-4665-8520-7c7cb6239926", "hotel@example.com", true, false, null, "hotel@EXAMPLE.COM", "HOTEL", "AQAAAAIAAYagAAAAEL22hOHvooTY7FGghzpoBR+6gdn1OnY+TetTfsAijgB/RJsbLO7Lr8+k+dkDTYETkw==", "1234567890", false, "12eb3f23-2c0c-4623-a2d1-88df2bfdf9ff", false, "hotel" },
+                    { "3", 0, "f1eea056-7a23-47b3-844d-8e4e5c8f5eaa", "trip@example.com", true, false, null, "trip@EXAMPLE.COM", "TRIP", "AQAAAAIAAYagAAAAEH7EsDuhN7p4uEtiHJVduuTM6lbnWkcwBbJcxA8gfB2JJMwla0/IfDcJTXrT40dp9g==", "1234567890", false, "b6ae56e1-239c-469f-a396-583b7635475e", false, "trip" },
+                    { "4", 0, "ac8607ba-a948-425d-a65b-38795f95351c", "User@example.com", true, false, null, null, "USER", "AQAAAAIAAYagAAAAEAoMx43nMY9GbINd5mV4+ZnsnKqDaQWiLMEKG9K29AB4C1OHJDKRTlFhFAEgTPJEpQ==", "1234567890", false, "82831347-82f9-480b-8301-90056c44c37b", false, "User" }
                 });
 
             migrationBuilder.InsertData(
@@ -362,9 +371,20 @@ namespace GlobeWander.Migrations
                 columns: new[] { "ID", "Category", "City", "Country", "Description", "Name", "PhoneNumber" },
                 values: new object[,]
                 {
-                    { 1, 3, "Petra", "Jordan", "a place before thousands years", "Petra", 78885423L },
-                    { 2, 3, "Jerash", "Jordan", "A historical place that the Romanian civilization build before thousands years.", "Jerash", 88782215L },
-                    { 3, 3, "Irbid", "Jordan", "A historical place that the Romanian civilization build before thousands years. In the north of Jordan", "Um Qais", 788442523L }
+                    { 1, 3, "Petra", "Jordan", "a place before thousands years", "Petra", "078885423" },
+                    { 2, 3, "Jerash", "Jordan", "A historical place that the Romanian civilization build before thousands years.", "Jerash", "088782215" },
+                    { 3, 3, "Irbid", "Jordan", "A historical place that the Romanian civilization build before thousands years. In the north of Jordan", "Um Qais", "0788442521" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[,]
+                {
+                    { "admin manager", "1" },
+                    { "hotel manager", "2" },
+                    { "trip manager", "3" },
+                    { "user", "4" }
                 });
 
             migrationBuilder.InsertData(
@@ -374,7 +394,7 @@ namespace GlobeWander.Migrations
                 {
                     { 1, "A unique hotel that you can't find in this place", "Paradise", 1 },
                     { 2, "A unique hotel that you can't find in this place", "Wander ", 2 },
-                    { 3, "A unique hotel that you can't find in this place", "Amazing", 3 }
+                    { 3, "A unique hotel that y    ou can't find in this place", "Amazing", 3 }
                 });
 
             migrationBuilder.InsertData(
@@ -382,9 +402,9 @@ namespace GlobeWander.Migrations
                 columns: new[] { "Id", "Activity", "Capacity", "Cost", "Count", "Description", "EndDate", "Name", "StartDate", "TourSpotID" },
                 values: new object[,]
                 {
-                    { 1, "walking", 30, 20m, 0, "trip start at 8 am and going from Amman to Petra", new DateTime(2023, 8, 21, 19, 9, 49, 702, DateTimeKind.Utc).AddTicks(3984), "Petra ride", new DateTime(2023, 8, 21, 22, 9, 49, 702, DateTimeKind.Local).AddTicks(3946), 1 },
-                    { 2, "visiting", 22, 30m, 0, "Amman to Jerash with a trip manager who can speak many languages", new DateTime(2023, 8, 21, 19, 9, 49, 702, DateTimeKind.Utc).AddTicks(3988), "Jerash ride", new DateTime(2023, 8, 21, 22, 9, 49, 702, DateTimeKind.Local).AddTicks(3986), 2 },
-                    { 3, "climbing", 40, 40m, 0, "Amman to Irbid with a trip manager who can speak many languages", new DateTime(2023, 8, 21, 19, 9, 49, 702, DateTimeKind.Utc).AddTicks(3991), "Um-Qais ride", new DateTime(2023, 8, 21, 22, 9, 49, 702, DateTimeKind.Local).AddTicks(3989), 3 }
+                    { 1, "walking", 30, 20m, 0, "trip start at 8 am and going from Amman to Petra", new DateTime(2023, 8, 23, 21, 40, 37, 979, DateTimeKind.Utc).AddTicks(8154), "Petra ride", new DateTime(2023, 8, 24, 0, 40, 37, 979, DateTimeKind.Local).AddTicks(8139), 1 },
+                    { 2, "visiting", 22, 30m, 0, "Amman to Jerash with a trip manager who can speak many languages", new DateTime(2023, 8, 23, 21, 40, 37, 979, DateTimeKind.Utc).AddTicks(8158), "Jerash ride", new DateTime(2023, 8, 24, 0, 40, 37, 979, DateTimeKind.Local).AddTicks(8157), 2 },
+                    { 3, "climbing", 40, 40m, 0, "Amman to Irbid with a trip manager who can speak many languages", new DateTime(2023, 8, 23, 21, 40, 37, 979, DateTimeKind.Utc).AddTicks(8161), "Um-Qais ride", new DateTime(2023, 8, 24, 0, 40, 37, 979, DateTimeKind.Local).AddTicks(8160), 3 }
                 });
 
             migrationBuilder.CreateIndex(

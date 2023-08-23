@@ -59,7 +59,7 @@ namespace Test
                 City = "Test",
                 Description = "Test",
                 Category = Category.Historical,
-                PhoneNumber = 24343
+                PhoneNumber = "24343"
             };
 
             _db.TourSpots.Add(tourSpot);

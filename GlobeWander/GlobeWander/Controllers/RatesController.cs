@@ -81,9 +81,10 @@ namespace GlobeWander.Controllers
         /// <param name="rateDTO">The updated rate data.</param>
         // PUT: api/Rates/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}/{TripID}")]
+        [HttpPut]
+        [Route("/api/trips/{TripID}/Rates/{id}")]
         [Authorize(Roles = "User")]
-        public async Task<IActionResult> PutRate(int id,int TripID, UpdateRateDTO rateDTO)
+        public async Task<IActionResult> PutRate(int TripID, int id, UpdateRateDTO rateDTO)
         {
           var updateRate =await _rate.UpdateRate(id,TripID, rateDTO);
           return Ok(updateRate);
@@ -109,9 +110,10 @@ namespace GlobeWander.Controllers
         /// <param name="id">The ID of the rate to delete.</param>
         /// <param name="TripID">The ID of the associated trip.</param>
         // DELETE: api/Rates/5
-        [HttpDelete("{id}/{TripID}")]
+        [HttpDelete]
+        [Route("/api/trips/{TripID}/Rates/{id}")]
         [Authorize(Roles = "Admin Manager,Trip Manager,User")]
-        public async Task<IActionResult> DeleteRate(int id ,int TripID)
+        public async Task<IActionResult> DeleteRate(int TripID, int id)
         {
             var deleteRate = await _rate.DeleteRate(id, TripID);
             return NoContent();

@@ -68,7 +68,7 @@ namespace Test
                 City = "test",
                 Description = "test",
                 Category = Category.Medical,
-                PhoneNumber = 324
+                PhoneNumber = "324"
             };
             var actualTourSpot = await service.UpdateTourSpot(UpdatedTourSpot, tourSpotDTO.ID);
             Assert.Equal(UpdatedTourSpot.Name, actualTourSpot.Name);
@@ -160,7 +160,7 @@ namespace Test
             var hotel = await CreateAndSaveTestHotel();
             var service = new HotelService(_db);
 
-            var hotelDTO = new HotelDTO()
+            var hotelDTO = new NewHotelDTO()
             {
 
                 Name = "Test",
@@ -601,17 +601,15 @@ namespace Test
 
             var x = await service.CreateTrip(newTripDTO);
 
-            var UpdatedTrip = new NewTripDTO()
+            var UpdatedTrip = new UpdateTripDTO()
             {
                 Name = newTripDTO.Name,
                 Description = newTripDTO.Description,
                 Cost = newTripDTO.Cost,
                 Activity = newTripDTO.Activity,
                 StartDate = newTripDTO.StartDate,
-                EndDate = newTripDTO.EndDate,
-                Capacity = newTripDTO.Capacity,
-                Count = newTripDTO.Count,
-                TourSpotID = newTripDTO.TourSpotID
+                EndDate = newTripDTO.EndDate
+               
             };
 
             var actualTrip = await service.UpdateTrip(UpdatedTrip, x.Id);
@@ -623,9 +621,6 @@ namespace Test
             Assert.Equal(UpdatedTrip.Activity, y.Activity);
             Assert.Equal(UpdatedTrip.StartDate, y.StartDate);
             Assert.Equal(UpdatedTrip.EndDate, y.EndDate);
-            Assert.Equal(UpdatedTrip.Capacity, y.Capacity);
-            Assert.Equal(UpdatedTrip.Count, y.Count);
-            Assert.Equal(UpdatedTrip.TourSpotID, y.TourSpotID);
 
         }
 

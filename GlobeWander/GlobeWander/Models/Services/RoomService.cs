@@ -62,12 +62,12 @@ namespace GlobeWander.Models.Services
 
             // return room;
 
-            var RoomDTO = _context.Rooms.Select(s => new RoomDTO()
+            var RoomDTO = await _context.Rooms.Select(s => new RoomDTO()
             {
                 ID = s.ID,
                 Name = s.Name,
                 Layout = s.Layout,
-            }).FirstOrDefault(x => x.ID == roomId);
+            }).FirstOrDefaultAsync(x => x.ID == roomId);
 
             return RoomDTO;
         }

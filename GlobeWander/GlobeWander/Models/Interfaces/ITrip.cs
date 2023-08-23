@@ -10,7 +10,7 @@ namespace GlobeWander.Models.Interfaces
 
         public Task<TripDTO> CreateTrip(NewTripDTO trip);
 
-        public Task<TripDTO> UpdateTrip(NewTripDTO trip, int id);
+        public Task<TripDTO> UpdateTrip(UpdateTripDTO trip, int id);
 
         public Task DeleteTrip(int id);
 

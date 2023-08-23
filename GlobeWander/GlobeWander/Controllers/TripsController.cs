@@ -73,7 +73,7 @@ namespace GlobeWander.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin Manager,Trip Manager")]
-        public async Task<IActionResult> PutTrip(int id, NewTripDTO trip)
+        public async Task<IActionResult> PutTrip(int id, UpdateTripDTO trip)
         {
             if (id != trip.Id)
             {

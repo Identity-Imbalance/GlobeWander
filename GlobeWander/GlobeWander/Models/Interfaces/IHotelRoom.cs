@@ -15,5 +15,7 @@ namespace GlobeWander.Models.Interfaces
 
         Task<HotelRoom>  DeleteHotelRoom(int hotelID,int roomNumber);
 
+        Task<List<AnonymousHotelRoomDTO>> GetAnonymousHotelRoomDTO();
+
     }
 }

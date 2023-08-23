@@ -91,14 +91,18 @@ namespace GlobeWander.Controllers
         // POST: api/BookingRooms
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        //[Authorize(Roles = "User")]
+        [Authorize(Roles = "User")]
         public async Task<ActionResult<BookingRoomDTO>> PostBookingRoom(NewBookingRoomDTO bookingRoomDTO)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             var x = await _context.CreateBookingRoom(bookingRoomDTO,userId);
 
-            return CreatedAtAction(nameof(GetBookingRoom), new { id = x.ID, tripId = x.HotelID, RoomNumber = x.RoomNumber, userName = x.Username }, x);
+            if (x != null)
+
+                return CreatedAtAction(nameof(GetBookingRoom), new { id = x.ID, tripId = x.HotelID, RoomNumber = x.RoomNumber, userName = x.Username }, x);
+
+            return NoContent();
 
         }
 

@@ -130,7 +130,7 @@ namespace GlobeWander.Models.Services
         public async Task<List<HotelRoomDTO>> GetHotelRooms()
         {
 
-            var hotelRoomDTO = await _context.HotelRooms.Select(b => new HotelRoomDTO
+            List<HotelRoomDTO> hotelRoomDTO = await _context.HotelRooms.Select(b => new HotelRoomDTO
             {
                 HotelID = b.HotelID,
                 RoomNumber = b.RoomNumber,
@@ -153,11 +153,11 @@ namespace GlobeWander.Models.Services
                     HotelID = x.HotelID,
                     RoomNumber = x.RoomNumber,
                     Cost = x.Cost,
-                    Duration = b.BookingRoom.Duration,
+                    Duration = x.Duration,
                     TotalPrice = x.TotalPrice,
                     Username = x.Username
                 })
-                .FirstOrDefault(),
+                .FirstOrDefault(i => i.RoomNumber == b.RoomNumber && i.HotelID == b.HotelID)
             }).ToListAsync();
 
 
@@ -189,6 +189,18 @@ namespace GlobeWander.Models.Services
 
             
         
+        }
+
+        public async Task<List<AnonymousHotelRoomDTO>> GetAnonymousHotelRoomDTO()
+        {
+            return await _context.HotelRooms.Select(hr => new AnonymousHotelRoomDTO
+            {
+                HotelID = hr.HotelID,
+                RoomNumber = hr.RoomNumber,
+                RoomID = hr.RoomID,
+                IsAvailable = hr.IsAvailable,
+                PricePerDay = hr.PricePerDay,
+            }).ToListAsync();
         }
     }
 }

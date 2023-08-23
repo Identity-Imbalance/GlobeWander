@@ -32,11 +32,18 @@ namespace GlobeWander.Controllers
         /// Get a list of all hotel rooms.
         /// </summary>
         // GET: api/HotelRooms
+        
         [HttpGet]
-        [Authorize(Roles = "Admin Manager,Hotel Manager")]
+        [Authorize(Roles = "Admin Manager,Hotel Manager , User")]
         public async Task<ActionResult<IEnumerable<HotelRoomDTO>>> GetHotelRooms()
         {
             return await _hotelRoom.GetHotelRooms();
+        }
+
+        [HttpGet("ViewHotelRooms")]
+        public async Task<ActionResult<IEnumerable<AnonymousHotelRoomDTO>>> ViewAllHotelRoomsForanyUser()
+        {
+            return await _hotelRoom.GetAnonymousHotelRoomDTO();
         }
 
         /// <summary>

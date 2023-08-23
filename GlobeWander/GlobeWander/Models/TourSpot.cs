@@ -16,7 +16,7 @@ namespace GlobeWander.Models
 
         public Category Category { get; set; }
 
-        public long PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
 
         public List<Hotel>? Hotels { get; set; }
 
