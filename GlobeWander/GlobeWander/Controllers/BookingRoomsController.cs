@@ -52,9 +52,8 @@ namespace GlobeWander.Controllers
 
         public async Task<ActionResult<BookingRoomDTO>> GetBookingRoom(int id)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var bookingRoomDTO = await _context.GetBookingRoomById(id, userId);
+            var bookingRoomDTO = await _context.GetBookingRoomById(id);
 
 
             if (bookingRoomDTO == null)
@@ -77,9 +76,8 @@ namespace GlobeWander.Controllers
       
         public async Task<IActionResult> PutBookingRoom(int id, DurationBookingRoomDTO bookingRoomDTO)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            await _context.UpdateBookingRoom(id, bookingRoomDTO,userId);
+            await _context.UpdateBookingRoom(id, bookingRoomDTO);
 
             return NoContent();
         }
@@ -93,14 +91,14 @@ namespace GlobeWander.Controllers
         // POST: api/BookingRooms
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        [Authorize(Roles = "User")]
+        //[Authorize(Roles = "User")]
         public async Task<ActionResult<BookingRoomDTO>> PostBookingRoom(NewBookingRoomDTO bookingRoomDTO)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             var x = await _context.CreateBookingRoom(bookingRoomDTO,userId);
 
-            return Ok(x);
+            return CreatedAtAction(nameof(GetBookingRoom), new { id = x.ID, tripId = x.HotelID, RoomNumber = x.RoomNumber, userName = x.Username }, x);
 
         }
 
