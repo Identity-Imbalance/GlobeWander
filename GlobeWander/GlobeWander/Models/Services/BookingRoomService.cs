@@ -24,12 +24,17 @@ namespace GlobeWander.Models.Services
             var user = await _UserManager.FindByIdAsync(userId);
             if (getHotelRoom.IsAvailable)
             {
+                var previousReservation = await GetLastReservationForRoom(bookingRoomDTO.HotelID, bookingRoomDTO.RoomNumber);
+                var staetDate =previousReservation !=null? previousReservation.EndDate.AddDays(1) : DateTime.Now.Date;
+                var endDate = staetDate.AddDays(bookingRoomDTO.Duration);
                 var bookingRoom = new BookingRoom
                 {
                     HotelID = bookingRoomDTO.HotelID,
                     RoomNumber = bookingRoomDTO.RoomNumber,
                     Cost = getHotelRoom.PricePerDay,
                     Duration = bookingRoomDTO.Duration,
+                    StartDate=staetDate,
+                    EndDate=endDate,
                     TotalPrice = getHotelRoom.PricePerDay * bookingRoomDTO.Duration,
                     Username = user.UserName
                 };
@@ -115,6 +120,16 @@ namespace GlobeWander.Models.Services
             }
             var newBookingRoomUpdate = await GetBookingRoomById(id, user.Id);
             return newBookingRoomUpdate;
+        }
+
+        private async Task<BookingRoom> GetLastReservationForRoom(int hotelId, int roomNumber)
+        {
+            var lastReservation = await _context.BookingRooms
+                .Where(b => b.HotelID == hotelId && b.RoomNumber == roomNumber)
+                .OrderByDescending(b => b.EndDate)
+                .FirstOrDefaultAsync();
+
+            return lastReservation;
         }
     }
 }
