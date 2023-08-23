@@ -13,8 +13,8 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace GlobeWander.Controllers
 {/// <summary>
-/// API controller for managing rates.
-/// </summary>
+ /// API controller for managing rates.
+ /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class RatesController : ControllerBase
@@ -47,12 +47,12 @@ namespace GlobeWander.Controllers
         [Authorize(Roles = "Admin Manager,Trip Manager")]
         public async Task<ActionResult<RateDTO>> GetRate(int id)
         {
-         var rate = await _rate.GetRateById(id);
-           if(rate == null)
+            var rate = await _rate.GetRateById(id);
+            if (rate == null)
             {
                 return NotFound();
             }
-           return Ok(rate);
+            return Ok(rate);
         }
 
         /// <summary>
@@ -83,10 +83,15 @@ namespace GlobeWander.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}/{TripID}")]
         [Authorize(Roles = "User")]
-        public async Task<IActionResult> PutRate(int id,int TripID, UpdateRateDTO rateDTO)
+        public async Task<IActionResult> PutRate(int id, int TripID, UpdateRateDTO rateDTO)
         {
-          var updateRate =await _rate.UpdateRate(id,TripID, rateDTO);
-          return Ok(updateRate);
+            if (rateDTO.Rating <= 10 && rateDTO.Rating >= 0)
+
+            {
+                var updateRate = await _rate.UpdateRate(id, TripID, rateDTO);
+                return Ok(updateRate);
+            }
+            return null;
         }
 
         /// <summary>
@@ -99,8 +104,12 @@ namespace GlobeWander.Controllers
         [Authorize(Roles = "User")]
         public async Task<ActionResult<RateDTO>> PostRate(NewRateDTO rateDTO)
         {
-         var createRate = await _rate.Create(rateDTO,User);
-            return Ok(createRate);
+            if (rateDTO.Rating <= 10 && rateDTO.Rating >= 0)
+            {
+                var createRate = await _rate.Create(rateDTO, User);
+                return Ok(createRate);
+            }
+            return NoContent();
         }
 
         /// <summary>
@@ -111,12 +120,12 @@ namespace GlobeWander.Controllers
         // DELETE: api/Rates/5
         [HttpDelete("{id}/{TripID}")]
         [Authorize(Roles = "Admin Manager,Trip Manager,User")]
-        public async Task<IActionResult> DeleteRate(int id ,int TripID)
+        public async Task<IActionResult> DeleteRate(int id, int TripID)
         {
             var deleteRate = await _rate.DeleteRate(id, TripID);
             return NoContent();
         }
 
-      
+
     }
 }
