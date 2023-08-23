@@ -19,7 +19,7 @@ namespace GlobeWander.Data
             modelBuilder.Entity<TourSpot>().HasData(
                 new TourSpot() { ID = 1, Name = "Petra", Country = "Jordan", City = "Petra", Description = "a place before thousands years", Category = Category.Historical, PhoneNumber = "078885423" },
                 new TourSpot() { ID = 2, Name = "Jerash", Country = "Jordan", City = "Jerash", Description = "A historical place that the Romanian civilization build before thousands years.", Category = Category.Historical, PhoneNumber = "088782215" },
-                new TourSpot() { ID = 3, Name = "Um Qais", Country = "Jordan", City = "Irbid", Description = "A historical place that the Romanian civilization build before thousands years. In the north of Jordan", Category = Category.Historical, PhoneNumber = "0788442523" }
+                new TourSpot() { ID = 3, Name = "Um Qais", Country = "Jordan", City = "Irbid", Description = "A historical place that the Romanian civilization build before thousands years. In the north of Jordan", Category = Category.Historical, PhoneNumber = "0788442521" }
                 );
             modelBuilder.Entity<Trip>().HasData(
 
@@ -30,7 +30,7 @@ namespace GlobeWander.Data
             modelBuilder.Entity<Hotel>().HasData(
                 new Hotel() { Id = 1, TourSpotID = 1, Name = "Paradise", Description = "A unique hotel that you can't find in this place" },
                 new Hotel() { Id = 2, TourSpotID = 2, Name = "Wander ", Description = "A unique hotel that you can't find in this place" },
-                new Hotel() { Id = 3, TourSpotID = 3, Name = "Amazing", Description = "A unique hotel that you can't find in this place" }
+                new Hotel() { Id = 3, TourSpotID = 3, Name = "Amazing", Description = "A unique hotel that y    ou can't find in this place" }
                 );
 
             modelBuilder.Entity<Room>().HasData(
@@ -130,20 +130,18 @@ namespace GlobeWander.Data
             // Seed User Roles
             List<IdentityUserRole<string>> userRoles = new List<IdentityUserRole<string>>()
     {
-        new IdentityUserRole<string> { UserId ="1" , RoleId = "admin manager" }, 
+            new IdentityUserRole<string> { UserId ="1" , RoleId = "admin manager" }, 
             new IdentityUserRole<string> { UserId = "2", RoleId = "hotel manager" } ,
             new IdentityUserRole<string> { UserId = "3", RoleId = "trip manager" } ,
-             new IdentityUserRole<string> { UserId = "4", RoleId = "user" } 
+            new IdentityUserRole<string> { UserId = "4", RoleId = "user" } 
 
     };
     modelBuilder.Entity<IdentityUserRole<string>>().HasData(userRoles);
 
             seedRole(modelBuilder, "Admin Manager", "create", "update", "delete", "read");
-            seedRole(modelBuilder, "Tour Manager", "create", "update", "delete", "read");
             seedRole(modelBuilder, "Trip Manager", "create", "update", "delete", "read");
             seedRole(modelBuilder, "Hotel Manager", "create", "update", "delete", "read");
             seedRole(modelBuilder, "User", "create", "update", "delete", "read");
-            seedRole(modelBuilder, "AnonymousUser", "read");
 
 
         }

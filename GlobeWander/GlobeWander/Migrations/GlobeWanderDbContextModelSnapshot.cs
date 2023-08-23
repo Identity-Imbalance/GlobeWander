@@ -91,15 +91,15 @@ namespace GlobeWander.Migrations
                         {
                             Id = "4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "5f1d1bf3-3174-49e3-9840-28197ca6ee43",
+                            ConcurrencyStamp = "ac8607ba-a948-425d-a65b-38795f95351c",
                             Email = "User@example.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedUserName = "USER",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDyAYX3sm7I2GGETQrJZasfyfFpCwguGd08oCEjXK33taBZoE/34TXQ1/kNvW+bjYQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEAoMx43nMY9GbINd5mV4+ZnsnKqDaQWiLMEKG9K29AB4C1OHJDKRTlFhFAEgTPJEpQ==",
                             PhoneNumber = "1234567890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "c7263789-b4bb-410e-a0da-3fe897380077",
+                            SecurityStamp = "82831347-82f9-480b-8301-90056c44c37b",
                             TwoFactorEnabled = false,
                             UserName = "User"
                         },
@@ -107,16 +107,16 @@ namespace GlobeWander.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f25f97e3-e90c-4cbe-af59-f435ab291251",
+                            ConcurrencyStamp = "477c5124-a3da-4d8e-8621-35799e4582d6",
                             Email = "adminUser@example.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "adminUser@EXAMPLE.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEE2uIRPYVNo9Ifw5AgC5zNpVHH+hY1nMfOBv+x6hMbL4R15319Kj23GjIC5MeZibTw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAECa94HADwvhErWzvHWuast983NIo3+i2+L7e+nw58F95qVoTbycRdMColPbhlGCDDA==",
                             PhoneNumber = "1234567890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "2c0bd26e-6ed0-436d-b0e2-04504486a15b",
+                            SecurityStamp = "c6692053-4094-40f7-baad-513a2532b3dd",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         },
@@ -124,16 +124,16 @@ namespace GlobeWander.Migrations
                         {
                             Id = "3",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "02b192a3-6996-452e-b52a-c382417fd060",
+                            ConcurrencyStamp = "f1eea056-7a23-47b3-844d-8e4e5c8f5eaa",
                             Email = "trip@example.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "trip@EXAMPLE.COM",
                             NormalizedUserName = "TRIP",
-                            PasswordHash = "AQAAAAIAAYagAAAAECi4ollBuEPeMoVaxAZGZNH2Pua9W/+03cpC7GzRy8JMRuN8uqsHH2EEQAXnW2DHTw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEH7EsDuhN7p4uEtiHJVduuTM6lbnWkcwBbJcxA8gfB2JJMwla0/IfDcJTXrT40dp9g==",
                             PhoneNumber = "1234567890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "cfbfeef6-3b11-433a-a9ad-5fe8be6f373d",
+                            SecurityStamp = "b6ae56e1-239c-469f-a396-583b7635475e",
                             TwoFactorEnabled = false,
                             UserName = "trip"
                         },
@@ -141,16 +141,16 @@ namespace GlobeWander.Migrations
                         {
                             Id = "2",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "511e6655-3a1b-4950-9c08-ae17020e32f6",
+                            ConcurrencyStamp = "1c8a2b58-cb45-4665-8520-7c7cb6239926",
                             Email = "hotel@example.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "hotel@EXAMPLE.COM",
                             NormalizedUserName = "HOTEL",
-                            PasswordHash = "AQAAAAIAAYagAAAAEOMHstQ2B4dCqbb2vBVQE7lCKI5Umc3Wqv/1wchpIPnRC7kr5ESyY0BN1jTOJM5zEg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEL22hOHvooTY7FGghzpoBR+6gdn1OnY+TetTfsAijgB/RJsbLO7Lr8+k+dkDTYETkw==",
                             PhoneNumber = "1234567890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "27a42e39-73e5-4f07-bb5d-a122487e297d",
+                            SecurityStamp = "12eb3f23-2c0c-4623-a2d1-88df2bfdf9ff",
                             TwoFactorEnabled = false,
                             UserName = "hotel"
                         });
@@ -268,7 +268,7 @@ namespace GlobeWander.Migrations
                         new
                         {
                             Id = 3,
-                            Description = "A unique hotel that you can't find in this place",
+                            Description = "A unique hotel that y    ou can't find in this place",
                             Name = "Amazing",
                             TourSpotID = 3
                         });
@@ -394,8 +394,9 @@ namespace GlobeWander.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("PhoneNumber")
-                        .HasColumnType("bigint");
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 
@@ -410,7 +411,7 @@ namespace GlobeWander.Migrations
                             Country = "Jordan",
                             Description = "a place before thousands years",
                             Name = "Petra",
-                            PhoneNumber = 78885423L
+                            PhoneNumber = "078885423"
                         },
                         new
                         {
@@ -420,7 +421,7 @@ namespace GlobeWander.Migrations
                             Country = "Jordan",
                             Description = "A historical place that the Romanian civilization build before thousands years.",
                             Name = "Jerash",
-                            PhoneNumber = 88782215L
+                            PhoneNumber = "088782215"
                         },
                         new
                         {
@@ -430,7 +431,7 @@ namespace GlobeWander.Migrations
                             Country = "Jordan",
                             Description = "A historical place that the Romanian civilization build before thousands years. In the north of Jordan",
                             Name = "Um Qais",
-                            PhoneNumber = 788442523L
+                            PhoneNumber = "0788442521"
                         });
                 });
 
@@ -487,9 +488,9 @@ namespace GlobeWander.Migrations
                             Cost = 20m,
                             Count = 0,
                             Description = "trip start at 8 am and going from Amman to Petra",
-                            EndDate = new DateTime(2023, 8, 21, 21, 12, 43, 519, DateTimeKind.Utc).AddTicks(6857),
+                            EndDate = new DateTime(2023, 8, 23, 21, 40, 37, 979, DateTimeKind.Utc).AddTicks(8154),
                             Name = "Petra ride",
-                            StartDate = new DateTime(2023, 8, 22, 0, 12, 43, 519, DateTimeKind.Local).AddTicks(6808),
+                            StartDate = new DateTime(2023, 8, 24, 0, 40, 37, 979, DateTimeKind.Local).AddTicks(8139),
                             TourSpotID = 1
                         },
                         new
@@ -500,9 +501,9 @@ namespace GlobeWander.Migrations
                             Cost = 30m,
                             Count = 0,
                             Description = "Amman to Jerash with a trip manager who can speak many languages",
-                            EndDate = new DateTime(2023, 8, 21, 21, 12, 43, 519, DateTimeKind.Utc).AddTicks(6862),
+                            EndDate = new DateTime(2023, 8, 23, 21, 40, 37, 979, DateTimeKind.Utc).AddTicks(8158),
                             Name = "Jerash ride",
-                            StartDate = new DateTime(2023, 8, 22, 0, 12, 43, 519, DateTimeKind.Local).AddTicks(6860),
+                            StartDate = new DateTime(2023, 8, 24, 0, 40, 37, 979, DateTimeKind.Local).AddTicks(8157),
                             TourSpotID = 2
                         },
                         new
@@ -513,9 +514,9 @@ namespace GlobeWander.Migrations
                             Cost = 40m,
                             Count = 0,
                             Description = "Amman to Irbid with a trip manager who can speak many languages",
-                            EndDate = new DateTime(2023, 8, 21, 21, 12, 43, 519, DateTimeKind.Utc).AddTicks(6865),
+                            EndDate = new DateTime(2023, 8, 23, 21, 40, 37, 979, DateTimeKind.Utc).AddTicks(8161),
                             Name = "Um-Qais ride",
-                            StartDate = new DateTime(2023, 8, 22, 0, 12, 43, 519, DateTimeKind.Local).AddTicks(6863),
+                            StartDate = new DateTime(2023, 8, 24, 0, 40, 37, 979, DateTimeKind.Local).AddTicks(8160),
                             TourSpotID = 3
                         });
                 });
@@ -556,13 +557,6 @@ namespace GlobeWander.Migrations
                         },
                         new
                         {
-                            Id = "tour manager",
-                            ConcurrencyStamp = "00000000-0000-0000-0000-000000000000",
-                            Name = "Tour Manager",
-                            NormalizedName = "TOUR MANAGER"
-                        },
-                        new
-                        {
                             Id = "trip manager",
                             ConcurrencyStamp = "00000000-0000-0000-0000-000000000000",
                             Name = "Trip Manager",
@@ -581,13 +575,6 @@ namespace GlobeWander.Migrations
                             ConcurrencyStamp = "00000000-0000-0000-0000-000000000000",
                             Name = "User",
                             NormalizedName = "USER"
-                        },
-                        new
-                        {
-                            Id = "anonymoususer",
-                            ConcurrencyStamp = "00000000-0000-0000-0000-000000000000",
-                            Name = "AnonymousUser",
-                            NormalizedName = "ANONYMOUSUSER"
                         });
                 });
 

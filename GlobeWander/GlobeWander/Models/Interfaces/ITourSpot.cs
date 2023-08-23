@@ -17,5 +17,7 @@ namespace GlobeWander.Models.Interfaces
         public Task<TourSpotDTO> UpdateTourSpot(newTourSpotDTO tourSpot, int id);
 
         // create a method to update the hotel and trip and add them by the id 
+
+        public Task<List<TrendTourSpotDTO>> GetMostVisitedTourSpots();
     }
 }

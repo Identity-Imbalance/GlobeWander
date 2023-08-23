@@ -152,7 +152,7 @@ namespace GlobeWander.Models.Services
         /// </summary>
         /// <param name="trip">Updated trip data.</param>
         /// <param name="id">ID of the trip to be updated.</param>
-        public async Task<TripDTO> UpdateTrip(NewTripDTO trip, int id)
+        public async Task<TripDTO> UpdateTrip(UpdateTripDTO trip, int id)
         {
            var updateTrip = await _context.Trips.FindAsync(id);
 
@@ -165,8 +165,6 @@ namespace GlobeWander.Models.Services
                 updateTrip.Cost = trip.Cost;
                 updateTrip.EndDate = trip.EndDate;
                 updateTrip.Activity = trip.Activity;
-                updateTrip.Capacity = trip.Capacity;
-                updateTrip.Count = trip.Count;
 
                 _context.Entry(updateTrip).State = EntityState.Modified;
 

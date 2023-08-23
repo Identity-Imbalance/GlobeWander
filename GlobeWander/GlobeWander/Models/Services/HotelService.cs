@@ -22,17 +22,18 @@ namespace GlobeWander.Models.Services
         /// Create a new hotel.
         /// </summary>
         /// <param name="hotelDTO">Data for the new hotel.</param>
-        public async Task<HotelDTO> CreateHotel(HotelDTO hotelDTO)
+        public async Task<NewHotelDTO> CreateHotel(NewHotelDTO hotelDTO)
         {
-            Hotel hotel =new Hotel() {    Name= hotelDTO.Name,
+            Hotel hotel =new Hotel() {    
+                Name= hotelDTO.Name,
                 Description= hotelDTO.Description,
                 TourSpotID= hotelDTO.TourSpotID
             };
-            hotel.TourSpot = await _context.TourSpots.FindAsync(hotel.TourSpotID);
-            _context.Hotels.Add(hotel);
-            hotel.Id = hotelDTO.Id;
+
+             _context.Entry(hotel).State = EntityState.Added;
             await _context.SaveChangesAsync();
 
+            hotelDTO.Id = hotel.Id;
 
             return hotelDTO;
         }
@@ -44,11 +45,14 @@ namespace GlobeWander.Models.Services
         public async Task<Hotel> DeleteHotel(int id)
 
         {
-           // Hotel hoteldto = await GetHotelId(id);
-            var hotel= await _context.Hotels.FindAsync(id);
-             
-            _context.Entry(hotel).State = EntityState.Deleted;
-            await _context.SaveChangesAsync();
+            // Hotel hoteldto = await GetHotelId(id);
+            var hotel = await _context.Hotels.FindAsync(id);
+            if (hotel != null)
+            {
+                _context.Entry(hotel).State = EntityState.Deleted;
+                await _context.SaveChangesAsync();
+            }
+            
 
 
             return hotel;
@@ -61,7 +65,7 @@ namespace GlobeWander.Models.Services
 
         public async Task<HotelDTO> GetHotelId(int hotelId)
         {
-            var hotelrooms = await _context.HotelRooms.Where(x => x.HotelID == hotelId).Select(v => new HotelRoomDTO
+            var hotelRooms = await _context.HotelRooms.Where(x => x.HotelID == hotelId).Select(v => new HotelRoomDTO
             {
                 HotelID = v.HotelID,
                 RoomID = v.RoomID,
@@ -87,13 +91,13 @@ namespace GlobeWander.Models.Services
 
             }).ToListAsync();
 
-            HotelDTO hotel = await _context.Hotels.Where(x => x.Id == hotelId).Select(b => new HotelDTO
+            HotelDTO? hotel = await _context.Hotels.Where(x => x.Id == hotelId).Select(b => new HotelDTO
             {
                 Id = b.Id,
                 Name = b.Name,
                 Description = b.Description,
                 TourSpotID = b.TourSpotID,
-                HotelRoom = hotelrooms
+                HotelRoom = hotelRooms
             }).FirstOrDefaultAsync();
             ;
             return hotel;
@@ -152,19 +156,32 @@ namespace GlobeWander.Models.Services
         /// <param name="updatedHotel">Updated hotel data.</param>
         public async Task<HotelDTO> UpdateHotel(int id, HotelDTO updatedHotel)
         {
-            Hotel hotel = await _context.Hotels.FindAsync(id);
-            
+            Hotel? hotel = await _context.Hotels.FindAsync(id);
 
-            hotel.Name = updatedHotel.Name;
-            hotel.Description = updatedHotel.Description;
+            if (hotel != null)
+            {
 
+                hotel.Name = updatedHotel.Name;
+                hotel.Description = updatedHotel.Description;
 
-            _context.Entry(hotel).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-            updatedHotel.Id = id;
-            updatedHotel.TourSpotID= hotel.TourSpotID;
+                _context.Entry(hotel).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+                updatedHotel.Id = id;
+                updatedHotel.TourSpotID = hotel.TourSpotID;
 
-            return updatedHotel;
+                return updatedHotel;
+            }
+            return null;
+        }
+
+        public async Task<List<AnonymousHotelDTO>> AnonymousHotelDTOs()
+        {
+            return await _context.Hotels.Select(x => new AnonymousHotelDTO
+            {
+                Id = x.Id,
+                Name = x.Name,
+                Description = x.Description
+            }).ToListAsync();
         }
     }
 }

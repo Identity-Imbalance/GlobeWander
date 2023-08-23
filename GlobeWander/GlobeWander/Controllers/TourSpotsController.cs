@@ -40,6 +40,19 @@ namespace GlobeWander.Controllers
         }
 
         /// <summary>
+        /// get trend tours
+        /// </summary>
+        /// <returns></returns>
+        /// 
+        [AllowAnonymous]
+        [HttpGet("Trends")]
+        public async Task<ActionResult<IEnumerable<TrendTourSpotDTO>>> GetTrendToursSpots()
+        {
+            var tourSpots = await _context.GetMostVisitedTourSpots();
+            return Ok(tourSpots);
+        }
+
+        /// <summary>
         /// Get a specific tour spot by its ID.
         /// </summary>
         /// <param name="id">The ID of the tour spot.</param>

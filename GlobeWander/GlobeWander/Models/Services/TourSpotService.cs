@@ -60,8 +60,9 @@ namespace GlobeWander.Models.Services
         /// </summary>
         public async Task<List<TourSpotDTO>> GetAllTourSpots()
         {
-            return await _context.TourSpots.Select(
-                tours=> new TourSpotDTO
+
+            var tourSpots =  await _context.TourSpots.Select(
+                tours => new TourSpotDTO
                 {
                     ID = tours.ID,
                     Name = tours.Name,
@@ -83,14 +84,14 @@ namespace GlobeWander.Models.Services
                             RoomID = hrooms.RoomID,
                             PricePerDay = hrooms.PricePerDay,
                             IsAvailable = hrooms.IsAvailable,
-                            Rooms = new RoomDTO
+                            Rooms = hrooms.Rooms != null ? new RoomDTO
                             {
                                 ID = hrooms.Rooms.ID,
                                 Name = hrooms.Rooms.Name,
                                 Layout = hrooms.Rooms.Layout
-                                
-                            },
-                            BookingRoom = new BookingRoomDTO
+
+                            }:null,
+                            BookingRoom = hrooms.BookingRoom != null ? new BookingRoomDTO
                             {
                                 ID = hrooms.BookingRoom.ID,
                                 RoomNumber = hrooms.BookingRoom.RoomNumber,
@@ -99,11 +100,11 @@ namespace GlobeWander.Models.Services
                                 Duration = hrooms.BookingRoom.Duration,
                                 TotalPrice = hrooms.BookingRoom.TotalPrice,
                                 Username = hrooms.BookingRoom.Username
-                            }
+                            }:null
                         }).ToList(),
                     }).ToList(),
                     Trips = tours.Trips
-                    .Where(x=> x.TourSpotID == tours.ID)
+                    .Where(x => x.TourSpotID == tours.ID)
                     .Select(trips => new TripDTO
                     {
                         Id = trips.Id,
@@ -134,11 +135,98 @@ namespace GlobeWander.Models.Services
                             Rating = r.Rating,
                             Username = r.Username
                         }).ToList()
-                    }).ToList()
+                    })
+                    .ToList()
 
                 }
                 ).ToListAsync();
-            
+            return tourSpots;
+
+        }
+
+        public async Task<List<TrendTourSpotDTO>> GetMostVisitedTourSpots()
+        {
+            var tourSpots = await _context.TourSpots.Select(
+                tours => new TrendTourSpotDTO
+                {
+                    ID = tours.ID,
+                    Name = tours.Name,
+                    Country = tours.Country,
+                    City = tours.City,
+                    Description = tours.Description,
+                    Category = tours.Category,
+                    PhoneNumber = tours.PhoneNumber,
+                    Hotels = tours.Hotels.Select(hotels => new TrendHotelDTO
+                    {
+                        //TourSpotID = hotels.TourSpotID,
+                        Id = hotels.Id,
+                        Name = hotels.Name,
+                        Description = hotels.Description,
+                        HotelRoom = hotels.HotelRoom.Select(hrooms => new TrendHotelRoomDTO
+                        {
+                            RoomNumber = hrooms.RoomNumber,
+                            HotelID = hrooms.HotelID,
+                            RoomID = hrooms.RoomID,
+                            PricePerDay = hrooms.PricePerDay,
+                            IsAvailable = hrooms.IsAvailable,
+                            //Rooms = hrooms.Rooms != null ? new RoomDTO
+                            //{
+                            //    ID = hrooms.Rooms.ID,
+                            //    Name = hrooms.Rooms.Name,
+                            //    Layout = hrooms.Rooms.Layout
+
+                            //} : null,
+                            //BookingRoom = hrooms.BookingRoom != null ? new BookingRoomDTO
+                            //{
+                            //    ID = hrooms.BookingRoom.ID,
+                            //    RoomNumber = hrooms.BookingRoom.RoomNumber,
+                            //    HotelID = hrooms.BookingRoom.HotelID,
+                            //    Cost = hrooms.BookingRoom.Cost,
+                            //    Duration = hrooms.BookingRoom.Duration,
+                            //    TotalPrice = hrooms.BookingRoom.TotalPrice,
+                            //    Username = hrooms.BookingRoom.Username
+                            //} : null
+                        }).ToList(),
+                    }).ToList(),
+                    Trips = tours.Trips
+                    .Where(x => x.TourSpotID == tours.ID)
+                    .Select(trips => new TrendTripDTO
+                    {
+                        Id = trips.Id,
+                        Name = trips.Name,
+                        Description = trips.Description,
+                        Cost = trips.Cost,
+                        Activity = trips.Activity,
+                        StartDate = trips.StartDate,
+                        EndDate = trips.EndDate,
+                        Capacity = trips.Capacity,
+                        Count = trips.Count,
+                        //TourSpotID = trips.TourSpotID,
+                        //BookingTrips = trips.BookingTrips.Select(bt => new BookingTripDTO
+                        //{
+                        //    ID = bt.ID,
+                        //    TripID = bt.TripID,
+                        //    NumberOfPersons = bt.NumberOfPersons,
+                        //    CostPerPerson = bt.CostPerPerson,
+                        //    TotalPrice = bt.TotalPrice,
+                        //    Duration = bt.Duration,
+                        //    Username = bt.Username
+                        //}).ToList(),
+                        //Rates = trips.Rates.Select(r => new RateDTO
+                        //{
+                        //    ID = r.ID,
+                        //    TripID = r.TripID,
+                        //    Comments = r.Comments,
+                        //    Rating = r.Rating,
+                        //    Username = r.Username
+                        //}).ToList()
+                    })
+                    .ToList()
+
+                }
+                ).OrderByDescending(t => t.Trips.Sum(t => t.Count))
+                .ToListAsync();
+            return tourSpots;
         }
 
         /// <summary>

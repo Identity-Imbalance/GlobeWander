@@ -14,6 +14,8 @@ namespace GlobeWander.Models.Interfaces
 
         public Task<ApplicationUser> GetUserByIdAsync(string userId);
 
+        public Task<UserDTO> UpdateProfile(UserUpdateDTO updateDTO, ClaimsPrincipal claimsPrincipal);
+
     }
 }
 

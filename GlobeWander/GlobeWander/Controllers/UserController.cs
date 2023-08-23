@@ -1,4 +1,5 @@
-﻿using GlobeWander.Models.DTO;
+﻿using GlobeWander.Models;
+using GlobeWander.Models.DTO;
 using GlobeWander.Models.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -61,6 +62,13 @@ namespace GlobeWander.Controllers
             var profile = await _user.GetUser(this.User);
 
             return Ok(profile);
+        }
+
+        [HttpPut("UpdateProfile")]
+        public async Task<ActionResult<UserDTO>> UpdateProfile(UserUpdateDTO updateDTO)
+        {
+            var x = await _user.UpdateProfile(updateDTO,this.User);
+            return Ok(x);
         }
     }
 }

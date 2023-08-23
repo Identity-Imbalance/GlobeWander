@@ -28,25 +28,40 @@ namespace GlobeWander.Models.Services
         public async Task<BookingRoomDTO> CreateBookingRoom(NewBookingRoomDTO bookingRoomDTO, string userId)
         {
             var getHotelRoom = await _context.HotelRooms.FindAsync(bookingRoomDTO.HotelID,bookingRoomDTO.RoomNumber);
-            var user = await _UserManager.FindByIdAsync(userId);
-            if (getHotelRoom.IsAvailable)
+            if (getHotelRoom == null)
             {
-                var bookingRoom = new BookingRoom
+                return null;
+            }
+
+            var user = await _UserManager.FindByIdAsync(userId);
+
+            var hotelRoom = await _context.HotelRooms.FindAsync(bookingRoomDTO.HotelID, bookingRoomDTO.RoomNumber);
+
+            var existBookingRoom = await _context.BookingRooms
+                                    .Where(x => x.Username == user.UserName)
+                                    .FirstOrDefaultAsync(b => b.Username == user.UserName && b.HotelID == hotelRoom.HotelID);
+           if (existBookingRoom == null)
+            {
+                if (getHotelRoom.IsAvailable)
                 {
-                    HotelID = bookingRoomDTO.HotelID,
-                    RoomNumber = bookingRoomDTO.RoomNumber,
-                    Cost = getHotelRoom.PricePerDay,
-                    Duration = bookingRoomDTO.Duration,
-                    TotalPrice = getHotelRoom.PricePerDay * bookingRoomDTO.Duration,
-                    Username = user.UserName
-                };
-                getHotelRoom.IsAvailable = false;
-                _context.BookingRooms.Add(bookingRoom);
-                await _context.SaveChangesAsync();
+                    var bookingRoom = new BookingRoom
+                    {
+                        HotelID = bookingRoomDTO.HotelID,
+                        RoomNumber = bookingRoomDTO.RoomNumber,
+                        Cost = getHotelRoom.PricePerDay,
+                        Duration = bookingRoomDTO.Duration,
+                        TotalPrice = getHotelRoom.PricePerDay * bookingRoomDTO.Duration,
+                        Username = user.UserName
+                    };
+                    getHotelRoom.IsAvailable = false;
+                    _context.BookingRooms.Add(bookingRoom);
+                    await _context.SaveChangesAsync();
 
-                var newBookingRoom = await GetBookingRoomById(bookingRoom.ID);
+                    var newBookingRoom = await GetBookingRoomById(bookingRoom.ID);
 
-                return newBookingRoom;
+                    return newBookingRoom;
+                }
+                return null;
             }
             return null;
            
