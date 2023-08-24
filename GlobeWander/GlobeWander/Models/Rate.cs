@@ -8,8 +8,10 @@
 
         public string Comments { get; set;}
 
-        public string Rating { get; set; }
+        public int Rating { get; set; }
 
-        public Trip Trip { get; set; }
+        public string Username { get; set; }
+
+        public Trip? Trip { get; set; }
     }
 }

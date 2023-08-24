@@ -1,0 +1,7 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/GlobeWander/.vs/GlobeWander/FileContentIndex
+/GlobeWander/GlobeWander/Models/Services/BookingTripService.cs
+/GlobeWander/.vs/GlobeWander/v17/.suo

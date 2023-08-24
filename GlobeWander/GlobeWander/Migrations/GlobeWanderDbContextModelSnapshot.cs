@@ -22,6 +22,140 @@ namespace GlobeWander.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("GlobeWander.Models.ApplicationUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "4",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "ac8607ba-a948-425d-a65b-38795f95351c",
+                            Email = "User@example.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedUserName = "USER",
+                            PasswordHash = "AQAAAAIAAYagAAAAEAoMx43nMY9GbINd5mV4+ZnsnKqDaQWiLMEKG9K29AB4C1OHJDKRTlFhFAEgTPJEpQ==",
+                            PhoneNumber = "1234567890",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "82831347-82f9-480b-8301-90056c44c37b",
+                            TwoFactorEnabled = false,
+                            UserName = "User"
+                        },
+                        new
+                        {
+                            Id = "1",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "477c5124-a3da-4d8e-8621-35799e4582d6",
+                            Email = "adminUser@example.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "adminUser@EXAMPLE.COM",
+                            NormalizedUserName = "ADMIN",
+                            PasswordHash = "AQAAAAIAAYagAAAAECa94HADwvhErWzvHWuast983NIo3+i2+L7e+nw58F95qVoTbycRdMColPbhlGCDDA==",
+                            PhoneNumber = "1234567890",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "c6692053-4094-40f7-baad-513a2532b3dd",
+                            TwoFactorEnabled = false,
+                            UserName = "admin"
+                        },
+                        new
+                        {
+                            Id = "3",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "f1eea056-7a23-47b3-844d-8e4e5c8f5eaa",
+                            Email = "trip@example.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "trip@EXAMPLE.COM",
+                            NormalizedUserName = "TRIP",
+                            PasswordHash = "AQAAAAIAAYagAAAAEH7EsDuhN7p4uEtiHJVduuTM6lbnWkcwBbJcxA8gfB2JJMwla0/IfDcJTXrT40dp9g==",
+                            PhoneNumber = "1234567890",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "b6ae56e1-239c-469f-a396-583b7635475e",
+                            TwoFactorEnabled = false,
+                            UserName = "trip"
+                        },
+                        new
+                        {
+                            Id = "2",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "1c8a2b58-cb45-4665-8520-7c7cb6239926",
+                            Email = "hotel@example.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "hotel@EXAMPLE.COM",
+                            NormalizedUserName = "HOTEL",
+                            PasswordHash = "AQAAAAIAAYagAAAAEL22hOHvooTY7FGghzpoBR+6gdn1OnY+TetTfsAijgB/RJsbLO7Lr8+k+dkDTYETkw==",
+                            PhoneNumber = "1234567890",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "12eb3f23-2c0c-4623-a2d1-88df2bfdf9ff",
+                            TwoFactorEnabled = false,
+                            UserName = "hotel"
+                        });
+                });
+
             modelBuilder.Entity("GlobeWander.Models.BookingRoom", b =>
                 {
                     b.Property<int>("ID")
@@ -33,9 +167,8 @@ namespace GlobeWander.Migrations
                     b.Property<decimal>("Cost")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("Duration")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Duration")
+                        .HasColumnType("int");
 
                     b.Property<int>("HotelID")
                         .HasColumnType("int");
@@ -43,7 +176,17 @@ namespace GlobeWander.Migrations
                     b.Property<int>("RoomNumber")
                         .HasColumnType("int");
 
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("ID");
+
+                    b.HasIndex("HotelID", "RoomNumber")
+                        .IsUnique();
 
                     b.ToTable("BookingRooms");
                 });
@@ -51,22 +194,31 @@ namespace GlobeWander.Migrations
             modelBuilder.Entity("GlobeWander.Models.BookingTrip", b =>
                 {
                     b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("TripID")
-                        .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<decimal>("CostPerPerson")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("Duration")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Duration")
+                        .HasColumnType("int");
 
                     b.Property<int>("NumberOfPersons")
                         .HasColumnType("int");
 
-                    b.HasKey("ID", "TripID");
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("TripID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
 
                     b.HasIndex("TripID");
 
@@ -97,6 +249,29 @@ namespace GlobeWander.Migrations
                     b.HasIndex("TourSpotID");
 
                     b.ToTable("Hotels");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "A unique hotel that you can't find in this place",
+                            Name = "Paradise",
+                            TourSpotID = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "A unique hotel that you can't find in this place",
+                            Name = "Wander ",
+                            TourSpotID = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "A unique hotel that y    ou can't find in this place",
+                            Name = "Amazing",
+                            TourSpotID = 3
+                        });
                 });
 
             modelBuilder.Entity("GlobeWander.Models.HotelRoom", b =>
@@ -110,7 +285,7 @@ namespace GlobeWander.Migrations
                     b.Property<bool>("IsAvailable")
                         .HasColumnType("bit");
 
-                    b.Property<decimal>("Price")
+                    b.Property<decimal>("PricePerDay")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("RoomID")
@@ -126,20 +301,26 @@ namespace GlobeWander.Migrations
             modelBuilder.Entity("GlobeWander.Models.Rate", b =>
                 {
                     b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("TripID")
-                        .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<string>("Comments")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Rating")
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TripID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Username")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ID", "TripID");
+                    b.HasKey("ID");
 
                     b.HasIndex("TripID");
 
@@ -164,6 +345,26 @@ namespace GlobeWander.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Rooms");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            Layout = 2,
+                            Name = "Small Room"
+                        },
+                        new
+                        {
+                            ID = 2,
+                            Layout = 3,
+                            Name = "Suite Room"
+                        },
+                        new
+                        {
+                            ID = 3,
+                            Layout = 1,
+                            Name = "Studio room"
+                        });
                 });
 
             modelBuilder.Entity("GlobeWander.Models.TourSpot", b =>
@@ -174,9 +375,8 @@ namespace GlobeWander.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<string>("Categoary")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Category")
+                        .HasColumnType("int");
 
                     b.Property<string>("City")
                         .IsRequired()
@@ -201,6 +401,38 @@ namespace GlobeWander.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("TourSpots");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            Category = 3,
+                            City = "Petra",
+                            Country = "Jordan",
+                            Description = "a place before thousands years",
+                            Name = "Petra",
+                            PhoneNumber = "078885423"
+                        },
+                        new
+                        {
+                            ID = 2,
+                            Category = 3,
+                            City = "Jerash",
+                            Country = "Jordan",
+                            Description = "A historical place that the Romanian civilization build before thousands years.",
+                            Name = "Jerash",
+                            PhoneNumber = "088782215"
+                        },
+                        new
+                        {
+                            ID = 3,
+                            Category = 3,
+                            City = "Irbid",
+                            Country = "Jordan",
+                            Description = "A historical place that the Romanian civilization build before thousands years. In the north of Jordan",
+                            Name = "Um Qais",
+                            PhoneNumber = "0788442521"
+                        });
                 });
 
             modelBuilder.Entity("GlobeWander.Models.Trip", b =>
@@ -215,8 +447,14 @@ namespace GlobeWander.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Cost")
-                        .HasColumnType("float");
+                    b.Property<int>("Capacity")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Cost")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -232,18 +470,251 @@ namespace GlobeWander.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Theme")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TourSpotsID")
+                    b.Property<int>("TourSpotID")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TourSpotsID");
+                    b.HasIndex("TourSpotID");
 
                     b.ToTable("Trips");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Activity = "walking",
+                            Capacity = 30,
+                            Cost = 20m,
+                            Count = 0,
+                            Description = "trip start at 8 am and going from Amman to Petra",
+                            EndDate = new DateTime(2023, 8, 23, 21, 40, 37, 979, DateTimeKind.Utc).AddTicks(8154),
+                            Name = "Petra ride",
+                            StartDate = new DateTime(2023, 8, 24, 0, 40, 37, 979, DateTimeKind.Local).AddTicks(8139),
+                            TourSpotID = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Activity = "visiting",
+                            Capacity = 22,
+                            Cost = 30m,
+                            Count = 0,
+                            Description = "Amman to Jerash with a trip manager who can speak many languages",
+                            EndDate = new DateTime(2023, 8, 23, 21, 40, 37, 979, DateTimeKind.Utc).AddTicks(8158),
+                            Name = "Jerash ride",
+                            StartDate = new DateTime(2023, 8, 24, 0, 40, 37, 979, DateTimeKind.Local).AddTicks(8157),
+                            TourSpotID = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Activity = "climbing",
+                            Capacity = 40,
+                            Cost = 40m,
+                            Count = 0,
+                            Description = "Amman to Irbid with a trip manager who can speak many languages",
+                            EndDate = new DateTime(2023, 8, 23, 21, 40, 37, 979, DateTimeKind.Utc).AddTicks(8161),
+                            Name = "Um-Qais ride",
+                            StartDate = new DateTime(2023, 8, 24, 0, 40, 37, 979, DateTimeKind.Local).AddTicks(8160),
+                            TourSpotID = 3
+                        });
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "admin manager",
+                            ConcurrencyStamp = "00000000-0000-0000-0000-000000000000",
+                            Name = "Admin Manager",
+                            NormalizedName = "ADMIN MANAGER"
+                        },
+                        new
+                        {
+                            Id = "trip manager",
+                            ConcurrencyStamp = "00000000-0000-0000-0000-000000000000",
+                            Name = "Trip Manager",
+                            NormalizedName = "TRIP MANAGER"
+                        },
+                        new
+                        {
+                            Id = "hotel manager",
+                            ConcurrencyStamp = "00000000-0000-0000-0000-000000000000",
+                            Name = "Hotel Manager",
+                            NormalizedName = "HOTEL MANAGER"
+                        },
+                        new
+                        {
+                            Id = "user",
+                            ConcurrencyStamp = "00000000-0000-0000-0000-000000000000",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        });
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "1",
+                            RoleId = "admin manager"
+                        },
+                        new
+                        {
+                            UserId = "2",
+                            RoleId = "hotel manager"
+                        },
+                        new
+                        {
+                            UserId = "3",
+                            RoleId = "trip manager"
+                        },
+                        new
+                        {
+                            UserId = "4",
+                            RoleId = "user"
+                        });
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("GlobeWander.Models.BookingRoom", b =>
+                {
+                    b.HasOne("GlobeWander.Models.HotelRoom", "HotelRooms")
+                        .WithOne("BookingRoom")
+                        .HasForeignKey("GlobeWander.Models.BookingRoom", "HotelID", "RoomNumber")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("HotelRooms");
                 });
 
             modelBuilder.Entity("GlobeWander.Models.BookingTrip", b =>
@@ -282,15 +753,6 @@ namespace GlobeWander.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("GlobeWander.Models.BookingRoom", "BookingRoom")
-                        .WithOne("HotelRooms")
-                        .HasForeignKey("GlobeWander.Models.HotelRoom", "HotelID", "RoomNumber")
-                        .HasPrincipalKey("GlobeWander.Models.BookingRoom", "HotelID", "RoomNumber")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("BookingRoom");
-
                     b.Navigation("Hotel");
 
                     b.Navigation("Rooms");
@@ -311,22 +773,72 @@ namespace GlobeWander.Migrations
                 {
                     b.HasOne("GlobeWander.Models.TourSpot", "TourSpots")
                         .WithMany("Trips")
-                        .HasForeignKey("TourSpotsID")
+                        .HasForeignKey("TourSpotID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("TourSpots");
                 });
 
-            modelBuilder.Entity("GlobeWander.Models.BookingRoom", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
-                    b.Navigation("HotelRooms")
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.HasOne("GlobeWander.Models.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.HasOne("GlobeWander.Models.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GlobeWander.Models.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.HasOne("GlobeWander.Models.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("GlobeWander.Models.Hotel", b =>
                 {
                     b.Navigation("HotelRoom");
+                });
+
+            modelBuilder.Entity("GlobeWander.Models.HotelRoom", b =>
+                {
+                    b.Navigation("BookingRoom");
                 });
 
             modelBuilder.Entity("GlobeWander.Models.Room", b =>

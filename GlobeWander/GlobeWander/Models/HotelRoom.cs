@@ -10,7 +10,7 @@ namespace GlobeWander.Models
 
         public int RoomID { get; set; }
 
-        public decimal Price { get; set; }
+        public decimal PricePerDay { get; set; }
 
         public bool IsAvailable { get; set; }
 
@@ -20,6 +20,6 @@ namespace GlobeWander.Models
         [ForeignKey("RoomID")]
         public Room? Rooms { get; set; }
 
-        public BookingRoom BookingRoom { get; set; }
+        public BookingRoom? BookingRoom { get; set; }
     }
 }

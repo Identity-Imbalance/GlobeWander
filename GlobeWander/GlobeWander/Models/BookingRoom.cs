@@ -7,11 +7,15 @@
         public int HotelID { get; set; }
 
         public int RoomNumber { get; set; }
-
+         
         public decimal Cost { get; set; }
 
-        public string Duration { get; set; }
+        public int Duration { get; set; }
 
-        public HotelRoom HotelRooms { get; set; }
+        public decimal TotalPrice { get; set; }
+
+        public string Username { get; set; }
+
+        public HotelRoom? HotelRooms { get; set; }
     }
 }
